@@ -1,0 +1,17 @@
+.popupContent{
+  padding: 5px 0;
+  color: #cecece;
+}
+
+
+.menuTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.25rem;
+  height: 3rem;
+  border-bottom: 1px solid #414141;
+  &:hover {
+    cursor: pointer;
+  }
+}
