@@ -8,8 +8,11 @@ import {
 } from "react-icons/md";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import SettingsMenuItem from "@/video/videoPlayer/controls/settingsMenuItem/SettingsMenuItem";
-import { IQuality, IVideo } from "@/video/video.interface";
-import { PlayBackSpeedType } from "@/video/videoPlayer/videoPlayer.interface";
+import {
+  IQuality,
+  IVideo,
+  PlayBackSpeedType,
+} from "@/video/videoPlayer/videoPlayer.interface";
 
 enum PopupPages {
   MENU = "menu",

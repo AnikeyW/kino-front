@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
 import VideoPlayer from "@/video/videoPlayer/VideoPlayer";
-import { IVideo } from "@/video/video.interface";
+import { IVideo } from "@/video/videoPlayer/videoPlayer.interface";
 
 const video: IVideo = {
   title: "Игра Престолов 1.1",

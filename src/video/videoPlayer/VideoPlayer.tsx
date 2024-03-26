@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import { usePlayer } from "@/video/videoPlayer/usePlayer";
 import cl from "classnames";
 import styles from "./VideoPlayer.module.scss";
-import { IVideo } from "@/video/video.interface";
 import PlayPauseBtn from "@/video/videoPlayer/controls/playPauseBtn/PlayPauseBtn";
 import Timeline from "@/video/videoPlayer/controls/timeline/Timeline";
 import Volume from "@/video/videoPlayer/controls/volume/Volume";
@@ -12,6 +11,7 @@ import FullScreenBtn from "@/video/videoPlayer/controls/fullScreenBtn/FullScreen
 import MiniPlayerBtn from "@/video/videoPlayer/controls/miniPlayerBtn/MiniPlayerBtn";
 import Captions from "@/video/videoPlayer/controls/captions/Captions";
 import SettingsBtn from "@/video/videoPlayer/controls/settingsBtn/SettingsBtn";
+import { IVideo } from "@/video/videoPlayer/videoPlayer.interface";
 
 interface Props {
   video: IVideo;

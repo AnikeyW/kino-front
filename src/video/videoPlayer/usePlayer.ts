@@ -1,12 +1,12 @@
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import {
-  IVideoElement,
+  IQuality,
+  IVideo,
   PlayBackSpeedType,
 } from "@/video/videoPlayer/videoPlayer.interface";
-import { IQuality, IVideo } from "@/video/video.interface";
 
 export const usePlayer = (video: IVideo) => {
-  const videoRef = useRef<IVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);

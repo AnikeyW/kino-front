@@ -3,8 +3,11 @@ import { FC, useState } from "react";
 import styles from "./SettingsBtn.module.scss";
 import Popup from "@/components/UI/popup/Popup";
 import SettingsContent from "@/video/videoPlayer/controls/settingsContent/SettingsContent";
-import { IQuality, IVideo } from "@/video/video.interface";
-import { PlayBackSpeedType } from "@/video/videoPlayer/videoPlayer.interface";
+import {
+  IQuality,
+  IVideo,
+  PlayBackSpeedType,
+} from "@/video/videoPlayer/videoPlayer.interface";
 
 interface Props {
   video: IVideo;
