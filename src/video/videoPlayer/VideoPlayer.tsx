@@ -26,6 +26,7 @@ const VideoPlayer: FC<Props> = ({ video }) => {
         <Timeline
           currentDuration={status.currentDuration}
           totalDuration={status.videoDuration}
+          changeCurrentTime={actions.changeCurrentTime}
         />
         <div className={styles.controls}>
           <PlayPauseBtn
@@ -65,14 +66,15 @@ const VideoPlayer: FC<Props> = ({ video }) => {
         controls={false}
         onClick={actions.togglePlayingVideo}
         onDoubleClick={actions.fullScreenHandler}
-        onLoadedData={actions.onLoadedDataHandler}
+        onLoadedMetadata={actions.onLoadedDataHandler}
         onTimeUpdate={actions.timeUpdateHandler}
         onPause={actions.onPauseHandler}
         onPlay={actions.onPlayHandler}
+        preload={"metadata"}
       >
         {}
-        <source src={video.qualities[0].src} type={video.qualities[0].type} />
-        {/*<source src={quality.src} type={quality.type} />*/}
+        {/*<source src={video.qualities[0].src} type={video.qualities[0].type} />*/}
+        <source src={status.quality.src} type={status.quality.type} />
         {video.captions.map((caption, index) => (
           <track
             key={index}

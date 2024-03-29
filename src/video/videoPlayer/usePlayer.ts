@@ -1,3 +1,4 @@
+"use client";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import {
   IQuality,
@@ -19,6 +20,28 @@ export const usePlayer = (video: IVideo) => {
   );
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowRight":
+          skipTimeLine(10);
+          break;
+        case "ArrowLeft":
+          skipTimeLine(-10);
+          break;
+        // todo
+        default:
+          return;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
     document.addEventListener("fullscreenchange", fullScreenChangeListener);
 
     return () => {
@@ -28,6 +51,20 @@ export const usePlayer = (video: IVideo) => {
       );
     };
   }, []);
+
+  const changeCurrentTime = (seconds: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.currentTime = seconds;
+  };
+
+  const skipTimeLine = (seconds: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.currentTime += seconds;
+  };
 
   const onPauseHandler = () => {
     setIsPlaying(false);
@@ -57,6 +94,7 @@ export const usePlayer = (video: IVideo) => {
     if (!video) return;
     setQuality(quality);
     video.load();
+    video.currentTime = currentDuration;
     if (isPlaying) {
       video.play();
     }
@@ -151,6 +189,7 @@ export const usePlayer = (video: IVideo) => {
       timeUpdateHandler,
       onPauseHandler,
       onPlayHandler,
+      changeCurrentTime,
     },
   };
 };
