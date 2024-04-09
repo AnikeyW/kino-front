@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useRef, MouseEvent, useState } from "react";
 import { usePlayer } from "@/video/videoPlayer/usePlayer";
 import cl from "classnames";
 import styles from "./VideoPlayer.module.scss";
@@ -21,8 +21,12 @@ const VideoPlayer: FC<Props> = ({ video }) => {
   const { videoRef, status, actions } = usePlayer(video);
 
   return (
-    <div className={cl(styles.root)}>
-      <div className={styles.controlsContainer}>
+    <div
+      className={cl(styles.root, {
+        [styles.controlsContainerShow]: status.isControlsShow,
+      })}
+    >
+      <div className={cl(styles.controlsContainer)}>
         <Timeline
           currentDuration={status.currentDuration}
           totalDuration={status.videoDuration}
@@ -70,10 +74,11 @@ const VideoPlayer: FC<Props> = ({ video }) => {
         onTimeUpdate={actions.timeUpdateHandler}
         onPause={actions.onPauseHandler}
         onPlay={actions.onPlayHandler}
+        onMouseEnter={actions.mouseEnterHandler}
+        onMouseLeave={actions.mouseLeaveHandler}
+        onMouseMove={actions.mouseMoveHandler}
         preload={"metadata"}
       >
-        {}
-        {/*<source src={video.qualities[0].src} type={video.qualities[0].type} />*/}
         <source src={status.quality.src} type={status.quality.type} />
         {video.captions.map((caption, index) => (
           <track

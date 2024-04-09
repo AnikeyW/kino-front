@@ -8,6 +8,8 @@ import {
 
 export const usePlayer = (video: IVideo) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const timerControlsShowRef = useRef<NodeJS.Timeout | null>(null);
+  const throttleCurrentTimeRef = useRef<boolean>(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
@@ -18,17 +20,26 @@ export const usePlayer = (video: IVideo) => {
   const [quality, setQuality] = useState<IQuality>(
     video.qualities.find((q) => q.res === video.defaultRes)!,
   );
+  const [isControlsShow, setIsControlsShow] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case "ArrowRight":
+      switch (e.key.toLowerCase()) {
+        case "arrowright":
           skipTimeLine(10);
           break;
-        case "ArrowLeft":
+        case "arrowleft":
           skipTimeLine(-10);
           break;
-        // todo
+        case "f":
+          fullScreenHandler();
+          break;
+        case " ":
+          togglePlayingVideo();
+          break;
+        case "m":
+          toggleMute();
+          break;
         default:
           return;
       }
@@ -38,6 +49,7 @@ export const usePlayer = (video: IVideo) => {
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      clearTimeout(timerControlsShowRef.current!);
     };
   }, []);
 
@@ -51,6 +63,32 @@ export const usePlayer = (video: IVideo) => {
       );
     };
   }, []);
+
+  const handleMouseActivity = () => {
+    setIsControlsShow(true);
+    clearTimeout(timerControlsShowRef.current!);
+    timerControlsShowRef.current = setTimeout(() => {
+      document.documentElement.style.cursor = "none";
+      setIsControlsShow(false);
+    }, 5000);
+  };
+
+  const mouseMoveHandler = () => {
+    if (document.documentElement.style.cursor === "none") {
+      document.documentElement.style.cursor = "auto";
+    }
+    if (isFullScreen) {
+      handleMouseActivity();
+    }
+  };
+
+  const mouseEnterHandler = () => {
+    setIsControlsShow(true);
+  };
+
+  const mouseLeaveHandler = () => {
+    setIsControlsShow(false);
+  };
 
   const changeCurrentTime = (seconds: number) => {
     const video = videoRef.current;
@@ -78,8 +116,22 @@ export const usePlayer = (video: IVideo) => {
     setVideoDuration(e.currentTarget.duration);
   };
 
+  const changeCurrentDurationThrottle = (time: number) => {
+    if (throttleCurrentTimeRef.current) return;
+
+    throttleCurrentTimeRef.current = true;
+
+    setTimeout(() => {
+      setCurrentDuration(time);
+
+      throttleCurrentTimeRef.current = false;
+    }, 1000);
+  };
+
   const timeUpdateHandler = (e: SyntheticEvent<HTMLVideoElement>) => {
-    setCurrentDuration(e.currentTarget.currentTime);
+    if (isControlsShow) {
+      changeCurrentDurationThrottle(e.currentTarget.currentTime);
+    }
   };
 
   const changePlaybackSpeedHandler = (playbackSpeed: PlayBackSpeedType) => {
@@ -102,7 +154,7 @@ export const usePlayer = (video: IVideo) => {
 
   const toggleCaptions = () => {
     if (!videoRef.current) return;
-    //todo
+    //todo: допилить функционал с субтитрами
     setIsCaptionsOn((prevState) => !prevState);
     if (videoRef.current.textTracks.length === 0) {
       setIsCaptionsOn(false);
@@ -134,10 +186,8 @@ export const usePlayer = (video: IVideo) => {
 
     if (document.fullscreenElement === null) {
       video.parentElement!.requestFullscreen();
-      setIsFullScreen(true);
     } else {
       document.exitFullscreen();
-      setIsFullScreen(false);
     }
   };
 
@@ -156,12 +206,11 @@ export const usePlayer = (video: IVideo) => {
   const togglePlayingVideo = () => {
     const video = videoRef.current;
     if (!video) return;
-    if (isPlaying) {
+
+    if (!video.paused) {
       video.pause();
-      setIsPlaying(false);
     } else {
       video.play();
-      setIsPlaying(true);
     }
   };
 
@@ -175,6 +224,7 @@ export const usePlayer = (video: IVideo) => {
       isCaptionsOn,
       playBackSpeed,
       quality,
+      isControlsShow,
     },
     actions: {
       togglePlayingVideo,
@@ -190,6 +240,9 @@ export const usePlayer = (video: IVideo) => {
       onPauseHandler,
       onPlayHandler,
       changeCurrentTime,
+      mouseEnterHandler,
+      mouseLeaveHandler,
+      mouseMoveHandler,
     },
   };
 };
