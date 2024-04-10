@@ -25,10 +25,13 @@ const VideoPlayer: FC<Props> = ({ video }) => {
       className={cl(styles.root, {
         [styles.controlsContainerShow]: status.isControlsShow,
       })}
+      onMouseEnter={actions.mouseEnterHandler}
+      onMouseLeave={actions.mouseLeaveHandler}
+      onMouseMove={actions.mouseMoveHandler}
     >
       <div className={cl(styles.controlsContainer)}>
         <Timeline
-          currentDuration={status.currentDuration}
+          currentTime={status.currentTime}
           totalDuration={status.videoDuration}
           changeCurrentTime={actions.changeCurrentTime}
         />
@@ -43,7 +46,7 @@ const VideoPlayer: FC<Props> = ({ video }) => {
           />
           <Duration
             totalDuration={status.videoDuration}
-            currentDuration={status.currentDuration}
+            currentTime={status.currentTime}
           />
           <SettingsBtn
             video={video}
@@ -74,9 +77,6 @@ const VideoPlayer: FC<Props> = ({ video }) => {
         onTimeUpdate={actions.timeUpdateHandler}
         onPause={actions.onPauseHandler}
         onPlay={actions.onPlayHandler}
-        onMouseEnter={actions.mouseEnterHandler}
-        onMouseLeave={actions.mouseLeaveHandler}
-        onMouseMove={actions.mouseMoveHandler}
         preload={"metadata"}
       >
         <source src={status.quality.src} type={status.quality.type} />

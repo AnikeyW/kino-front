@@ -3,13 +3,13 @@ import { FC, useEffect, useRef, MouseEvent } from "react";
 import { formatTime } from "@/utils";
 
 interface Props {
-  currentDuration: number;
+  currentTime: number;
   totalDuration: number;
   changeCurrentTime: (seconds: number) => void;
 }
 
 const Timeline: FC<Props> = ({
-  currentDuration,
+  currentTime,
   totalDuration,
   changeCurrentTime,
 }) => {
@@ -48,13 +48,13 @@ const Timeline: FC<Props> = ({
   useEffect(() => {
     if (!timelineContainerRef.current) return;
 
-    const percent = currentDuration / totalDuration;
+    const percent = currentTime / totalDuration;
 
     timelineContainerRef.current.style.setProperty(
       "--progress-position",
       percent.toString(),
     );
-  }, [totalDuration, currentDuration]);
+  }, [totalDuration, currentTime]);
 
   return (
     <div

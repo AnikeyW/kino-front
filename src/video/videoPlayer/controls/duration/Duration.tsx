@@ -3,14 +3,14 @@ import styles from "./Duration.module.scss";
 import { formatTime } from "@/utils";
 
 interface Props {
-  currentDuration: number;
+  currentTime: number;
   totalDuration: number;
 }
 
-const Duration: FC<Props> = ({ currentDuration, totalDuration }) => {
+const Duration: FC<Props> = ({ currentTime, totalDuration }) => {
   return (
     <div className={styles.duration}>
-      <div className={styles.currentTime}>{formatTime(currentDuration)}</div>/
+      <div className={styles.currentTime}>{formatTime(currentTime)}</div>/
       <div className={styles.totalTime}>{formatTime(totalDuration)}</div>
     </div>
   );

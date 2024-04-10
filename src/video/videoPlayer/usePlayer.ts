@@ -5,15 +5,16 @@ import {
   IVideo,
   PlayBackSpeedType,
 } from "@/video/videoPlayer/videoPlayer.interface";
+import { clearTimeout } from "timers";
 
 export const usePlayer = (video: IVideo) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerControlsShowRef = useRef<NodeJS.Timeout | null>(null);
-  const throttleCurrentTimeRef = useRef<boolean>(false);
+  const lastCurrentTimeRef = useRef<number>(0);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
-  const [currentDuration, setCurrentDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isCaptionsOn, setIsCaptionsOn] = useState(false);
   const [playBackSpeed, setPlayBackSpeed] = useState<PlayBackSpeedType>(1);
@@ -95,6 +96,8 @@ export const usePlayer = (video: IVideo) => {
     if (!video) return;
 
     video.currentTime = seconds;
+    setCurrentTime(seconds);
+    lastCurrentTimeRef.current = Math.floor(seconds);
   };
 
   const skipTimeLine = (seconds: number) => {
@@ -116,21 +119,15 @@ export const usePlayer = (video: IVideo) => {
     setVideoDuration(e.currentTarget.duration);
   };
 
-  const changeCurrentDurationThrottle = (time: number) => {
-    if (throttleCurrentTimeRef.current) return;
-
-    throttleCurrentTimeRef.current = true;
-
-    setTimeout(() => {
-      setCurrentDuration(time);
-
-      throttleCurrentTimeRef.current = false;
-    }, 1000);
-  };
-
   const timeUpdateHandler = (e: SyntheticEvent<HTMLVideoElement>) => {
     if (isControlsShow) {
-      changeCurrentDurationThrottle(e.currentTarget.currentTime);
+      const currentTime = e.currentTarget.currentTime;
+      const timeSinceLastUpdate = currentTime - lastCurrentTimeRef.current;
+
+      if (timeSinceLastUpdate >= 1) {
+        setCurrentTime(currentTime);
+        lastCurrentTimeRef.current = Math.floor(currentTime);
+      }
     }
   };
 
@@ -146,7 +143,7 @@ export const usePlayer = (video: IVideo) => {
     if (!video) return;
     setQuality(quality);
     video.load();
-    video.currentTime = currentDuration;
+    video.currentTime = currentTime;
     if (isPlaying) {
       video.play();
     }
@@ -219,7 +216,7 @@ export const usePlayer = (video: IVideo) => {
     status: {
       isPlaying,
       videoDuration,
-      currentDuration,
+      currentTime,
       isFullScreen,
       isCaptionsOn,
       playBackSpeed,
