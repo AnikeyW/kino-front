@@ -7,12 +7,12 @@ import {
   MdVideoSettings,
 } from "react-icons/md";
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import SettingsMenuItem from "@/video/videoPlayer/controls/settingsMenuItem/SettingsMenuItem";
+import SettingsMenuItem from "@/components/video/videoPlayer/controls/settingsMenuItem/SettingsMenuItem";
 import {
   IQuality,
   IVideo,
   PlayBackSpeedType,
-} from "@/video/videoPlayer/videoPlayer.interface";
+} from "@/components/video/videoPlayer/videoPlayer.interface";
 
 enum PopupPages {
   MENU = "menu",

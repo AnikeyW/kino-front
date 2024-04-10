@@ -4,8 +4,7 @@ import {
   IQuality,
   IVideo,
   PlayBackSpeedType,
-} from "@/video/videoPlayer/videoPlayer.interface";
-import { clearTimeout } from "timers";
+} from "@/components/video/videoPlayer/videoPlayer.interface";
 
 export const usePlayer = (video: IVideo) => {
   const videoRef = useRef<HTMLVideoElement>(null);

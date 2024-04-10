@@ -2,12 +2,12 @@ import { MdSettings } from "react-icons/md";
 import { FC, useState } from "react";
 import styles from "./SettingsBtn.module.scss";
 import Popup from "@/components/UI/popup/Popup";
-import SettingsContent from "@/video/videoPlayer/controls/settingsContent/SettingsContent";
+import SettingsContent from "@/components/video/videoPlayer/controls/settingsContent/SettingsContent";
 import {
   IQuality,
   IVideo,
   PlayBackSpeedType,
-} from "@/video/videoPlayer/videoPlayer.interface";
+} from "@/components/video/videoPlayer/videoPlayer.interface";
 
 interface Props {
   video: IVideo;

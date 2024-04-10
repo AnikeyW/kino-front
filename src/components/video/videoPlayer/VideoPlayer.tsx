@@ -1,17 +1,17 @@
 "use client";
-import React, { FC, useRef, MouseEvent, useState } from "react";
-import { usePlayer } from "@/video/videoPlayer/usePlayer";
+import React, { FC } from "react";
 import cl from "classnames";
 import styles from "./VideoPlayer.module.scss";
-import PlayPauseBtn from "@/video/videoPlayer/controls/playPauseBtn/PlayPauseBtn";
-import Timeline from "@/video/videoPlayer/controls/timeline/Timeline";
-import Volume from "@/video/videoPlayer/controls/volume/Volume";
-import Duration from "@/video/videoPlayer/controls/duration/Duration";
-import FullScreenBtn from "@/video/videoPlayer/controls/fullScreenBtn/FullScreenBtn";
-import MiniPlayerBtn from "@/video/videoPlayer/controls/miniPlayerBtn/MiniPlayerBtn";
-import Captions from "@/video/videoPlayer/controls/captions/Captions";
-import SettingsBtn from "@/video/videoPlayer/controls/settingsBtn/SettingsBtn";
-import { IVideo } from "@/video/videoPlayer/videoPlayer.interface";
+import { IVideo } from "@/components/video/videoPlayer/videoPlayer.interface";
+import { usePlayer } from "@/components/video/videoPlayer/usePlayer";
+import Timeline from "@/components/video/videoPlayer/controls/timeline/Timeline";
+import PlayPauseBtn from "@/components/video/videoPlayer/controls/playPauseBtn/PlayPauseBtn";
+import Volume from "@/components/video/videoPlayer/controls/volume/Volume";
+import Duration from "@/components/video/videoPlayer/controls/duration/Duration";
+import SettingsBtn from "@/components/video/videoPlayer/controls/settingsBtn/SettingsBtn";
+import Captions from "@/components/video/videoPlayer/controls/captions/Captions";
+import MiniPlayerBtn from "@/components/video/videoPlayer/controls/miniPlayerBtn/MiniPlayerBtn";
+import FullScreenBtn from "@/components/video/videoPlayer/controls/fullScreenBtn/FullScreenBtn";
 
 interface Props {
   video: IVideo;
