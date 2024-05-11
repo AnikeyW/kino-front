@@ -11,3 +11,14 @@ export const formatTime = (seconds: number): string => {
     return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
   }
 };
+
+export const timestampToStringData = (timestamp: number): string => {
+  const date = new Date(timestamp);
+
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+
+  const dateString = `${year}-${month}-${day}`;
+  return dateString;
+};

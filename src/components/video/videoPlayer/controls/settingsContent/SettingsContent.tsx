@@ -9,6 +9,7 @@ import {
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import SettingsMenuItem from "@/components/video/videoPlayer/controls/settingsMenuItem/SettingsMenuItem";
 import {
+  IAudio,
   IQuality,
   IVideo,
   PlayBackSpeedType,
@@ -19,16 +20,19 @@ enum PopupPages {
   QUALITY = "quality",
   SPEED = "speed",
   SUBTITLES = "subtitles",
+  AUDIO = "audio",
 }
 
 interface Props {
   video: IVideo;
+  audio: IAudio;
   quality: IQuality;
   playBackSpeed: PlayBackSpeedType;
   isCaptionsOn: boolean;
   setQualityHandler: (quality: IQuality) => void;
   setIsOpenPopup: Dispatch<SetStateAction<boolean>>;
   changePlaybackSpeedHandler: (playbackSpeed: PlayBackSpeedType) => void;
+  changeAudioHandler: (audio: IAudio) => void;
 }
 
 const playBackSpeeds: PlayBackSpeedType[] = [
@@ -37,12 +41,14 @@ const playBackSpeeds: PlayBackSpeedType[] = [
 
 const SettingsContent: FC<Props> = ({
   video,
+  audio,
   quality,
   playBackSpeed,
   isCaptionsOn,
   setQualityHandler,
   setIsOpenPopup,
   changePlaybackSpeedHandler,
+  changeAudioHandler,
 }) => {
   const [popupPage, setPopupPage] = useState(PopupPages.MENU);
 
@@ -75,7 +81,14 @@ const SettingsContent: FC<Props> = ({
             icon={<MdVideoSettings size={18} />}
             iconShow={true}
             itemName={"Качество"}
-            itemValue={quality.res}
+            itemValue={quality.res.toString()}
+          />
+          <SettingsMenuItem
+            onClick={() => setPopupPage(PopupPages.AUDIO)}
+            icon={<MdVideoSettings size={18} />}
+            iconShow={true}
+            itemName={"Озвучка"}
+            itemValue={audio.title}
           />
         </>
       )}
@@ -88,13 +101,13 @@ const SettingsContent: FC<Props> = ({
             <MdOutlineArrowBackIos />
             Качество
           </div>
-          {video.qualities.map((q) => (
+          {audio.qualities.map((q) => (
             <SettingsMenuItem
               key={q.res}
               onClick={() => clickQualityHandler(q)}
               icon={<MdDone size={18} />}
               iconShow={q.res === quality.res}
-              itemName={q.res}
+              itemName={q.res.toString()}
             />
           ))}
         </>
@@ -143,6 +156,27 @@ const SettingsContent: FC<Props> = ({
               icon={<MdDone size={18} />}
               iconShow={playBackSpeed === speed}
               itemName={speed === 1 ? "Обычная" : `${speed}x`}
+            />
+          ))}
+        </>
+      )}
+
+      {popupPage === PopupPages.AUDIO && (
+        <>
+          <div
+            onClick={() => setPopupPage(PopupPages.MENU)}
+            className={styles.menuTitle}
+          >
+            <MdOutlineArrowBackIos />
+            Озвучка
+          </div>
+          {video.audios.map((a) => (
+            <SettingsMenuItem
+              key={a.id}
+              onClick={() => changeAudioHandler(a)}
+              icon={<MdDone size={18} />}
+              iconShow={audio.id === a.id}
+              itemName={a.title}
             />
           ))}
         </>

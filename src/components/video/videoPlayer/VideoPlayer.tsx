@@ -1,6 +1,6 @@
 "use client";
 import React, { FC } from "react";
-import cl from "classnames";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./VideoPlayer.module.scss";
 import { IVideo } from "@/components/video/videoPlayer/videoPlayer.interface";
 import { usePlayer } from "@/components/video/videoPlayer/usePlayer";
@@ -22,51 +22,61 @@ const VideoPlayer: FC<Props> = ({ video }) => {
 
   return (
     <div
-      className={cl(styles.root, {
-        [styles.controlsContainerShow]: status.isControlsShow,
-      })}
+      className={styles.root}
       onMouseEnter={actions.mouseEnterHandler}
       onMouseLeave={actions.mouseLeaveHandler}
       onMouseMove={actions.mouseMoveHandler}
     >
-      <div className={cl(styles.controlsContainer)}>
-        <Timeline
-          currentTime={status.currentTime}
-          totalDuration={status.videoDuration}
-          changeCurrentTime={actions.changeCurrentTime}
-        />
-        <div className={styles.controls}>
-          <PlayPauseBtn
-            isPlaying={status.isPlaying}
-            togglePlayingVideo={actions.togglePlayingVideo}
-          />
-          <Volume
-            changeVolume={actions.changeVideoVolume}
-            toggleMute={actions.toggleMute}
-          />
-          <Duration
-            totalDuration={status.videoDuration}
-            currentTime={status.currentTime}
-          />
-          <SettingsBtn
-            video={video}
-            quality={status.quality}
-            isCaptionsOn={status.isCaptionsOn}
-            playBackSpeed={status.playBackSpeed}
-            setQualityHandler={actions.setQualityHandler}
-            changePlaybackSpeedHandler={actions.changePlaybackSpeedHandler}
-          />
-          <Captions
-            toggleCaptions={actions.toggleCaptions}
-            isCaptionsOn={status.isCaptionsOn}
-          />
-          <MiniPlayerBtn miniPlayerHandler={actions.miniPlayerHandler} />
-          <FullScreenBtn
-            isFullScreen={status.isFullScreen}
-            fullScreenHandler={actions.fullScreenHandler}
-          />
-        </div>
-      </div>
+      <AnimatePresence>
+        {status.isControlsShow && (
+          <motion.div
+            className={styles.controlsContainer}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <Timeline
+              currentTime={status.currentTime}
+              totalDuration={status.videoDuration}
+              changeCurrentTime={actions.changeCurrentTime}
+            />
+            <div className={styles.controls}>
+              <PlayPauseBtn
+                isPlaying={status.isPlaying}
+                togglePlayingVideo={actions.togglePlayingVideo}
+              />
+              <Volume
+                changeVolume={actions.changeVideoVolume}
+                toggleMute={actions.toggleMute}
+              />
+              <Duration
+                totalDuration={status.videoDuration}
+                currentTime={status.currentTime}
+              />
+              <SettingsBtn
+                video={video}
+                audio={status.audio}
+                quality={status.quality}
+                isCaptionsOn={status.isCaptionsOn}
+                playBackSpeed={status.playBackSpeed}
+                setQualityHandler={actions.setQualityHandler}
+                changePlaybackSpeedHandler={actions.changePlaybackSpeedHandler}
+                changeAudioHandler={actions.changeAudioHandler}
+              />
+              <Captions
+                toggleCaptions={actions.toggleCaptions}
+                isCaptionsOn={status.isCaptionsOn}
+              />
+              <MiniPlayerBtn miniPlayerHandler={actions.miniPlayerHandler} />
+              <FullScreenBtn
+                isFullScreen={status.isFullScreen}
+                fullScreenHandler={actions.fullScreenHandler}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <video
         ref={videoRef}
         autoPlay={false}

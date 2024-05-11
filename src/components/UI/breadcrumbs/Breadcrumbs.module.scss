@@ -1,0 +1,11 @@
+.root{
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #b9b9b9;
+  margin: 1rem 0;
+
+  svg {
+    padding-top: 3px;
+  }
+}

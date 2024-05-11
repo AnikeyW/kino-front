@@ -1,0 +1,26 @@
+.root {
+  background-color: #efefef;
+  
+  .header {
+    height: var(--header-height);
+    background-color: #2e6456;
+
+    .headerBox{
+      display: flex;
+      align-items: center;
+      height: 100%;
+
+      .nav {
+        margin-left: auto;
+        display: flex;
+        gap: 1rem;
+      }
+    }
+  }
+
+
+
+  .section {
+    background-color: var(--bgc-section);
+  }
+}

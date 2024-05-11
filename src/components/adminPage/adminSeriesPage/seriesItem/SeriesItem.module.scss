@@ -1,0 +1,13 @@
+.root{
+  display: flex;
+  align-items: center;
+  height: 60px;
+
+  .image{
+    width: 60px;
+
+    img {
+      object-fit: contain;
+    }
+  }
+}

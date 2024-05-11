@@ -1,4 +1,4 @@
-export type IRes = "1080" | "720" | "480" | "360";
+export type IRes = 1440 | 1080 | 720 | 480 | 360 | 240;
 
 export interface IQuality {
   res: IRes;
@@ -6,10 +6,18 @@ export interface IQuality {
   type: string;
 }
 
+export interface IAudio {
+  id: string;
+  title: string;
+  default: boolean;
+  qualities: IQuality[];
+}
+
 export interface IVideo {
   title: string;
-  defaultRes: IRes;
-  qualities: IQuality[];
+  // defaultRes: IRes;
+  // qualities: IQuality[];
+  audios: IAudio[];
   captions: {
     srcLang: string;
     src: string;

@@ -1,6 +1,7 @@
 "use client";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import {
+  IAudio,
   IQuality,
   IVideo,
   PlayBackSpeedType,
@@ -11,6 +12,7 @@ export const usePlayer = (video: IVideo) => {
   const timerControlsShowRef = useRef<NodeJS.Timeout | null>(null);
   const lastCurrentTimeRef = useRef<number>(0);
 
+  const [audio, setAudio] = useState(video.audios.find((a) => a.default)!);
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -18,9 +20,15 @@ export const usePlayer = (video: IVideo) => {
   const [isCaptionsOn, setIsCaptionsOn] = useState(false);
   const [playBackSpeed, setPlayBackSpeed] = useState<PlayBackSpeedType>(1);
   const [quality, setQuality] = useState<IQuality>(
-    video.qualities.find((q) => q.res === video.defaultRes)!,
+    video.audios
+      .find((a) => a.id === audio.id)
+      ?.qualities.sort((a, b) => b.res - a.res)[0]!,
   );
   const [isControlsShow, setIsControlsShow] = useState(false);
+
+  useEffect(() => {
+    setQuality(audio.qualities.find((q) => q.res === quality.res)!);
+  }, [audio]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -64,13 +72,17 @@ export const usePlayer = (video: IVideo) => {
     };
   }, []);
 
+  const changeAudioHandler = (audio: IAudio) => {
+    setAudio(audio);
+  };
+
   const handleMouseActivity = () => {
     setIsControlsShow(true);
     clearTimeout(timerControlsShowRef.current!);
     timerControlsShowRef.current = setTimeout(() => {
       document.documentElement.style.cursor = "none";
       setIsControlsShow(false);
-    }, 5000);
+    }, 3000);
   };
 
   const mouseMoveHandler = () => {
@@ -221,6 +233,7 @@ export const usePlayer = (video: IVideo) => {
       playBackSpeed,
       quality,
       isControlsShow,
+      audio,
     },
     actions: {
       togglePlayingVideo,
@@ -239,6 +252,7 @@ export const usePlayer = (video: IVideo) => {
       mouseEnterHandler,
       mouseLeaveHandler,
       mouseMoveHandler,
+      changeAudioHandler,
     },
   };
 };
