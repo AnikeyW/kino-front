@@ -3,9 +3,9 @@ const nextConfig = {
   reactStrictMode: false,
   images: {remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '5000',
+        protocol: 'https',
+        hostname: 'holotv.space',
+        // port: '5000',
       },
     ],}
 };
