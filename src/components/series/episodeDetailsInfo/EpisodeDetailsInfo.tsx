@@ -2,14 +2,14 @@
 import React, { FC, useEffect } from "react";
 import styles from "./EpisodeDetailsInfo.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
-import VideoJsPlayer from "@/components/videojsPlayer/VideoJsPlayer";
+// import VideoJsPlayer from "@/components/videojsPlayer/VideoJsPlayer";
 import { formatDate } from "@/utils";
-import LinkBtn from "@/components/UI/myLink/linkBtn/LinkBtn";
+// import LinkBtn from "@/components/UI/myLink/linkBtn/LinkBtn";
 import PreviousEpisodeButton from "@/components/series/previousEpisodeButton/PreviousEpisodeButton";
 import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisodeButton";
-import ShakaPlayer from "@/components/shakaPlayer/ShakaPlayer";
-import OpenPlayerJs from "@/components/openPlayerJs/OpenPlayerJs";
-import IframeComponent from "@/components/iframePlayer/IramePlayer";
+// import ShakaPlayer from "@/components/shakaPlayer/ShakaPlayer";
+// import OpenPlayerJs from "@/components/openPlayerJs/OpenPlayerJs";
+// import IframeComponent from "@/components/iframePlayer/IramePlayer";
 import IframePlayer from "@/components/iframePlayer/IramePlayer";
 
 interface Props {
