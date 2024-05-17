@@ -1,6 +1,5 @@
 .root {
   min-height: calc(100vh - var(--header-height));
+  height: calc(100vh - var(--header-height));
   background-color: var(--bgc-page);
-  padding: 0.5rem;
-
 }

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./SeasonList.module.scss";
 import { ISeasonWithoutEpisodes } from "@/components/series/Series.types";
-import SeasonItem from "@/components/series/seasonItem/SeasonItem";
+import CardItem from "@/components/UI/cardItem/CardItem";
 
 interface Props {
   seasons: ISeasonWithoutEpisodes[];
@@ -10,11 +10,18 @@ interface Props {
 const SeasonList: FC<Props> = ({ seasons }) => {
   return (
     <div className={styles.root}>
-      {seasons.map((season) => (
-        <div key={season.id} className={styles.itemWrapper}>
-          <SeasonItem data={season} />
-        </div>
-      ))}
+      <h2 className={styles.title}>Сезоны</h2>
+      <div className={styles.seasonsList}>
+        {seasons.map((season) => (
+          <div key={season.id} className={styles.itemWrapper}>
+            <CardItem
+              title={season.title}
+              imageSrc={season.poster}
+              href={`/series/${season.seriesId}/season/${season.order}`}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

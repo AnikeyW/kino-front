@@ -19,6 +19,17 @@ export const timestampToStringData = (timestamp: number): string => {
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
 
-  const dateString = `${year}-${month}-${day}`;
-  return dateString;
+  return `${year}-${month}-${day}`;
+};
+
+export const formatDate = (date: string): string => {
+  const parsedDate = new Date(date);
+
+  return (
+    parsedDate.getDate().toString().padStart(2, "0") +
+    "." +
+    (parsedDate.getMonth() + 1).toString().padStart(2, "0") +
+    "." +
+    parsedDate.getFullYear()
+  );
 };

@@ -35,5 +35,5 @@ export interface IEpisode {
   poster: string;
   isProcessing: boolean;
   src: string;
-  releaseDate: number;
+  releaseDate: string;
 }

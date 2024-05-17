@@ -1,0 +1,11 @@
+.root{
+  width: 100%;
+  aspect-ratio: 16/9;
+  background-color: inherit;
+  border-radius: 5px;
+  overflow: hidden;
+
+  iframe {
+    background-color: inherit;
+  }
+}

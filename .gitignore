@@ -34,6 +34,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/public/22.mp4
-/public/GOT.S01E01.mp4
-/public

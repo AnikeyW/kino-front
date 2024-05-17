@@ -1,8 +1,10 @@
 import React from "react";
-import VideoJsPlayer from "@/components/videojsPlayer/VideoJsPlayer";
 import { seriesService } from "@/services/series.service";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import styles from "./page.module.scss";
+import EpisodeDetailsInfo from "@/components/series/episodeDetailsInfo/EpisodeDetailsInfo";
+import BlockWrapper from "@/components/UI/blockWrapper/BlockWrapper";
+import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
 
 interface Params {
   seasonOrder: number;
@@ -24,13 +26,14 @@ export async function generateStaticParams({ params }: { params: Params }) {
 }
 
 const Page = async ({ params }: { params: Params }) => {
-  const [episode, series] = await Promise.all([
+  const [episode, series, season] = await Promise.all([
     seriesService.getEpisodeByOrder(
       params.episodeOrder,
       params.seasonOrder,
       params.seriesId,
     ),
     seriesService.getSeriesById(params.seriesId),
+    seriesService.getSeasonByOrder(params.seasonOrder, params.seriesId),
   ]);
 
   const breadcrumbs = [
@@ -40,16 +43,15 @@ const Page = async ({ params }: { params: Params }) => {
     },
     {
       path: "/series",
-      title: "Сериалы",
+      title: "...",
     },
     {
       path: `/series/${series.id}`,
-      title: series.title,
+      title: "...",
     },
     {
       path: `/series/${series.id}/season/${params.seasonOrder}`,
-      title: series.seasons.find((season) => season.order == params.seasonOrder)
-        ?.title!,
+      title: season.title,
     },
     {
       path: "",
@@ -59,8 +61,18 @@ const Page = async ({ params }: { params: Params }) => {
 
   return (
     <div className={styles.root}>
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <VideoJsPlayer src={process.env.NEXT_PUBLIC_SERVER_URL + episode.src} />
+      <DetailsPage>
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        <BlockWrapper>
+          <EpisodeDetailsInfo
+            episode={episode}
+            seriesTitle={series.title}
+            seasonOrder={params.seasonOrder}
+            episodesQuantity={season.episodes.length}
+            seriesId={params.seriesId}
+          />
+        </BlockWrapper>
+      </DetailsPage>
     </div>
   );
 };
