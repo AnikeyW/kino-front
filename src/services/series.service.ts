@@ -165,7 +165,6 @@ export const seriesService = {
   async getSeriesById(seriesId: number): Promise<ISeries> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API + `series/${seriesId}`,
-      { cache: "no-store" },
     );
 
     if (!res.ok) {
