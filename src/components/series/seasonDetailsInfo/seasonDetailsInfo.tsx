@@ -12,7 +12,7 @@ const SeasonDetailsInfo: FC<Props> = ({ seasonData }) => {
     <div className={styles.root}>
       <div className={styles.poster}>
         <Image
-          src={process.env.NEXT_PUBLIC_SERVER_URL + seasonData.poster}
+          src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + seasonData.poster}
           alt={"series_poster"}
           width={200}
           height={300}

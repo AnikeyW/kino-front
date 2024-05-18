@@ -2,13 +2,19 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: false,
-  images: {remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'holotv.space',
-        // port: '5000',
-      },
-    ],}
+  images: { remotePatterns: [
+      process.env.NODE_ENV === 'development'
+        ? {
+          protocol: 'http',
+          hostname: 'localhost',
+          port: '5000',
+        }
+        : {
+          protocol: 'https',
+          hostname: 'holotv.space',
+        },
+    ]
+  }
 };
 
 export default nextConfig;

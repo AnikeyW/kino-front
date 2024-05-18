@@ -12,7 +12,7 @@ const SeriesDetailsInfo: FC<Props> = ({ seriesDetails }) => {
     <div className={styles.root}>
       <div className={styles.poster}>
         <Image
-          src={process.env.NEXT_PUBLIC_SERVER_URL + seriesDetails.poster}
+          src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + seriesDetails.poster}
           alt={"series_poster"}
           width={200}
           height={300}

@@ -15,7 +15,7 @@ const SeriesItem: FC<Props> = ({ seriesItem }) => {
     <div className={styles.root}>
       <div className={styles.image}>
         <Image
-          src={process.env.NEXT_PUBLIC_SERVER_URL + seriesItem.poster}
+          src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + seriesItem.poster}
           alt={seriesItem.title}
           width={60}
           height={60}

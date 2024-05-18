@@ -60,7 +60,8 @@ const EditInfoSeason: FC<Props> = ({ seasonDetails }) => {
             src={
               posterPreviewSrc
                 ? posterPreviewSrc
-                : process.env.NEXT_PUBLIC_SERVER_URL + seasonDetails.poster
+                : process.env.NEXT_PUBLIC_SERVER_URL_STATIC +
+                  seasonDetails.poster
             }
             alt={seasonDetails.title}
           />

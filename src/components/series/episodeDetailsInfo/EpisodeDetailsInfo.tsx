@@ -35,20 +35,20 @@ const EpisodeDetailsInfo: FC<Props> = ({
       <h1
         className={styles.title}
       >{`${seriesTitle} Сезон ${seasonOrder} Серия ${episode.order}`}</h1>
-      {/*<VideoJsPlayer src={process.env.NEXT_PUBLIC_SERVER_URL + episode.src} />*/}
+      {/*<VideoJsPlayer src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.src} />*/}
 
-      {/*<VideoJsPlayer src={process.env.NEXT_PUBLIC_SERVER_URL + mdp} />*/}
-      {/*<OpenPlayerJs src={process.env.NEXT_PUBLIC_SERVER_URL + episode.src} />*/}
-      {/*<ShakaPlayer src={process.env.NEXT_PUBLIC_SERVER_URL + episode.src} />*/}
+      {/*<VideoJsPlayer src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + mdp} />*/}
+      {/*<OpenPlayerJs src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.src} />*/}
+      {/*<ShakaPlayer src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.src} />*/}
 
       {/*<IframePlayer*/}
       {/*  src={`/player/playerjs.html?file=${"/player/playlist.txt"}`}*/}
       {/*/>*/}
       {/*<IframePlayer*/}
-      {/*  src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL + episode.src}`}*/}
+      {/*  src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.src}`}*/}
       {/*/>*/}
       <IframePlayer
-        src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL + m3u8} or ${process.env.NEXT_PUBLIC_SERVER_URL + mpd}`}
+        src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + m3u8} or ${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + mpd}`}
       />
       <div className={styles.prevNextBtns}>
         <PreviousEpisodeButton

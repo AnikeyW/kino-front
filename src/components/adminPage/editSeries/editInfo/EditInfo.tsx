@@ -57,7 +57,8 @@ const EditInfo: FC<Props> = ({ seriesDetails }) => {
             src={
               posterPreviewSrc
                 ? posterPreviewSrc
-                : process.env.NEXT_PUBLIC_SERVER_URL + seriesDetails.poster
+                : process.env.NEXT_PUBLIC_SERVER_URL_STATIC +
+                  seriesDetails.poster
             }
             alt={seriesDetails.title}
           />
