@@ -2,6 +2,8 @@ import React from "react";
 import EditSeason from "@/components/adminPage/editSeason/EditSeason";
 import { seriesService } from "@/services/series.service";
 
+export const revalidate = 0;
+
 const Page = async ({
   params,
 }: {

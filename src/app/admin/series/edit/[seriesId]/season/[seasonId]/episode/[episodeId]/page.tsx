@@ -1,6 +1,8 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
 
+export const revalidate = 0;
+
 const Page = async ({
   params,
 }: {
