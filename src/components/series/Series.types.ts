@@ -34,6 +34,7 @@ export interface IEpisode {
   duration: number;
   poster: string;
   isProcessing: boolean;
-  src: string;
+  srcHls: string;
+  srcDash: string;
   releaseDate: string;
 }

@@ -27,8 +27,8 @@ const EpisodeDetailsInfo: FC<Props> = ({
   episodesQuantity,
   seriesId,
 }) => {
-  const m3u8 = "video/b97f99cb-aef7-4386-9838-90596397d6b7/master.m3u8";
-  const mpd = "video/b97f99cb-aef7-4386-9838-90596397d6b7/master.mpd";
+  // const m3u8 = "video/b97f99cb-aef7-4386-9838-90596397d6b7/master.m3u8";
+  // const mpd = "video/b97f99cb-aef7-4386-9838-90596397d6b7/master.mpd";
 
   return (
     <div className={styles.root}>
@@ -48,7 +48,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
       {/*  src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.src}`}*/}
       {/*/>*/}
       <IframePlayer
-        src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + m3u8} or ${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + mpd}`}
+        src={`/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls} or ${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcDash}`}
       />
       <div className={styles.prevNextBtns}>
         <PreviousEpisodeButton
