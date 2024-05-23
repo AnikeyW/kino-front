@@ -21,6 +21,12 @@ export interface ISeason {
 
 export type ISeasonWithoutEpisodes = Omit<ISeason, "episodes">;
 
+export interface ISubtitle {
+  id: number;
+  src: string;
+  episodeId: number;
+}
+
 export interface IEpisode {
   id: number;
   title: string;
@@ -33,8 +39,10 @@ export interface IEpisode {
   views: number;
   duration: number;
   poster: string;
+  thumbnails: string[];
   isProcessing: boolean;
   srcHls: string;
   srcDash: string;
   releaseDate: string;
+  subtitles: ISubtitle[];
 }

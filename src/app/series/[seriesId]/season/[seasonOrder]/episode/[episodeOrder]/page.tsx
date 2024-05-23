@@ -63,15 +63,15 @@ const Page = async ({ params }: { params: Params }) => {
     <div className={styles.root}>
       <DetailsPage>
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <BlockWrapper>
-          <EpisodeDetailsInfo
-            episode={episode}
-            seriesTitle={series.title}
-            seasonOrder={params.seasonOrder}
-            episodesQuantity={season.episodes.length}
-            seriesId={params.seriesId}
-          />
-        </BlockWrapper>
+        {/*<BlockWrapper>*/}
+        <EpisodeDetailsInfo
+          episode={episode}
+          seriesTitle={series.title}
+          seasonOrder={params.seasonOrder}
+          episodesQuantity={season.episodes.length}
+          seriesId={params.seriesId}
+        />
+        {/*</BlockWrapper>*/}
       </DetailsPage>
     </div>
   );

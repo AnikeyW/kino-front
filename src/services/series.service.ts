@@ -1,4 +1,9 @@
-import { IEpisode, ISeason, ISeries } from "@/components/series/Series.types";
+import {
+  IEpisode,
+  ISeason,
+  ISeries,
+  ISubtitle,
+} from "@/components/series/Series.types";
 import $api from "@/http";
 
 export interface CreateSeriesDto {
@@ -38,37 +43,57 @@ export interface CreateEpisodeDto {
   skipIntro?: number | null;
   skipCredits?: number | null;
   seasonId: number;
-  releaseDate: number;
-  poster: File | null;
+  releaseDate: string;
   video: File | null;
+  subtitles: File[];
+}
+
+export interface EditEpisodeDto {
+  title: string;
+  description: string;
+  order: string;
+  skipRepeat?: number | null;
+  skipIntro?: number | null;
+  skipCredits?: number | null;
+  releaseDate: string;
+  poster: string;
+  existSubtitles: ISubtitle[];
+  newSubtitles: File[];
 }
 
 export const seriesService = {
-  async addEpisode(data: CreateEpisodeDto) {
+  async editEpisode(episodeData: EditEpisodeDto, episodeId: number) {
     try {
       const formData = new FormData();
 
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("order", data.order.toString());
-      formData.append("seasonId", data.seasonId.toString());
-      formData.append("releaseDate", data.releaseDate.toString());
-      formData.append("poster", data.poster!);
-      formData.append("video", data.video!);
-      if (data.skipCredits) {
-        formData.append("skipCredits", data.skipCredits.toString());
+      formData.append("title", episodeData.title);
+      formData.append("description", episodeData.description);
+      formData.append("order", episodeData.order);
+      formData.append("releaseDate", episodeData.releaseDate);
+      formData.append("poster", episodeData.poster);
+      episodeData.newSubtitles.forEach((sub) => {
+        formData.append("newSubtitles", sub);
+      });
+      formData.append(
+        "existSubtitles",
+        JSON.stringify(episodeData.existSubtitles),
+      );
+      if (episodeData.skipCredits) {
+        formData.append("skipCredits", episodeData.skipCredits.toString());
       }
-      if (data.skipRepeat) {
-        formData.append("skipRepeat", data.skipRepeat.toString());
+      if (episodeData.skipRepeat) {
+        formData.append("skipRepeat", episodeData.skipRepeat.toString());
       }
-      if (data.skipIntro) {
-        formData.append("skipIntro", data.skipIntro.toString());
+      if (episodeData.skipIntro) {
+        formData.append("skipIntro", episodeData.skipIntro.toString());
       }
 
       const response = await $api.post(
-        process.env.NEXT_PUBLIC_SERVER_URL_API + "episode",
+        process.env.NEXT_PUBLIC_SERVER_URL_API + `episode/${episodeId}`,
         formData,
       );
+
+      return response.data;
     } catch (e) {
       console.log(e);
     }

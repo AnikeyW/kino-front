@@ -33,3 +33,14 @@ export const formatDate = (date: string): string => {
     parsedDate.getFullYear()
   );
 };
+
+export const formatTimeHhMm = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (hours > 0) {
+    return `${hours}ч ${minutes}мин`;
+  } else {
+    return `${minutes}мин`;
+  }
+};

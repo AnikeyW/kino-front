@@ -43,16 +43,16 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
     <div className={styles.root}>
       <DetailsPage>
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <BlockWrapper>
-          <SeasonDetailsInfo seasonData={season} />
-        </BlockWrapper>
-        <BlockWrapper>
-          <EpisodeList
-            episodes={season.episodes}
-            seriesId={params.seriesId}
-            seasonOrder={params.seasonOrder}
-          />
-        </BlockWrapper>
+        {/*<BlockWrapper>*/}
+        <SeasonDetailsInfo seasonData={season} />
+        {/*</BlockWrapper>*/}
+        {/*<BlockWrapper>*/}
+        <EpisodeList
+          episodes={season.episodes}
+          seriesId={params.seriesId}
+          seasonOrder={params.seasonOrder}
+        />
+        {/*</BlockWrapper>*/}
       </DetailsPage>
     </div>
   );

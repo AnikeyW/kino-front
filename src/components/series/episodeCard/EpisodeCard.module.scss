@@ -1,5 +1,5 @@
 .root{
-  width: 160px;
+  width: 100%;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   color: #b9b9b9;
@@ -9,13 +9,19 @@
   margin-bottom: 10px;
   box-shadow: 1px 0 8px 1px #000000;
 
+  @media screen and (max-width: 576px){
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
   &:hover {
     background-color: var(--item-card-bg-hover);
   }
 
   .poster{
-    min-width: 150px;
-    min-height: 220px;
+    min-width: 100%;
+    aspect-ratio: 5/3;
+    position: relative;
 
     .img{
       width: 100%;
@@ -28,6 +34,8 @@
     align-items: center;
     margin: 1px 0 5px 0;
     min-height: 32px;
+
+
   }
 
   .date{
@@ -39,6 +47,24 @@
     small{
       font-size: 12px;
       color: gray;
+      @media screen and (max-width: 576px){
+        font-size: 10px;
+      }
+    }
+  }
+
+  .duration{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: darkgrey;
+
+    small{
+      font-size: 12px;
+      color: gray;
+      @media screen and (max-width: 576px){
+        font-size: 10px;
+      }
     }
   }
 }

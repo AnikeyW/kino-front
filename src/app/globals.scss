@@ -1,16 +1,27 @@
 :root {
     --header-height: 50px;
     --nav-height: 50px;
-    --bgc-page: #3d3d3d;
-    --bgc-section: #2f2f2f;
-    --item-card-bg: #464646;
-    --item-card-bg-hover: #313131;
+
+    --bgc-page: #1c1c1c;
+    --bgc-section: #121212;
+
+    --item-card-bg: #1c1c1c;
+    --item-card-bg-hover: #121212;
+
     --link-color: #cecece;
     --link-color-hover: #e8e8e8;
+
     --text-color: #c9c9c9;
     --text-color-soft: #a8a8a8;
     --text-color-light: #e1e1e1;
-    --block-bg: #575757;
+
+    --block-bg: #2d2d2d;
+
+    --btn-bg: #01a0c4;
+    --btn-bg-hover: #008faf;
+    --btn-color: white;
+    --action-btn-bg: #00af12;
+    --action-btn-bg-hover: #009a0f;
 }
 
 *{

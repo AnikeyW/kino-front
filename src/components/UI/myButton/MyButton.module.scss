@@ -1,0 +1,22 @@
+.root {
+  padding: 7px 20px;
+  background-color: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 100ms ease-in-out;
+
+  &:hover {
+    background-color: var(--btn-bg-hover);
+  }
+}
+
+.action {
+  background-color: var(--action-btn-bg);
+
+  &:hover {
+    background-color: var(--action-btn-bg-hover);
+  }
+}
