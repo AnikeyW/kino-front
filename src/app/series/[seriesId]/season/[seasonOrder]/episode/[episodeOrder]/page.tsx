@@ -42,14 +42,6 @@ const Page = async ({ params }: { params: Params }) => {
       title: "Главная",
     },
     {
-      path: "/series",
-      title: "...",
-    },
-    {
-      path: `/series/${series.id}`,
-      title: "...",
-    },
-    {
       path: `/series/${series.id}/season/${params.seasonOrder}`,
       title: season.title,
     },
@@ -68,8 +60,8 @@ const Page = async ({ params }: { params: Params }) => {
           episode={episode}
           seriesTitle={series.title}
           seasonOrder={params.seasonOrder}
-          episodesQuantity={season.episodes.length}
           seriesId={params.seriesId}
+          seasonEpisodes={season.episodes}
         />
         {/*</BlockWrapper>*/}
       </DetailsPage>

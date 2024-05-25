@@ -8,9 +8,10 @@ import { formatDate, formatTimeHhMm } from "@/utils";
 interface Props {
   episode: IEpisode;
   href: string;
+  seasonOrder: number;
 }
 
-const EpisodeCard: FC<Props> = ({ episode, href }) => {
+const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
   return (
     <MyLink href={href}>
       <div className={styles.root}>
@@ -21,15 +22,13 @@ const EpisodeCard: FC<Props> = ({ episode, href }) => {
             fill={true}
           />
         </div>
+        <div className={styles.episodeInfo}>
+          <span>{`Сезон ${seasonOrder} Серия ${episode.order}`}</span>
+          <span className={styles.duration}>
+            {formatTimeHhMm(episode.duration)}
+          </span>
+        </div>
         <div className={styles.title}>{episode.title}</div>
-        <div className={styles.date}>
-          <small>Дата выхода:</small>
-          {formatDate(episode.releaseDate)}
-        </div>
-        <div className={styles.duration}>
-          <small>Длительность:</small>
-          {formatTimeHhMm(episode.duration)}
-        </div>
       </div>
     </MyLink>
   );

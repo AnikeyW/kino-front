@@ -18,6 +18,7 @@ const EpisodeList: FC<Props> = ({ episodes, seriesId, seasonOrder }) => {
           <EpisodeCard
             key={episode.id}
             episode={episode}
+            seasonOrder={seasonOrder}
             href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
           />
         ))}

@@ -16,10 +16,10 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
                 <span className={styles.logoPt2}>TV</span>
               </MyLink>
             </div>
-            <nav className={styles.nav}>
-              <Link href={"/series"}>Сериалы</Link>
-              <Link href={"/movies"}>Фильмы</Link>
-            </nav>
+            {/*<nav className={styles.nav}>*/}
+            {/*  <Link href={"/series"}>Сериалы</Link>*/}
+            {/*  <Link href={"/movies"}>Фильмы</Link>*/}
+            {/*</nav>*/}
           </div>
         </Container>
       </header>

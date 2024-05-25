@@ -26,14 +26,6 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
       title: "Главная",
     },
     {
-      path: "/series",
-      title: "...",
-    },
-    {
-      path: `/series/${series.id}`,
-      title: series.title,
-    },
-    {
       path: "",
       title: season.title,
     },
