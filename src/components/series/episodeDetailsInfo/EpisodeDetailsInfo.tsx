@@ -53,6 +53,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
       <div className={styles.seasonEpisodesList}>
         {seasonEpisodes.map((episode) => (
           <EpisodeCard
+            key={episode.id}
             episode={episode}
             href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
             seasonOrder={seasonOrder}
