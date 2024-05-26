@@ -43,11 +43,11 @@ const Page = async ({ params }: { params: Params }) => {
     },
     {
       path: `/series/${series.id}/season/${params.seasonOrder}`,
-      title: season.title,
+      title: `Сезон ${season.order}`,
     },
     {
       path: "",
-      title: episode.title,
+      title: `Серия ${episode.order}`,
     },
   ];
 

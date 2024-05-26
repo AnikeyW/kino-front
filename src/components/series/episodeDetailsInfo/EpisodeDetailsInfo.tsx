@@ -26,7 +26,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
     <div className={styles.root}>
       <div className={styles.episodeInfo}>
         <h1
-          className={styles.title}
+          className={styles.episodeNumber}
         >{`${seriesTitle} Сезон ${seasonOrder} Серия ${episode.order}`}</h1>
 
         <IframePlayer episode={episode} />
@@ -47,18 +47,28 @@ const EpisodeDetailsInfo: FC<Props> = ({
 
         <div>{formatDate(episode.releaseDate)}</div>
 
-        <div className={styles.description}>{episode.description}</div>
+        <div className={styles.title}>{episode.title}</div>
+
+        <div
+          className={styles.description}
+          dangerouslySetInnerHTML={{ __html: episode.description }}
+        ></div>
       </div>
 
-      <div className={styles.seasonEpisodesList}>
-        {seasonEpisodes.map((episode) => (
-          <EpisodeCard
-            key={episode.id}
-            episode={episode}
-            href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
-            seasonOrder={seasonOrder}
-          />
-        ))}
+      <div className={styles.seasonEpisodesBlock}>
+        <div className={styles.seasonEpisodesTitle}>
+          {`Все серии ${seasonOrder} сезона`}
+        </div>
+        <div className={styles.seasonEpisodesList}>
+          {seasonEpisodes.map((episode) => (
+            <EpisodeCard
+              key={episode.id}
+              episode={episode}
+              href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
+              seasonOrder={seasonOrder}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
