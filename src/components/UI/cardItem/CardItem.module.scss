@@ -1,5 +1,5 @@
 .root{
-  width: 160px;
+  width: 100%;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   color: #b9b9b9;
@@ -14,8 +14,9 @@
   }
 
   .poster{
-    min-width: 150px;
-    min-height: 220px;
+    min-width: 100%;
+    aspect-ratio: 2/3;
+    position: relative;
 
     .img{
       width: 100%;

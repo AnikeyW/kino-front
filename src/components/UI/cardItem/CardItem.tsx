@@ -18,8 +18,7 @@ const CardItem: FC<Props> = ({ href, title, imageSrc, releaseDate }) => {
           <Image
             src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + imageSrc}
             alt={"series_poster"}
-            width={150}
-            height={220}
+            fill={true}
           />
         </div>
         <div className={styles.title}>{title}</div>

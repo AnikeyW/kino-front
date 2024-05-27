@@ -21,6 +21,24 @@
       }
     }
 
+    .releaseDate{
+      display: flex;
+      width: 200px;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.5rem 0;
+
+      @media screen and (max-width: 576px){
+        width: 100%;
+      }
+
+      .releaseDateName{
+        font-size: 14px;
+        color: var(--text-color-soft);
+      }
+      .releaseDateValue{}
+    }
+
     .prevNextBtns {
       display: flex;
       justify-content: space-between;
@@ -41,7 +59,6 @@
   .seasonEpisodesBlock{
     width: 270px;
     min-width: 270px;
-    //margin-top: 36px;
 
     @media screen and (max-width: 992px){
       width: 200px;

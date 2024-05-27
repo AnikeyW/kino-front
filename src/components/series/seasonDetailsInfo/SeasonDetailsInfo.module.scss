@@ -34,16 +34,12 @@
     }
 
     .description{
+      line-height: 20px;
 
       p{
         @media screen and (max-width: 576px){
           font-size: 14px;
         }
-      }
-
-      small {
-        color: var(--text-color-soft);
-        font-size: 14px;
       }
     }
   }

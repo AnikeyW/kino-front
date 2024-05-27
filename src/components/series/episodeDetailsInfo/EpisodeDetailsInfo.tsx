@@ -45,7 +45,12 @@ const EpisodeDetailsInfo: FC<Props> = ({
           />
         </div>
 
-        <div>{formatDate(episode.releaseDate)}</div>
+        <div className={styles.releaseDate}>
+          <div className={styles.releaseDateName}>Дата выхода:</div>
+          <div className={styles.releaseDateValue}>
+            {formatDate(episode.releaseDate)}
+          </div>
+        </div>
 
         <div className={styles.title}>{episode.title}</div>
 

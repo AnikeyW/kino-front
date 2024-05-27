@@ -13,13 +13,12 @@ const SeasonList: FC<Props> = ({ seasons }) => {
       <h2 className={styles.title}>Сезоны</h2>
       <div className={styles.seasonsList}>
         {seasons.map((season) => (
-          <div key={season.id} className={styles.itemWrapper}>
-            <CardItem
-              title={season.title}
-              imageSrc={season.poster}
-              href={`/series/${season.seriesId}/season/${season.order}`}
-            />
-          </div>
+          <CardItem
+            key={season.id}
+            title={`Сезон ${season.order}`}
+            imageSrc={season.poster}
+            href={`/series/${season.seriesId}/season/${season.order}`}
+          />
         ))}
       </div>
     </div>
