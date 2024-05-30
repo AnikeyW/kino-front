@@ -5,7 +5,6 @@ import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
 import SeasonDetailsInfo from "@/components/series/seasonDetailsInfo/seasonDetailsInfo";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import EpisodeList from "@/components/series/episodeList/EpisodeList";
-import BlockWrapper from "@/components/UI/blockWrapper/BlockWrapper";
 
 export interface SeasonDetailsParams {
   seasonOrder: number;
@@ -35,16 +34,12 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
     <div className={styles.root}>
       <DetailsPage>
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {/*<BlockWrapper>*/}
-        <SeasonDetailsInfo seasonData={season} />
-        {/*</BlockWrapper>*/}
-        {/*<BlockWrapper>*/}
+        <SeasonDetailsInfo seasonData={season} seriesData={series} />
         <EpisodeList
           episodes={season.episodes}
           seriesId={params.seriesId}
           seasonOrder={params.seasonOrder}
         />
-        {/*</BlockWrapper>*/}
       </DetailsPage>
     </div>
   );
