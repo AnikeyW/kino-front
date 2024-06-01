@@ -1,24 +1,40 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./AdminSeriesPage.module.scss";
 import { ISeriesWithoutSeasons } from "@/components/series/Series.types";
 import SeriesItem from "@/components/adminPage/adminSeriesPage/seriesItem/SeriesItem";
-import MyLink from "@/components/UI/myLink/MyLink";
+import MyButton from "@/components/UI/myButton/MyButton";
+import MyInput from "@/components/UI/myInput/MyInput";
+import Modal from "@/components/UI/modal/Modal";
+import AddSeries from "@/components/adminPage/addSeries/AddSeries";
 
 interface Props {
   series: ISeriesWithoutSeasons[];
 }
 
 const AdminSeriesPage: FC<Props> = ({ series }) => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
   return (
     <div className={styles.root}>
-      <div className={styles.search}>
-        <input type="text" placeholder={"Поиск"} />
-      </div>
+      <Modal isOpen={isOpenModal} onClose={closeModal}>
+        <AddSeries closeModal={closeModal} />
+      </Modal>
+      <div className={styles.top}>
+        <div className={styles.search}>
+          <MyInput type="text" placeholder={"Поиск"} />
+        </div>
 
-      <MyLink href={"/admin/series/add"}>
-        <button>добавить сериал</button>
-      </MyLink>
+        <div className={styles.addSeriesBtn}>
+          <MyButton onClick={() => setIsOpenModal(true)}>
+            Добавить сериал
+          </MyButton>
+        </div>
+      </div>
 
       <div className={styles.seriesList}>
         {series.map((seriesItem) => (

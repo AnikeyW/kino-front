@@ -1,1 +1,1 @@
-export const REVALIDATE_TIME = 60;
+export const TOAST_DURATION = 5000;

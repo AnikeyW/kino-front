@@ -24,9 +24,23 @@ const EditableTextarea: FC<Props> = ({ label, value, onChange }) => {
     }
   };
 
+  const autoResize = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + 5 + "px";
+    }
+  };
+
+  const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    autoResize();
+    onChange(e);
+  };
+
   useEffect(() => {
     if (isEditMode && textareaRef.current) {
       textareaRef.current.focus();
+      autoResize();
     }
   }, [isEditMode]);
 
@@ -38,7 +52,7 @@ const EditableTextarea: FC<Props> = ({ label, value, onChange }) => {
           <textarea
             ref={textareaRef}
             value={value}
-            onChange={onChange}
+            onChange={changeHandler}
             onBlur={() => setIsEditMode(false)}
             onKeyDown={keyDownHandler}
             className={styles.textarea}

@@ -1,9 +1,7 @@
 import React, { FC } from "react";
 import styles from "./PostersList.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
-import EpisodeCard from "@/components/series/episodeCard/EpisodeCard";
 import Image from "next/image";
-import { formatDate, formatTimeHhMm } from "@/utils";
 
 interface Props {
   episodeDetails: IEpisode;

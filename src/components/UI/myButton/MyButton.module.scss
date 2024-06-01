@@ -8,15 +8,20 @@
   font-size: 16px;
   transition: background-color 100ms ease-in-out;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--btn-bg-hover);
+  }
+
+  &:disabled{
+    background-color: #b9b9b9;
+    cursor: not-allowed;
   }
 }
 
 .action {
   background-color: var(--action-btn-bg);
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--action-btn-bg-hover);
   }
 }

@@ -1,18 +1,21 @@
 import React, { ChangeEvent, useState } from "react";
-import { CreateEpisodeDto } from "@/services/series.service";
+import { CreateEpisodeDto, seriesService } from "@/services/series.service";
 import { useRouter } from "next/navigation";
 import { IEpisode } from "@/components/series/Series.types";
-import $api from "@/http";
-import { AxiosError, AxiosProgressEvent } from "axios";
+import { toast } from "react-hot-toast";
 
-export const useAddEpisode = (episodes: IEpisode[], seasonId: number) => {
+export const useAddEpisode = (
+  episodes: IEpisode[],
+  seasonId: number,
+  closeModal: () => void,
+) => {
   const router = useRouter();
   const [episodeData, setEpisodeData] = useState<CreateEpisodeDto>({
     title: `Эпизод ${episodes.length + 1}`,
     description: "",
     order: episodes.length + 1,
     seasonId: seasonId,
-    releaseDate: "01.01.2011",
+    releaseDate: "2020-01-01",
     video: null,
     skipIntro: null,
     skipCredits: null,
@@ -24,6 +27,7 @@ export const useAddEpisode = (episodes: IEpisode[], seasonId: number) => {
     isUploading: false,
     percent: 0,
   });
+  console.log(episodeData.releaseDate);
 
   const changeSubtitlesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -49,65 +53,41 @@ export const useAddEpisode = (episodes: IEpisode[], seasonId: number) => {
     setEpisodeData({ ...episodeData, [field]: e.target.value });
   };
 
+  const setPercentCallback = (percent: number) => {
+    setUploadProgress((prev) => ({ ...prev, percent: percent }));
+  };
+
   const addEpisodeHandler = async () => {
     if (!episodeData.video) {
       setError("Добавь видео");
       return;
     }
 
-    const formData = new FormData();
-
-    formData.append("title", episodeData.title);
-    formData.append("description", episodeData.description);
-    formData.append("order", episodeData.order.toString());
-    formData.append("seasonId", episodeData.seasonId.toString());
-    formData.append("releaseDate", episodeData.releaseDate.toString());
-    formData.append("video", episodeData.video!);
-    episodeData.subtitles.forEach((sub) => {
-      formData.append("subtitles", sub);
-    });
-    if (episodeData.skipCredits) {
-      formData.append("skipCredits", episodeData.skipCredits.toString());
-    }
-    if (episodeData.skipRepeat) {
-      formData.append("skipRepeat", episodeData.skipRepeat.toString());
-    }
-    if (episodeData.skipIntro) {
-      formData.append("skipIntro", episodeData.skipIntro.toString());
-    }
-
     setUploadProgress((prev) => ({ ...prev, isUploading: true }));
     setError("");
 
-    $api
-      .post(process.env.NEXT_PUBLIC_SERVER_URL_API + "episode", formData, {
-        onUploadProgress: (e: AxiosProgressEvent) => {
-          const total = e.total || 1;
-          const percentCompleted = Math.round((e.loaded * 100) / total);
-          setUploadProgress((prev) => ({ ...prev, percent: percentCompleted }));
-        },
-      })
-      .then(() => {
-        console.log("ok");
+    seriesService
+      .addEpisode(episodeData, setPercentCallback)
+      .then((episode) => {
         setEpisodeData({
-          title: `Эпизод ${episodes.length + 1}`,
+          title: `Эпизод ${episode.order + 1}`,
           description: "",
-          order: episodes.length + 1,
+          order: episode.order + 1,
           seasonId: seasonId,
           video: null,
-          releaseDate: "01.01.2011",
+          releaseDate: "2020-01-01",
           skipRepeat: null,
           skipCredits: null,
           skipIntro: null,
           subtitles: [],
         });
+        closeModal();
         router.refresh();
+        toast.success("Эпизод добавлен");
       })
-      .catch((err) => {
-        if (err instanceof AxiosError) {
-          setError(err.message);
-        }
-        console.error(err);
+      .catch((err: string) => {
+        setError(err);
+        toast.error("Ошибка при добавлении эпизода");
       })
       .finally(() => {
         setUploadProgress((prev) => ({ ...prev, isUploading: false }));

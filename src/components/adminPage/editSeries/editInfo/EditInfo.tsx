@@ -1,77 +1,49 @@
 "use client";
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { FC } from "react";
 import styles from "./EditInfo.module.scss";
 import FileUpload from "@/components/UI/fileUploud/FileUpload";
 import EditableInput from "@/components/UI/editableInput/EditableInput";
 import EditableTextarea from "@/components/UI/editableTextarea/EditableTextarea";
 import { ISeries } from "@/components/series/Series.types";
-import { EditSeriesDto, seriesService } from "@/services/series.service";
+import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
+import Image from "next/image";
+import { useEditSeries } from "@/hooks/useEditSeries";
 
 interface Props {
   seriesDetails: ISeries;
 }
 
 const EditInfo: FC<Props> = ({ seriesDetails }) => {
-  const [seriesData, setSeriesData] = useState<EditSeriesDto>({
-    title: seriesDetails.title,
-    description: seriesDetails.description,
-    releaseYear: seriesDetails.releaseYear.toString(),
-    poster: seriesDetails.poster,
-  });
-  const [posterPreviewSrc, setPosterPreviewSrc] = useState<string>("");
-
-  const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSeriesData({ ...seriesData, poster: e.target.files[0] });
-      if (!FileReader) return;
-      const img = new FileReader();
-      img.onload = () => {
-        if (img.result && typeof img.result === "string") {
-          setPosterPreviewSrc(img.result);
-        }
-      };
-      img.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  const changeSeriesDataHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof typeof seriesData,
-  ) => {
-    setSeriesData({ ...seriesData, [field]: e.target.value });
-  };
-
-  const saveChangesHandler = async () => {
-    const updatedSeries = await seriesService.editSeries(
-      seriesData,
-      seriesDetails.id,
-    );
-    setSeriesData(updatedSeries);
-  };
+  const { data, actions } = useEditSeries(seriesDetails);
 
   return (
-    <div className={styles.seriesInfo}>
+    <div className={styles.root}>
       <div className={styles.posterBox}>
         <div className={styles.poster}>
-          <img
+          <Image
             src={
-              posterPreviewSrc
-                ? posterPreviewSrc
+              data.posterPreviewSrc
+                ? data.posterPreviewSrc
                 : process.env.NEXT_PUBLIC_SERVER_URL_STATIC +
                   seriesDetails.poster
             }
             alt={seriesDetails.title}
+            fill={true}
+            sizes={"200px"}
+            priority={true}
           />
         </div>
 
-        <div className={styles.changePosterBtn}>
-          <FileUpload
-            setFile={onChangePicture}
-            accept={"image/*"}
-            name={"poster"}
-          >
-            Изменить постер
-          </FileUpload>
+        <div className={styles.changePoster}>
+          <MyButton>
+            <FileUpload
+              setFile={actions.onChangePicture}
+              accept={"image/*"}
+              name={"poster"}
+            >
+              Выбрать постер
+            </FileUpload>
+          </MyButton>
         </div>
       </div>
 
@@ -79,16 +51,16 @@ const EditInfo: FC<Props> = ({ seriesDetails }) => {
         <div className={styles.seriesTitle}>
           <EditableInput
             label={""}
-            value={seriesData.title}
-            onChange={(e) => changeSeriesDataHandler(e, "title")}
+            value={data.seriesData.title}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "title")}
           />
         </div>
 
         <div className={styles.seriesReleaseYear}>
           <EditableInput
             label={"Год выхода :"}
-            value={seriesData.releaseYear}
-            onChange={(e) => changeSeriesDataHandler(e, "releaseYear")}
+            value={data.seriesData.releaseYear}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "releaseYear")}
           />
         </div>
 
@@ -96,13 +68,19 @@ const EditInfo: FC<Props> = ({ seriesDetails }) => {
           <small>Описание:</small>
           <EditableTextarea
             label={""}
-            value={seriesData.description}
-            onChange={(e) => changeSeriesDataHandler(e, "description")}
+            value={data.seriesData.description}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "description")}
           />
         </div>
 
         <div className={styles.saveBtn}>
-          <button onClick={saveChangesHandler}>Сохранить</button>
+          <MyButton
+            variant={VariantsBtn.ACTION}
+            onClick={actions.saveChangesHandler}
+            disabled={data.isChangesSaving}
+          >
+            {data.isChangesSaving ? "Сохранение..." : "Сохранить"}
+          </MyButton>
         </div>
       </div>
     </div>

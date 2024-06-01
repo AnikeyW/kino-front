@@ -5,53 +5,21 @@ import FileUpload from "@/components/UI/fileUploud/FileUpload";
 import { IEpisode } from "@/components/series/Series.types";
 import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
 import { useAddEpisode } from "@/hooks/useAddEpisode";
+import MyInput from "@/components/UI/myInput/MyInput";
+import ErrorMessage from "@/components/UI/errorMessage/ErrorMessage";
 
 interface Props {
   episodes: IEpisode[];
   seasonId: number;
+  closeModal: () => void;
 }
 
-const AddEpisode: FC<Props> = ({ episodes, seasonId }) => {
-  const { data, actions } = useAddEpisode(episodes, seasonId);
+const AddEpisode: FC<Props> = ({ episodes, seasonId, closeModal }) => {
+  const { data, actions } = useAddEpisode(episodes, seasonId, closeModal);
 
   return (
     <div className={styles.root}>
-      <div>
-        <div>
-          <input
-            type="text"
-            placeholder={"Название"}
-            value={data.episodeData.title}
-            onChange={(e) => actions.changeEpisodeDataHandler(e, "title")}
-          />
-        </div>
-
-        <div>
-          <input
-            type="text"
-            placeholder={"Описание"}
-            value={data.episodeData.description}
-            onChange={(e) => actions.changeEpisodeDataHandler(e, "description")}
-          />
-        </div>
-
-        <div>
-          <input
-            type="number"
-            placeholder={"Порядковый номер"}
-            value={data.episodeData.order}
-            onChange={(e) => actions.changeEpisodeDataHandler(e, "order")}
-          />
-        </div>
-
-        <div>
-          <input
-            type="date"
-            value={data.episodeData.releaseDate}
-            onChange={(e) => actions.changeEpisodeDataHandler(e, "releaseDate")}
-          />
-        </div>
-
+      <div className={styles.files}>
         <div className={styles.changeVideoBtn}>
           <MyButton>
             <FileUpload
@@ -62,7 +30,7 @@ const AddEpisode: FC<Props> = ({ episodes, seasonId }) => {
               Выбрать видео
             </FileUpload>
           </MyButton>
-          {data.episodeData.video && <span>{data.episodeData.video.name}</span>}
+          {data.episodeData.video && <div>{data.episodeData.video.name}</div>}
         </div>
 
         <div className={styles.selectSubsBtn}>
@@ -81,17 +49,65 @@ const AddEpisode: FC<Props> = ({ episodes, seasonId }) => {
               <div key={index}>{sub.name}</div>
             ))}
         </div>
+      </div>
 
-        <MyButton
-          onClick={actions.addEpisodeHandler}
-          variant={VariantsBtn.ACTION}
-        >
-          Добавить Эпизод
-        </MyButton>
-        {data.uploadProgress.isUploading && (
-          <progress value={data.uploadProgress.percent} max="100"></progress>
-        )}
-        {data.error && <div style={{ color: "red" }}>{data.error}</div>}
+      <div className={styles.info}>
+        <div className={styles.input}>
+          <MyInput
+            type="text"
+            placeholder={"Название"}
+            value={data.episodeData.title}
+            onChange={(e) => actions.changeEpisodeDataHandler(e, "title")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <span>Порядковый номер:</span>
+          <MyInput
+            type="number"
+            placeholder={"Порядковый номер"}
+            value={data.episodeData.order}
+            onChange={(e) => actions.changeEpisodeDataHandler(e, "order")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <input
+            type="date"
+            value={data.episodeData.releaseDate}
+            onChange={(e) => actions.changeEpisodeDataHandler(e, "releaseDate")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <MyInput
+            type="text"
+            placeholder={"Описание"}
+            value={data.episodeData.description}
+            onChange={(e) => actions.changeEpisodeDataHandler(e, "description")}
+          />
+        </div>
+
+        <div className={styles.bottom}>
+          {data.uploadProgress.isUploading && (
+            <div className={styles.progress}>
+              <div>{data.uploadProgress.percent}%</div>
+              <progress
+                value={data.uploadProgress.percent}
+                max="100"
+              ></progress>
+            </div>
+          )}
+          <MyButton
+            onClick={actions.addEpisodeHandler}
+            variant={VariantsBtn.ACTION}
+            disabled={data.uploadProgress.isUploading}
+          >
+            {data.uploadProgress.isUploading ? "Добавление" : "Добавить Эпизод"}
+          </MyButton>
+        </div>
+
+        {data.error && <ErrorMessage message={data.error} />}
       </div>
     </div>
   );

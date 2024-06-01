@@ -1,4 +1,3 @@
-"use client";
 import React, { FC } from "react";
 import { ISeries } from "@/components/series/Series.types";
 import MyLink from "@/components/UI/myLink/MyLink";

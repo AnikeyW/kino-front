@@ -5,12 +5,13 @@ import {
   ISubtitle,
 } from "@/components/series/Series.types";
 import $api from "@/http";
+import { AxiosError, AxiosProgressEvent } from "axios";
 
 export interface CreateSeriesDto {
   title: string;
   description: string;
-  releaseYear: string;
-  poster: File;
+  releaseYear: number;
+  poster: File | null;
 }
 
 export interface EditSeriesDto {
@@ -62,6 +63,51 @@ export interface EditEpisodeDto {
 }
 
 export const seriesService = {
+  async addEpisode(
+    episodeData: CreateEpisodeDto,
+    setPercentCallback: (percent: number) => void,
+  ) {
+    try {
+      const formData = new FormData();
+
+      formData.append("title", episodeData.title);
+      formData.append("description", episodeData.description);
+      formData.append("order", episodeData.order.toString());
+      formData.append("seasonId", episodeData.seasonId.toString());
+      formData.append("releaseDate", episodeData.releaseDate.toString());
+      formData.append("video", episodeData.video!);
+      episodeData.subtitles.forEach((sub) => {
+        formData.append("subtitles", sub);
+      });
+      if (episodeData.skipCredits) {
+        formData.append("skipCredits", episodeData.skipCredits.toString());
+      }
+      if (episodeData.skipRepeat) {
+        formData.append("skipRepeat", episodeData.skipRepeat.toString());
+      }
+      if (episodeData.skipIntro) {
+        formData.append("skipIntro", episodeData.skipIntro.toString());
+      }
+
+      const response = await $api.post<IEpisode>(
+        process.env.NEXT_PUBLIC_SERVER_URL_API + "episode",
+        formData,
+        {
+          onUploadProgress: (e: AxiosProgressEvent) => {
+            const total = e.total || 1;
+            const percentCompleted = Math.round((e.loaded * 100) / total);
+            setPercentCallback(percentCompleted);
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Ошибка добавления Эпизода");
+    }
+  },
+
   async editEpisode(episodeData: EditEpisodeDto, episodeId: number) {
     try {
       const formData = new FormData();
@@ -95,7 +141,8 @@ export const seriesService = {
 
       return response.data;
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      throw new Error("Ошибка при изменении эпизода");
     }
   },
 
@@ -113,8 +160,10 @@ export const seriesService = {
         process.env.NEXT_PUBLIC_SERVER_URL_API + "season",
         formData,
       );
+      return response.data;
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      throw new Error("Ошибка при добавлении сезона");
     }
   },
 
@@ -124,15 +173,16 @@ export const seriesService = {
 
       formData.append("title", data.title);
       formData.append("description", data.description);
-      formData.append("releaseYear", data.releaseYear);
-      formData.append("poster", data.poster);
+      formData.append("releaseYear", data.releaseYear.toString());
+      formData.append("poster", data.poster!);
 
       const response = await $api.post(
         process.env.NEXT_PUBLIC_SERVER_URL_API + "series",
         formData,
       );
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      throw new Error("Ошибка при добавлении сериала");
     }
   },
 
@@ -152,7 +202,8 @@ export const seriesService = {
 
       return response.data;
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      throw new Error("Ошибка при редактировании Сериала");
     }
   },
 
@@ -172,7 +223,8 @@ export const seriesService = {
 
       return response.data;
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      throw new Error("Ошибка при редактировании Сезона");
     }
   },
 

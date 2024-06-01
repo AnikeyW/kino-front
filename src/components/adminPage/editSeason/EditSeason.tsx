@@ -1,10 +1,7 @@
-"use client";
 import React, { FC } from "react";
 import styles from "./EditSeason.module.scss";
 import { ISeason } from "@/components/series/Series.types";
 import MyLink from "@/components/UI/myLink/MyLink";
-import EditInfo from "@/components/adminPage/editSeries/editInfo/EditInfo";
-import EditSeasonsList from "@/components/adminPage/editSeries/editSeasonsList/EditSeasonsList";
 import EditInfoSeason from "@/components/adminPage/editSeason/editInfoSeason/EditInfoSeason";
 import EditEpisodesList from "@/components/adminPage/editSeason/editEpisodesList/EditEpisodesList";
 

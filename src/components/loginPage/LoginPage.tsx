@@ -4,6 +4,9 @@ import { authService } from "@/services/auth.service";
 import ErrorMessage from "@/components/UI/errorMessage/ErrorMessage";
 import { useRouter } from "next/navigation";
 import LoadingPage from "@/components/UI/loadingPage/LoadingPage";
+import styles from "./LoginPage.module.scss";
+import MyButton from "@/components/UI/myButton/MyButton";
+import MyInput from "@/components/UI/myInput/MyInput";
 
 const LoginPage = () => {
   const [error, serError] = useState(null);
@@ -40,29 +43,32 @@ const LoginPage = () => {
 
   return (
     <>
-      {false ? (
-        <LoadingPage />
-      ) : (
-        <div>
-          Вход в панель Администратора
+      {/*{false ? (*/}
+      {/*  <LoadingPage />*/}
+      {/*) : (*/}
+      <div className={styles.root}>
+        <div className={styles.form}>
+          <div className={styles.formTitle}>Вход в панель Администратора</div>
+
           <form action={submitHandler}>
-            <div>
-              <input type="email" placeholder={"email"} name={"email"} />
+            <div className={styles.input}>
+              <MyInput type={"email"} placeholder={"email"} name={"email"} />
             </div>
-            <div>
-              <input
-                type="password"
+            <div className={styles.input}>
+              <MyInput
+                type={"password"}
                 placeholder={"password"}
                 name={"password"}
               />
             </div>
-            <div>
-              <button type={"submit"}>login</button>
+            <div className={styles.loginBtn}>
+              <MyButton type={"submit"}>Войти</MyButton>
             </div>
             {error && <ErrorMessage message={error} />}
           </form>
         </div>
-      )}
+      </div>
+      {/*)}*/}
     </>
   );
 };

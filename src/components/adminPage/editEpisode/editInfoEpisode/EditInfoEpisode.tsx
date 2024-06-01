@@ -1,99 +1,22 @@
 "use client";
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { FC } from "react";
 import styles from "./EditInfoEpisode.module.scss";
 import EditableInput from "@/components/UI/editableInput/EditableInput";
 import EditableTextarea from "@/components/UI/editableTextarea/EditableTextarea";
 import { IEpisode } from "@/components/series/Series.types";
-import { EditEpisodeDto, seriesService } from "@/services/series.service";
 import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
 import PostersList from "@/components/adminPage/editEpisode/postersList/PostersList";
 import Image from "next/image";
 import FileUpload from "@/components/UI/fileUploud/FileUpload";
 import { MdOutlineRemoveCircle } from "react-icons/md";
+import { useEditEpisode } from "@/hooks/useEditEpisode";
 
 interface Props {
   episodeDetails: IEpisode;
 }
 
 const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
-  const [episodeData, setEpisodeData] = useState<EditEpisodeDto>({
-    title: episodeDetails.title,
-    description: episodeDetails.description,
-    order: episodeDetails.order.toString(),
-    poster: episodeDetails.poster,
-    newSubtitles: [],
-    existSubtitles: episodeDetails.subtitles,
-    releaseDate: episodeDetails.releaseDate.split("T")[0],
-    skipCredits: episodeDetails.skipCredits,
-    skipIntro: episodeDetails.skipIntro,
-    skipRepeat: episodeDetails.skipRepeat,
-  });
-
-  const changeEpisodeDataHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof typeof episodeData,
-  ) => {
-    setEpisodeData({ ...episodeData, [field]: e.target.value });
-  };
-
-  const onChangePoster = (thumbnailSrc: string) => {
-    setEpisodeData({ ...episodeData, poster: thumbnailSrc });
-  };
-
-  const changeNewSubtitlesHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (e.target.files) {
-      setEpisodeData({
-        ...episodeData,
-        newSubtitles: [...Array.from(e.target.files)],
-      });
-    }
-  };
-
-  const removeExistSubtitlesHandler = (subId: number) => {
-    const subs = episodeData.existSubtitles.filter((s) => s.id !== subId);
-    setEpisodeData({
-      ...episodeData,
-      existSubtitles: subs,
-    });
-  };
-
-  const saveChangesHandler = async () => {
-    const updatedEpisode = await seriesService.editEpisode(
-      {
-        title: episodeData.title,
-        description: episodeData.description,
-        order: episodeData.order,
-        releaseDate: episodeData.releaseDate,
-        poster: episodeData.poster,
-        skipCredits: !episodeData.skipCredits
-          ? null
-          : Number(episodeData.skipCredits),
-        skipIntro: !episodeData.skipIntro
-          ? null
-          : Number(episodeData.skipIntro),
-        skipRepeat: !episodeData.skipRepeat
-          ? null
-          : Number(episodeData.skipRepeat),
-        existSubtitles: episodeData.existSubtitles,
-        newSubtitles: episodeData.newSubtitles,
-      },
-      episodeDetails.id,
-    );
-    setEpisodeData({
-      title: updatedEpisode.title,
-      description: updatedEpisode.description,
-      order: updatedEpisode.order.toString(),
-      releaseDate: updatedEpisode.releaseDate.split("T")[0],
-      poster: updatedEpisode.poster,
-      skipCredits: updatedEpisode.skipCredits,
-      skipIntro: updatedEpisode.skipIntro,
-      skipRepeat: updatedEpisode.skipRepeat,
-      existSubtitles: updatedEpisode.subtitles,
-      newSubtitles: [],
-    });
-  };
+  const { data, actions } = useEditEpisode(episodeDetails);
 
   return (
     <div className={styles.root}>
@@ -102,7 +25,8 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
           <div className={styles.poster}>
             <Image
               src={
-                process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episodeData.poster
+                process.env.NEXT_PUBLIC_SERVER_URL_STATIC +
+                data.episodeData.poster
               }
               alt={"poster"}
               fill={true}
@@ -115,8 +39,8 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
           <div className={styles.title}>
             <EditableInput
               label={""}
-              value={episodeData.title}
-              onChange={(e) => changeEpisodeDataHandler(e, "title")}
+              value={data.episodeData.title}
+              onChange={(e) => actions.changeEpisodeDataHandler(e, "title")}
             />
           </div>
 
@@ -124,40 +48,46 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
             <span>Дата выхода: </span>
             <input
               type="date"
-              value={episodeData.releaseDate}
-              onChange={(e) => changeEpisodeDataHandler(e, "releaseDate")}
+              value={data.episodeData.releaseDate}
+              onChange={(e) =>
+                actions.changeEpisodeDataHandler(e, "releaseDate")
+              }
             />
           </div>
 
           <div className={styles.order}>
             <EditableInput
               label={"Порядковый номер: "}
-              value={episodeData.order}
-              onChange={(e) => changeEpisodeDataHandler(e, "order")}
+              value={data.episodeData.order}
+              onChange={(e) => actions.changeEpisodeDataHandler(e, "order")}
             />
           </div>
 
           <div className={styles.order}>
             <EditableInput
               label={"Пропустить интро(сек.): "}
-              value={episodeData.skipIntro?.toString() || ""}
-              onChange={(e) => changeEpisodeDataHandler(e, "skipIntro")}
+              value={data.episodeData.skipIntro?.toString() || ""}
+              onChange={(e) => actions.changeEpisodeDataHandler(e, "skipIntro")}
             />
           </div>
 
           <div className={styles.order}>
             <EditableInput
               label={"Пропустить повтор(сек.): "}
-              value={episodeData.skipRepeat?.toString() || ""}
-              onChange={(e) => changeEpisodeDataHandler(e, "skipRepeat")}
+              value={data.episodeData.skipRepeat?.toString() || ""}
+              onChange={(e) =>
+                actions.changeEpisodeDataHandler(e, "skipRepeat")
+              }
             />
           </div>
 
           <div className={styles.order}>
             <EditableInput
               label={"Пропустить титры(сек.): "}
-              value={episodeData.skipCredits?.toString() || ""}
-              onChange={(e) => changeEpisodeDataHandler(e, "skipCredits")}
+              value={data.episodeData.skipCredits?.toString() || ""}
+              onChange={(e) =>
+                actions.changeEpisodeDataHandler(e, "skipCredits")
+              }
             />
           </div>
 
@@ -165,11 +95,11 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
             <div>Субтитры: </div>
             <div>
               <div>Существующие:</div>
-              {episodeData.existSubtitles.length === 0 ? (
+              {data.episodeData.existSubtitles.length === 0 ? (
                 <div>нет субтитров</div>
               ) : (
                 <ul>
-                  {episodeData.existSubtitles.map((sub) => (
+                  {data.episodeData.existSubtitles.map((sub) => (
                     <li key={sub.id}>
                       <span>
                         {
@@ -181,7 +111,11 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
                         }
                       </span>
 
-                      <div onClick={() => removeExistSubtitlesHandler(sub.id)}>
+                      <div
+                        onClick={() =>
+                          actions.removeExistSubtitlesHandler(sub.id)
+                        }
+                      >
                         <MdOutlineRemoveCircle color="red" />
                       </div>
                     </li>
@@ -192,7 +126,7 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
             <div>
               <MyButton>
                 <FileUpload
-                  setFile={changeNewSubtitlesHandler}
+                  setFile={actions.changeNewSubtitlesHandler}
                   accept={".vtt,text/vtt"}
                   name={"subtitles"}
                   multiple={true}
@@ -200,34 +134,38 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
                   Добавить Субтитры
                 </FileUpload>
               </MyButton>
-              {episodeData.newSubtitles.length > 0 &&
-                episodeData.newSubtitles.map((sub, index) => (
+              {data.episodeData.newSubtitles.length > 0 &&
+                data.episodeData.newSubtitles.map((sub, index) => (
                   <div key={index}>{sub.name}</div>
                 ))}
             </div>
           </div>
-
-          <div className={styles.description}>
-            <small>Описание:</small>
-            <EditableTextarea
-              label={""}
-              value={episodeData.description}
-              onChange={(e) => changeEpisodeDataHandler(e, "description")}
-            />
-          </div>
-
-          <div className={styles.saveBtn}>
-            <MyButton onClick={saveChangesHandler} variant={VariantsBtn.ACTION}>
-              Сохранить
-            </MyButton>
-          </div>
         </div>
+      </div>
+
+      <div className={styles.description}>
+        <small>Описание:</small>
+        <EditableTextarea
+          label={""}
+          value={data.episodeData.description}
+          onChange={(e) => actions.changeEpisodeDataHandler(e, "description")}
+        />
+      </div>
+
+      <div className={styles.saveBtn}>
+        <MyButton
+          onClick={actions.saveChangesHandler}
+          variant={VariantsBtn.ACTION}
+          disabled={data.isLoading}
+        >
+          {data.isLoading ? "Сохранение..." : "Сохранить"}
+        </MyButton>
       </div>
 
       <div className={styles.postersList}>
         <PostersList
           episodeDetails={episodeDetails}
-          changePoster={onChangePoster}
+          changePoster={actions.onChangePoster}
         />
       </div>
     </div>

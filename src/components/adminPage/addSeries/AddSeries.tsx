@@ -1,36 +1,84 @@
 "use client";
-import React, { FormEvent } from "react";
-import { CreateSeriesDto, seriesService } from "@/services/series.service";
+import React, { FC } from "react";
+import styles from "./AddSeries.module.scss";
+import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
+import Image from "next/image";
+import FileUpload from "@/components/UI/fileUploud/FileUpload";
+import MyInput from "@/components/UI/myInput/MyInput";
+import ErrorMessage from "@/components/UI/errorMessage/ErrorMessage";
+import { useAddSeries } from "@/hooks/useAddSeries";
 
-const AddSeries = () => {
-  const addSeriesHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-      releaseYear: formData.get("releaseYear") as string,
-      poster: formData.get("poster") as File,
-    };
-    seriesService.addSeries(data);
-  };
+interface Props {
+  closeModal: () => void;
+}
+
+const AddSeries: FC<Props> = ({ closeModal }) => {
+  const { data, actions } = useAddSeries(closeModal);
 
   return (
-    <form onSubmit={addSeriesHandler}>
-      <div>
-        <input type="text" placeholder={"Название"} name={"title"} />
+    <div className={styles.root}>
+      <div className={styles.posterBox}>
+        {!!data.posterPreviewSrc && (
+          <div className={styles.poster}>
+            <Image src={data.posterPreviewSrc} alt={""} fill={true} />
+          </div>
+        )}
+
+        <div className={styles.changePosterBtn}>
+          <MyButton>
+            <FileUpload
+              setFile={actions.onChangePicture}
+              accept={"image/*"}
+              name={"poster"}
+            >
+              Выбрать постер
+            </FileUpload>
+          </MyButton>
+        </div>
       </div>
-      <div>
-        <input type="text" placeholder={"Описание"} name={"description"} />
+
+      <div className={styles.form}>
+        <div className={styles.input}>
+          <MyInput
+            type={"text"}
+            placeholder={"Название"}
+            value={data.seriesData.title}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "title")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <span>Год выхода:</span>
+          <MyInput
+            type={"number"}
+            placeholder={"Год выхода"}
+            value={data.seriesData.releaseYear}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "releaseYear")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <MyInput
+            type={"text"}
+            placeholder={"Описание"}
+            value={data.seriesData.description}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "description")}
+          />
+        </div>
+
+        <div className={styles.addBtn}>
+          <MyButton
+            onClick={actions.addSeriesHandler}
+            variant={VariantsBtn.ACTION}
+            disabled={data.isLoading}
+          >
+            {data.isLoading ? "Добавление..." : "Добавить сериал"}
+          </MyButton>
+        </div>
+
+        {data.error && <ErrorMessage message={data.error} />}
       </div>
-      <div>
-        <input type="text" placeholder={"Год выпуска"} name={"releaseYear"} />
-      </div>
-      <div>
-        <input type="file" name={"poster"} accept="image/png, image/jpeg" />
-      </div>
-      <button type={"submit"}>добавиить</button>
-    </form>
+    </div>
   );
 };
 

@@ -9,14 +9,18 @@ export enum VariantsBtn {
 
 interface Props {
   children: ReactNode;
+  type?: "button" | "submit" | "reset";
   onClick?: (args: any) => void;
   variant?: VariantsBtn;
+  disabled?: boolean;
 }
 
 const MyButton: FC<Props> = ({
   children,
+  type,
   onClick,
   variant = VariantsBtn.DEFAULT,
+  disabled,
 }) => {
   return (
     <button
@@ -24,6 +28,8 @@ const MyButton: FC<Props> = ({
         [styles.action]: variant === VariantsBtn.ACTION,
       })}
       onClick={onClick}
+      type={type ? type : "button"}
+      disabled={disabled}
     >
       {children}
     </button>

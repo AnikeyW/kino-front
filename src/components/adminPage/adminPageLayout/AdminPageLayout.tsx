@@ -6,6 +6,8 @@ import { MdLogout } from "react-icons/md";
 import { authService } from "@/services/auth.service";
 import MyLink from "@/components/UI/myLink/MyLink";
 import cl from "classnames";
+import { Toaster } from "react-hot-toast";
+import { TOAST_DURATION } from "@/constants";
 
 interface ILink {
   href: string;
@@ -39,6 +41,10 @@ const AdminPageLayout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div className={styles.root}>
+      <Toaster
+        position={"top-right"}
+        toastOptions={{ duration: TOAST_DURATION }}
+      />
       <div className={styles.sideNav}>
         <div className={styles.title}>
           <h1>Админ панель</h1>
