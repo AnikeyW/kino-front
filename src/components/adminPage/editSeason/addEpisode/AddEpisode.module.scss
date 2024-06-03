@@ -12,6 +12,19 @@
   }
 
   .info{
+    width: 600px;
+
+    @media screen and (max-width: 992px){
+      width: 500px;
+    }
+
+    @media screen and (max-width: 768px){
+      width: 300px;
+    }
+
+    @media screen and (max-width: 480px){
+      width: 300px;
+    }
 
     .input{
       display: flex;
@@ -22,6 +35,10 @@
       span {
         font-size: 14px;
         white-space: nowrap;
+      }
+
+      .deleteParagraphBtn{
+        cursor: pointer;
       }
     }
 

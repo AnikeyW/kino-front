@@ -5,7 +5,7 @@ import {
   ISubtitle,
 } from "@/components/series/Series.types";
 import $api from "@/http";
-import { AxiosError, AxiosProgressEvent } from "axios";
+import { AxiosProgressEvent } from "axios";
 
 export interface CreateSeriesDto {
   title: string;
@@ -38,7 +38,7 @@ export interface EditSeasonDto {
 
 export interface CreateEpisodeDto {
   title: string;
-  description: string;
+  description: string[];
   order: number;
   skipRepeat?: number | null;
   skipIntro?: number | null;
@@ -71,7 +71,7 @@ export const seriesService = {
       const formData = new FormData();
 
       formData.append("title", episodeData.title);
-      formData.append("description", episodeData.description);
+      formData.append("description", JSON.stringify(episodeData.description));
       formData.append("order", episodeData.order.toString());
       formData.append("seasonId", episodeData.seasonId.toString());
       formData.append("releaseDate", episodeData.releaseDate.toString());
@@ -176,7 +176,7 @@ export const seriesService = {
       formData.append("releaseYear", data.releaseYear.toString());
       formData.append("poster", data.poster!);
 
-      const response = await $api.post(
+      await $api.post(
         process.env.NEXT_PUBLIC_SERVER_URL_API + "series",
         formData,
       );

@@ -12,16 +12,6 @@ export const formatTime = (seconds: number): string => {
   }
 };
 
-export const timestampToStringData = (timestamp: number): string => {
-  const date = new Date(timestamp);
-
-  const year = date.getFullYear();
-  const month = ("0" + (date.getMonth() + 1)).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
-
-  return `${year}-${month}-${day}`;
-};
-
 export const formatDate = (date: string): string => {
   const parsedDate = new Date(date);
 
@@ -42,5 +32,14 @@ export const formatTimeHhMm = (seconds: number): string => {
     return `${hours}ч ${minutes}мин`;
   } else {
     return `${minutes}мин`;
+  }
+};
+
+export const isJSON = (str: string): boolean => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
   }
 };

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./EpisodeDetailsInfo.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
-import { formatDate } from "@/utils";
+import { formatDate, isJSON } from "@/utils";
 import PreviousEpisodeButton from "@/components/series/previousEpisodeButton/PreviousEpisodeButton";
 import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisodeButton";
 import IframePlayer from "@/components/iframePlayer/IramePlayer";
@@ -54,10 +54,18 @@ const EpisodeDetailsInfo: FC<Props> = ({
 
         <div className={styles.title}>{episode.title}</div>
 
-        <div
-          className={styles.description}
-          dangerouslySetInnerHTML={{ __html: episode.description }}
-        ></div>
+        {isJSON(episode.description) ? (
+          <div className={styles.description}>
+            {JSON.parse(episode.description).map((paragraph: string) => (
+              <p style={{ marginBottom: "1rem" }}>{paragraph}</p>
+            ))}
+          </div>
+        ) : (
+          <div
+            className={styles.description}
+            dangerouslySetInnerHTML={{ __html: episode.description }}
+          ></div>
+        )}
       </div>
 
       <div className={styles.seasonEpisodesBlock}>

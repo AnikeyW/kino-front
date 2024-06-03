@@ -11,10 +11,18 @@ import styles from "./EditableTextarea.module.scss";
 interface Props {
   label: string;
   value: string;
+  placeholder?: string;
+  defaultText?: string;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-const EditableTextarea: FC<Props> = ({ label, value, onChange }) => {
+const EditableTextarea: FC<Props> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  defaultText,
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -56,6 +64,7 @@ const EditableTextarea: FC<Props> = ({ label, value, onChange }) => {
             onBlur={() => setIsEditMode(false)}
             onKeyDown={keyDownHandler}
             className={styles.textarea}
+            placeholder={placeholder}
           />
         </div>
       ) : (
@@ -66,6 +75,7 @@ const EditableTextarea: FC<Props> = ({ label, value, onChange }) => {
         >
           <span className={styles.label}>{label}</span>
           {value}
+          {value === "" && defaultText !== "" ? defaultText : ""}
         </div>
       )}
     </>

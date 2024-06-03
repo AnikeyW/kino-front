@@ -12,7 +12,7 @@ export const useAddEpisode = (
   const router = useRouter();
   const [episodeData, setEpisodeData] = useState<CreateEpisodeDto>({
     title: `Эпизод ${episodes.length + 1}`,
-    description: "",
+    description: [""],
     order: episodes.length + 1,
     seasonId: seasonId,
     releaseDate: "2020-01-01",
@@ -27,7 +27,38 @@ export const useAddEpisode = (
     isUploading: false,
     percent: 0,
   });
-  console.log(episodeData.releaseDate);
+
+  const deleteParagraphHandler = (paragraphIndex: number) => {
+    const episodeDescription = episodeData.description;
+    episodeDescription.splice(paragraphIndex, 1);
+
+    setEpisodeData({
+      ...episodeData,
+      description: episodeDescription,
+    });
+  };
+
+  const changeDescriptionHandler = (
+    e: ChangeEvent<HTMLTextAreaElement>,
+    paragraphIndex: number,
+  ) => {
+    const episodeDescription = episodeData.description;
+
+    episodeDescription[paragraphIndex] = e.target.value;
+    setEpisodeData({
+      ...episodeData,
+      description: episodeDescription,
+    });
+  };
+
+  const addParagraphHandler = () => {
+    const episodeDescription = episodeData.description;
+    episodeDescription.push("");
+    setEpisodeData({
+      ...episodeData,
+      description: episodeDescription,
+    });
+  };
 
   const changeSubtitlesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -71,7 +102,7 @@ export const useAddEpisode = (
       .then((episode) => {
         setEpisodeData({
           title: `Эпизод ${episode.order + 1}`,
-          description: "",
+          description: [""],
           order: episode.order + 1,
           seasonId: seasonId,
           video: null,
@@ -100,6 +131,9 @@ export const useAddEpisode = (
       changeEpisodeDataHandler,
       onChangeVideo,
       changeSubtitlesHandler,
+      changeDescriptionHandler,
+      addParagraphHandler,
+      deleteParagraphHandler,
     },
     data: {
       error,

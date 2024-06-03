@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { EditEpisodeDto, seriesService } from "@/services/series.service";
 import { IEpisode } from "@/components/series/Series.types";
 import { toast } from "react-hot-toast";
+import { isJSON } from "@/utils";
 
 export const useEditEpisode = (episodeDetails: IEpisode) => {
   const [episodeData, setEpisodeData] = useState<EditEpisodeDto>({
@@ -17,6 +18,49 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
     skipRepeat: episodeDetails.skipRepeat,
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  const deleteParagraphHandler = (paragraphIndex: number) => {
+    const episodeDescription = JSON.parse(episodeData.description);
+    episodeDescription.splice(paragraphIndex, 1);
+
+    setEpisodeData({
+      ...episodeData,
+      description: JSON.stringify(episodeDescription),
+    });
+  };
+
+  const changeDescriptionHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    paragraphIndex: number,
+  ) => {
+    const episodeDescription = JSON.parse(episodeData.description);
+
+    episodeDescription[paragraphIndex] = e.target.value;
+    setEpisodeData({
+      ...episodeData,
+      description: JSON.stringify(episodeDescription),
+    });
+  };
+
+  const addParagraphHandler = () => {
+    if (episodeData.description === "") {
+      setEpisodeData({
+        ...episodeData,
+        description: JSON.stringify([""]),
+      });
+      return;
+    }
+    if (isJSON(episodeData.description)) {
+      const episodeDescription = JSON.parse(episodeData.description);
+      episodeDescription.push("");
+      setEpisodeData({
+        ...episodeData,
+        description: JSON.stringify(episodeDescription),
+      });
+    } else {
+      toast.error("Не правильный формат");
+    }
+  };
 
   const changeEpisodeDataHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -103,6 +147,9 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
       changeNewSubtitlesHandler,
       removeExistSubtitlesHandler,
       saveChangesHandler,
+      addParagraphHandler,
+      changeDescriptionHandler,
+      deleteParagraphHandler,
     },
   };
 };

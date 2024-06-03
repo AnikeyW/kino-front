@@ -10,6 +10,7 @@ import Image from "next/image";
 import FileUpload from "@/components/UI/fileUploud/FileUpload";
 import { MdOutlineRemoveCircle } from "react-icons/md";
 import { useEditEpisode } from "@/hooks/useEditEpisode";
+import { isJSON } from "@/utils";
 
 interface Props {
   episodeDetails: IEpisode;
@@ -145,11 +146,48 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
 
       <div className={styles.description}>
         <small>Описание:</small>
-        <EditableTextarea
-          label={""}
-          value={data.episodeData.description}
-          onChange={(e) => actions.changeEpisodeDataHandler(e, "description")}
-        />
+        {isJSON(data.episodeData.description) ? (
+          <>
+            {JSON.parse(data.episodeData.description).map(
+              (paragraph: string, index: number) => (
+                <div style={{ display: "flex" }} className={styles.paragraph}>
+                  <div className={styles.textArea}>
+                    <EditableTextarea
+                      key={index}
+                      label={""}
+                      value={paragraph}
+                      placeholder={`Параграф ${index + 1}`}
+                      defaultText={
+                        paragraph === "" ? `Параграф ${index + 1}` : ""
+                      }
+                      onChange={(e) =>
+                        actions.changeDescriptionHandler(e, index)
+                      }
+                    />
+                  </div>
+
+                  <div
+                    onClick={() => actions.deleteParagraphHandler(index)}
+                    className={styles.deleteParagraphBtn}
+                  >
+                    <MdOutlineRemoveCircle
+                      title={`Удалить параграф ${index + 1}`}
+                    />
+                  </div>
+                </div>
+              ),
+            )}
+          </>
+        ) : (
+          <EditableTextarea
+            label={""}
+            value={data.episodeData.description}
+            onChange={(e) => actions.changeEpisodeDataHandler(e, "description")}
+          />
+        )}
+        <MyButton onClick={actions.addParagraphHandler}>
+          Добавить параграф
+        </MyButton>
       </div>
 
       <div className={styles.saveBtn}>

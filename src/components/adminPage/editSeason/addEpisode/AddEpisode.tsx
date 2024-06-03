@@ -7,6 +7,8 @@ import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
 import { useAddEpisode } from "@/hooks/useAddEpisode";
 import MyInput from "@/components/UI/myInput/MyInput";
 import ErrorMessage from "@/components/UI/errorMessage/ErrorMessage";
+import MyTextArea from "@/components/UI/myTextArea/MyTextArea";
+import { MdOutlineRemoveCircle } from "react-icons/md";
 
 interface Props {
   episodes: IEpisode[];
@@ -79,14 +81,27 @@ const AddEpisode: FC<Props> = ({ episodes, seasonId, closeModal }) => {
           />
         </div>
 
-        <div className={styles.input}>
-          <MyInput
-            type="text"
-            placeholder={"Описание"}
-            value={data.episodeData.description}
-            onChange={(e) => actions.changeEpisodeDataHandler(e, "description")}
-          />
-        </div>
+        {data.episodeData.description.map((textarea, index) => (
+          <div className={styles.input} key={index}>
+            <MyTextArea
+              value={data.episodeData.description[index]}
+              onChange={(e) => {
+                actions.changeDescriptionHandler(e, index);
+              }}
+            />
+            <div
+              className={styles.deleteParagraphBtn}
+              title={"Удалить параграф"}
+              onClick={() => actions.deleteParagraphHandler(index)}
+            >
+              <MdOutlineRemoveCircle />
+            </div>
+          </div>
+        ))}
+
+        <MyButton onClick={actions.addParagraphHandler}>
+          Добавить параграф
+        </MyButton>
 
         <div className={styles.bottom}>
           {data.uploadProgress.isUploading && (
