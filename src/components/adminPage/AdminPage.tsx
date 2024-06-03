@@ -1,19 +1,12 @@
-"use client";
-import React, { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import React from "react";
+import { redirect } from "next/navigation";
+import styles from "./AdminPage.module.scss";
 
 const AdminPage = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (pathname === "/admin") {
-      router.push("/admin/series");
-    }
-  }, []);
+  redirect("/admin/series");
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <div className={styles.root}>
       <h1>Админ панель</h1>
     </div>
   );

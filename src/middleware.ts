@@ -20,23 +20,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL_API + "auth/checkauth",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          accessToken,
-          refreshToken,
-        },
-      },
-    );
-
-    const result = await response.json();
-
-    if (result?.statusCode === 401) {
-      if (!refreshToken) {
-        return NextResponse.redirect(new URL("/login", request.url));
-      }
+    if (refreshToken && !accessToken) {
       const response = await fetch(
         process.env.NEXT_PUBLIC_SERVER_URL_API + "auth/refresh",
         {
@@ -51,6 +35,55 @@ export async function middleware(request: NextRequest) {
       if (!result.admin) {
         return NextResponse.redirect(new URL("/login", request.url));
       }
+
+      const responseNext = NextResponse.next();
+
+      const setCookieHeader = response.headers.get("set-cookie");
+
+      if (setCookieHeader) {
+        const cookies = setCookieHeader
+          .split(", ")
+          .map((cookie) => cookie.split("; "));
+        cookies.forEach((cookieParts) => {
+          const [nameValue, ...attributes] = cookieParts;
+          const [name, value] = nameValue?.split("=") || [];
+
+          if (name && value) {
+            const cookieOptions: any = {};
+
+            attributes.forEach((attr) => {
+              const [attrName, attrValue] = attr.split("=");
+              switch (attrName.toLowerCase()) {
+                case "max-age":
+                  cookieOptions.maxAge = parseInt(attrValue, 10);
+                  break;
+                case "path":
+                  cookieOptions.path = attrValue;
+                  break;
+                case "expires":
+                  cookieOptions.expires = new Date(attrValue);
+                  break;
+                case "httponly":
+                  cookieOptions.httpOnly = true;
+                  break;
+                case "secure":
+                  cookieOptions.secure = true;
+                  break;
+                case "samesite":
+                  cookieOptions.sameSite = attrValue.toLowerCase() as
+                    | "lax"
+                    | "strict"
+                    | "none";
+                  break;
+              }
+            });
+
+            responseNext.cookies.set(name.trim(), value.trim(), cookieOptions);
+          }
+        });
+      }
+
+      return responseNext;
     }
   }
   return;

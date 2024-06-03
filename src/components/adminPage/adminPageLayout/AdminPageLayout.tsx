@@ -32,10 +32,10 @@ const AdminPageLayout: FC<PropsWithChildren> = ({ children }) => {
   const logoutHandler = async () => {
     try {
       await authService.logout();
-      localStorage.removeItem("accessToken");
-      await router.push("/login");
     } catch (e) {
       console.log(e);
+    } finally {
+      router.push("/login");
     }
   };
 
