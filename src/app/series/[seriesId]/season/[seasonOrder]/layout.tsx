@@ -1,7 +1,6 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
 import { SeasonDetailsParams } from "@/app/series/[seriesId]/season/[seasonOrder]/page";
-import { Metadata } from "next";
 
 export const revalidate = 1800;
 
@@ -11,9 +10,8 @@ export const generateMetadata = async ({
   params: SeasonDetailsParams;
 }) => {
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_CLIENT_URL!),
     alternates: {
-      canonical: `/series/${params.seriesId}/season/${params.seasonOrder}`,
+      canonical: false,
     },
     title: `Игра престолов ${params.seasonOrder} сезон смотреть онлайн бесплатно все серии`,
     description: `Сериал Игра престолов (Game of Thrones) ${params.seasonOrder} сезон смотреть онлайн все серии бесплатно, без регистрации в хорошем качестве HD 1080 официальный дубляж.`,

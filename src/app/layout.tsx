@@ -10,10 +10,6 @@ import YandexMetrika from "@/components/yandexMetrika/YandexMetrika";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_CLIENT_URL!),
-  alternates: {
-    canonical: "/",
-  },
   title: "Игра престолов смотреть онлайн бесплатно все сезоны",
   description:
     "Сериал Игра престолов (Game of Thrones) смотреть онлайн все сезоны и серии бесплатно, без регистрации в хорошем качестве HD, FullHD 720-1080.",

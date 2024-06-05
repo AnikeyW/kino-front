@@ -4,7 +4,6 @@ import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import styles from "./page.module.scss";
 import EpisodeDetailsInfo from "@/components/series/episodeDetailsInfo/EpisodeDetailsInfo";
 import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
-import { SeasonDetailsParams } from "@/app/series/[seriesId]/season/[seasonOrder]/page";
 
 interface Params {
   seasonOrder: number;
@@ -22,10 +21,6 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
   );
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_CLIENT_URL!),
-    alternates: {
-      canonical: `/series/${params.seriesId}/season/${params.seasonOrder}/episode/${params.episodeOrder}`,
-    },
     title: `Игра престолов ${params.seasonOrder} сезон ${params.episodeOrder} серия смотреть онлайн бесплатно`,
     description: `Сериал Игра престолов (Game of Thrones) смотреть онлайн ${params.seasonOrder} сезон ${params.episodeOrder} серию в хорошем качестве FullHD 1080 в русском дубляже на ПК, ТВ и мобильных устройствах.`,
     robots: {
