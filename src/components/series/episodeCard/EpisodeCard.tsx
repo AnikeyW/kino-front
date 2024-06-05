@@ -3,7 +3,7 @@ import { IEpisode } from "@/components/series/Series.types";
 import styles from "./EpisodeCard.module.scss";
 import Image from "next/image";
 import MyLink from "@/components/UI/myLink/MyLink";
-import { formatDate, formatTimeHhMm } from "@/utils";
+import { formatTimeHhMm } from "@/utils";
 
 interface Props {
   episode: IEpisode;
@@ -20,6 +20,7 @@ const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
             src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
             alt={"episode_poster"}
             fill={true}
+            quality={60}
           />
         </div>
         <div className={styles.episodeInfo}>
