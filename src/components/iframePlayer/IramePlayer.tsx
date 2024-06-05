@@ -30,7 +30,8 @@ const IframePlayer: FC<Props> = ({ episode }) => {
     });
 
     const url = `/player/playerjs.html?file=${videoSrc}&subtitle=${subtitlesSrc}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
-    setUrl(url);
+    const formatUrl = url.replace(/\\/g, "/");
+    setUrl(formatUrl);
   }, []);
 
   return (
