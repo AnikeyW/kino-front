@@ -150,7 +150,11 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
           <>
             {JSON.parse(data.episodeData.description).map(
               (paragraph: string, index: number) => (
-                <div style={{ display: "flex" }} className={styles.paragraph}>
+                <div
+                  style={{ display: "flex" }}
+                  className={styles.paragraph}
+                  key={index}
+                >
                   <div className={styles.textArea}>
                     <EditableTextarea
                       key={index}

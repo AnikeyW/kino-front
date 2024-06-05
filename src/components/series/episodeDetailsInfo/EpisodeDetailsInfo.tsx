@@ -56,9 +56,13 @@ const EpisodeDetailsInfo: FC<Props> = ({
 
         {isJSON(episode.description) ? (
           <div className={styles.description}>
-            {JSON.parse(episode.description).map((paragraph: string) => (
-              <p style={{ marginBottom: "1rem" }}>{paragraph}</p>
-            ))}
+            {JSON.parse(episode.description).map(
+              (paragraph: string, index: number) => (
+                <p style={{ marginBottom: "1rem" }} key={index}>
+                  {paragraph}
+                </p>
+              ),
+            )}
           </div>
         ) : (
           <div
