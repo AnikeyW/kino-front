@@ -71,8 +71,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <Script id="metrika-counter" strategy="afterInteractive">
-        {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      {process.env.NODE_ENV === "production" && (
+        <Script id="metrika-counter" strategy="afterInteractive">
+          {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
           m[i].l=1*new Date();
           for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
           k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -84,14 +85,21 @@ export default function RootLayout({
                 trackLinks:true,
                 accurateTrackBounce:true,
           });`}
-      </Script>
-      <Suspense fallback={<></>}>
-        <YandexMetrika />
-      </Suspense>
+        </Script>
+      )}
+
+      {process.env.NODE_ENV === "production" && (
+        <Suspense fallback={<></>}>
+          <YandexMetrika />
+        </Suspense>
+      )}
+
       <body className={inter.className}>
         <MainLayout>{children}</MainLayout>
       </body>
-      <GoogleAnalytics gaId="G-9NXHFLG71P" />
+      {process.env.NODE_ENV === "production" && (
+        <GoogleAnalytics gaId="G-9NXHFLG71P" />
+      )}
     </html>
   );
 }
