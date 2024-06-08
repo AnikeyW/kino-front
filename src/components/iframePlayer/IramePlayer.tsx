@@ -4,7 +4,6 @@ import styles from "./IframePlayer.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
 
 interface Props {
-  // src: string;
   episode: IEpisode;
 }
 
@@ -39,7 +38,6 @@ const IframePlayer: FC<Props> = ({ episode }) => {
       {url && (
         <iframe src={url} width="100%" height="100%" allowFullScreen></iframe>
       )}
-      {/*<iframe src={src} width="100%" height="100%" allowFullScreen></iframe>*/}
     </div>
   );
 };
