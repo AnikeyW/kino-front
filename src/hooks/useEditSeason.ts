@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { EditSeasonDto, seriesService } from "@/services/series.service";
 import { ISeason } from "@/components/series/Series.types";
 import { toast } from "react-hot-toast";
+import { isJSON } from "@/utils";
 
 export const useEditSeason = (seasonDetails: ISeason) => {
   const [seasonData, setSeasonData] = useState<EditSeasonDto>({
@@ -12,6 +13,49 @@ export const useEditSeason = (seasonDetails: ISeason) => {
   });
   const [posterPreviewSrc, setPosterPreviewSrc] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const deleteParagraphHandler = (paragraphIndex: number) => {
+    const description = JSON.parse(seasonData.description);
+    description.splice(paragraphIndex, 1);
+
+    setSeasonData({
+      ...seasonData,
+      description: JSON.stringify(description),
+    });
+  };
+
+  const changeDescriptionHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    paragraphIndex: number,
+  ) => {
+    const description = JSON.parse(seasonData.description);
+
+    description[paragraphIndex] = e.target.value;
+    setSeasonData({
+      ...seasonData,
+      description: JSON.stringify(description),
+    });
+  };
+
+  const addParagraphHandler = () => {
+    if (seasonData.description === "") {
+      setSeasonData({
+        ...seasonData,
+        description: JSON.stringify([""]),
+      });
+      return;
+    }
+    if (isJSON(seasonData.description)) {
+      const description = JSON.parse(seasonData.description);
+      description.push("");
+      setSeasonData({
+        ...seasonData,
+        description: JSON.stringify(description),
+      });
+    } else {
+      toast.error("Не правильный формат");
+    }
+  };
 
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -60,6 +104,9 @@ export const useEditSeason = (seasonDetails: ISeason) => {
       onChangePicture,
       changeSeasonDataHandler,
       saveChangesHandler,
+      addParagraphHandler,
+      changeDescriptionHandler,
+      deleteParagraphHandler,
     },
   };
 };

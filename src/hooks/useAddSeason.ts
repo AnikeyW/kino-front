@@ -12,7 +12,7 @@ export const useAddSeason = (
   const router = useRouter();
   const [seasonData, setSeasonData] = useState<CreateSeasonDto>({
     title: `Сезон ${seasons.length + 1}`,
-    description: "",
+    description: [""],
     order: seasons.length + 1,
     poster: null,
     seriesId: seriesId,
@@ -20,6 +20,38 @@ export const useAddSeason = (
   const [posterPreviewSrc, setPosterPreviewSrc] = useState<string>("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const addParagraphHandler = () => {
+    const description = seasonData.description;
+    description.push("");
+    setSeasonData({
+      ...seasonData,
+      description: description,
+    });
+  };
+
+  const deleteParagraphHandler = (paragraphIndex: number) => {
+    const description = seasonData.description;
+    description.splice(paragraphIndex, 1);
+
+    setSeasonData({
+      ...seasonData,
+      description: description,
+    });
+  };
+
+  const changeDescriptionHandler = (
+    e: ChangeEvent<HTMLTextAreaElement>,
+    paragraphIndex: number,
+  ) => {
+    const description = seasonData.description;
+
+    description[paragraphIndex] = e.target.value;
+    setSeasonData({
+      ...seasonData,
+      description: description,
+    });
+  };
 
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -53,7 +85,7 @@ export const useAddSeason = (
       const response = await seriesService.addSeason(seasonData);
       setSeasonData({
         title: "",
-        description: "",
+        description: [""],
         order: seasons.length + 1,
         poster: null,
         seriesId: seriesId,
@@ -81,6 +113,9 @@ export const useAddSeason = (
       onChangePicture,
       changeSeasonDataHandler,
       addSeasonHandler,
+      changeDescriptionHandler,
+      deleteParagraphHandler,
+      addParagraphHandler,
     },
   };
 };

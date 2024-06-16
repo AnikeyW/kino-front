@@ -8,6 +8,11 @@ import { ISeries } from "@/components/series/Series.types";
 import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
 import Image from "next/image";
 import { useEditSeries } from "@/hooks/useEditSeries";
+import { Select } from "antd";
+import { useGetCountriesList } from "@/hooks/useGetCountriesList";
+import { useGetGenresList } from "@/hooks/useGetGenresList";
+import { isJSON } from "@/utils";
+import { MdOutlineRemoveCircle } from "react-icons/md";
 
 interface Props {
   seriesDetails: ISeries;
@@ -15,6 +20,8 @@ interface Props {
 
 const EditInfo: FC<Props> = ({ seriesDetails }) => {
   const { data, actions } = useEditSeries(seriesDetails);
+  const { countries, isLoadingCountries } = useGetCountriesList();
+  const { genres, isLoadingGenres } = useGetGenresList();
 
   return (
     <div className={styles.root}>
@@ -56,21 +63,136 @@ const EditInfo: FC<Props> = ({ seriesDetails }) => {
           />
         </div>
 
-        <div className={styles.seriesReleaseYear}>
+        <div className={styles.input}>
           <EditableInput
-            label={"Год выхода :"}
+            label={"Год выхода: "}
             value={data.seriesData.releaseYear}
             onChange={(e) => actions.changeSeriesDataHandler(e, "releaseYear")}
           />
         </div>
 
+        <div className={styles.input}>
+          <EditableInput
+            label={"Рейтинг Кинопоиск: "}
+            value={data.seriesData.rateKinopoisk.toString()}
+            onChange={(e) =>
+              actions.changeSeriesDataHandler(e, "rateKinopoisk")
+            }
+          />
+        </div>
+
+        <div className={styles.input}>
+          <EditableInput
+            label={"Рейтинг IMDB: "}
+            value={data.seriesData.rateImdb.toString()}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "rateImdb")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <span>Качество:</span>
+          <Select
+            value={data.seriesData.quality}
+            style={{ width: 120 }}
+            onChange={actions.onSelectQualityHandler}
+            variant={"outlined"}
+            options={[
+              { value: 240, label: 240 },
+              { value: 320, label: 320 },
+              { value: 480, label: 480 },
+              { value: 720, label: 720 },
+              { value: 1080, label: 1080 },
+              { value: 1440, label: 1440 },
+              { value: 2160, label: 2160 },
+              { value: 4320, label: 4320 },
+            ]}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <span>Страна:</span>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ minWidth: "200px" }}
+            placeholder="Выбери страны"
+            defaultValue={data.seriesData.countries}
+            onChange={actions.onSelectCountryHandler}
+            loading={isLoadingCountries}
+            options={countries.map((country) => ({
+              value: country,
+              label: country,
+            }))}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <span>Жанры:</span>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "200px" }}
+            placeholder="Выбери жанры"
+            defaultValue={data.seriesData.genres}
+            onChange={actions.onSelectGenresHandler}
+            loading={isLoadingGenres}
+            options={genres.map((genre) => ({
+              value: genre,
+              label: genre,
+            }))}
+          />
+        </div>
+
         <div className={styles.description}>
           <small>Описание:</small>
-          <EditableTextarea
-            label={""}
-            value={data.seriesData.description}
-            onChange={(e) => actions.changeSeriesDataHandler(e, "description")}
-          />
+          {isJSON(data.seriesData.description) ? (
+            <>
+              {JSON.parse(data.seriesData.description).map(
+                (paragraph: string, index: number) => (
+                  <div
+                    style={{ display: "flex" }}
+                    className={styles.paragraph}
+                    key={index}
+                  >
+                    <div className={styles.textArea}>
+                      <EditableTextarea
+                        key={index}
+                        label={""}
+                        value={paragraph}
+                        placeholder={`Параграф ${index + 1}`}
+                        defaultText={
+                          paragraph === "" ? `Параграф ${index + 1}` : ""
+                        }
+                        onChange={(e) =>
+                          actions.changeDescriptionHandler(e, index)
+                        }
+                      />
+                    </div>
+
+                    <div
+                      onClick={() => actions.deleteParagraphHandler(index)}
+                      className={styles.deleteParagraphBtn}
+                    >
+                      <MdOutlineRemoveCircle
+                        title={`Удалить параграф ${index + 1}`}
+                      />
+                    </div>
+                  </div>
+                ),
+              )}
+            </>
+          ) : (
+            <EditableTextarea
+              label={""}
+              value={data.seriesData.description}
+              onChange={(e) =>
+                actions.changeSeriesDataHandler(e, "description")
+              }
+            />
+          )}
+          <MyButton onClick={actions.addParagraphHandler}>
+            Добавить параграф
+          </MyButton>
         </div>
 
         <div className={styles.saveBtn}>

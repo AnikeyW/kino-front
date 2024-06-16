@@ -1,9 +1,24 @@
+export type QualityResolutionType =
+  | 240
+  | 320
+  | 480
+  | 720
+  | 1080
+  | 1440
+  | 2160
+  | 4320;
+
 export interface ISeries {
   id: number;
   title: string;
   poster: string;
   releaseYear: number;
   description: string;
+  rateKinopoisk: number;
+  rateImdb: number;
+  quality: QualityResolutionType;
+  countries: string[];
+  genres: string[];
   seasons: ISeasonWithoutEpisodes[];
 }
 

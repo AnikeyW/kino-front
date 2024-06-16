@@ -1,23 +1,68 @@
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
-import {
-  CreateSeasonDto,
-  CreateSeriesDto,
-  seriesService,
-} from "@/services/series.service";
+import { CreateSeriesDto, seriesService } from "@/services/series.service";
 import { toast } from "react-hot-toast";
 
 export const useAddSeries = (closeModal: () => void) => {
   const router = useRouter();
   const [seriesData, setSeriesData] = useState<CreateSeriesDto>({
     title: ``,
-    description: "",
+    description: [""],
     releaseYear: 2011,
     poster: null,
+    countries: [],
+    genres: [],
+    quality: 1080,
+    rateImdb: 9,
+    rateKinopoisk: 9,
   });
   const [posterPreviewSrc, setPosterPreviewSrc] = useState<string>("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const addParagraphHandler = () => {
+    const description = seriesData.description;
+    description.push("");
+    setSeriesData({
+      ...seriesData,
+      description: description,
+    });
+  };
+
+  const deleteParagraphHandler = (paragraphIndex: number) => {
+    const description = seriesData.description;
+    description.splice(paragraphIndex, 1);
+
+    setSeriesData({
+      ...seriesData,
+      description: description,
+    });
+  };
+
+  const changeDescriptionHandler = (
+    e: ChangeEvent<HTMLTextAreaElement>,
+    paragraphIndex: number,
+  ) => {
+    const description = seriesData.description;
+
+    description[paragraphIndex] = e.target.value;
+    setSeriesData({
+      ...seriesData,
+      description: description,
+    });
+  };
+
+  const onSelectQualityHandler = (value: number) => {
+    setSeriesData({ ...seriesData, quality: value });
+  };
+
+  const onSelectGenresHandler = (value: string[]) => {
+    setSeriesData({ ...seriesData, genres: value });
+  };
+
+  const onSelectCountryHandler = (value: string[]) => {
+    setSeriesData({ ...seriesData, countries: value });
+  };
 
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -51,9 +96,14 @@ export const useAddSeries = (closeModal: () => void) => {
       const response = await seriesService.addSeries(seriesData);
       setSeriesData({
         title: "",
-        description: "",
+        description: [""],
         poster: null,
         releaseYear: 2011,
+        countries: [],
+        genres: [],
+        quality: 1080,
+        rateImdb: 9,
+        rateKinopoisk: 9,
       });
       setPosterPreviewSrc("");
       router.refresh();
@@ -78,6 +128,12 @@ export const useAddSeries = (closeModal: () => void) => {
       onChangePicture,
       changeSeriesDataHandler,
       addSeriesHandler,
+      onSelectCountryHandler,
+      onSelectQualityHandler,
+      onSelectGenresHandler,
+      changeDescriptionHandler,
+      deleteParagraphHandler,
+      addParagraphHandler,
     },
   };
 };

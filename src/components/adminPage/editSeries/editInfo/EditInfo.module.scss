@@ -32,11 +32,35 @@
       margin-bottom: .5rem;
     }
 
-    .seriesReleaseYear{
+    .input{
       margin-bottom: .5rem;
     }
 
-    .description{}
+    .description{
+      margin-bottom: .5rem;
+
+      small {
+        margin-bottom: 0.5rem;
+      }
+
+      .paragraph{
+        display: flex;
+        margin-bottom: 0.5rem;
+
+        .textArea {
+          flex: auto;
+
+          textarea::placeholder {
+            color: #999;
+            opacity: 1;
+          }
+        }
+
+        .deleteParagraphBtn{
+          cursor: pointer;
+        }
+      }
+    }
 
     .saveBtn{
       margin-top: auto;

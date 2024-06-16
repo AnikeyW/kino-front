@@ -9,8 +9,13 @@ import { AxiosProgressEvent } from "axios";
 
 export interface CreateSeriesDto {
   title: string;
-  description: string;
+  description: string[];
   releaseYear: number;
+  rateKinopoisk: number;
+  rateImdb: number;
+  quality: number;
+  countries: string[];
+  genres: string[];
   poster: File | null;
 }
 
@@ -18,12 +23,17 @@ export interface EditSeriesDto {
   title: string;
   description: string;
   releaseYear: string;
+  rateKinopoisk: number;
+  rateImdb: number;
+  quality: number;
+  countries: string[];
+  genres: string[];
   poster: File | string;
 }
 
 export interface CreateSeasonDto {
   title: string;
-  description: string;
+  description: string[];
   seriesId: number;
   order: number;
   poster: File | null;
@@ -151,7 +161,7 @@ export const seriesService = {
       const formData = new FormData();
 
       formData.append("title", data.title);
-      formData.append("description", data.description);
+      formData.append("description", JSON.stringify(data.description));
       formData.append("seriesId", data.seriesId.toString());
       formData.append("order", data.order.toString());
       formData.append("poster", data.poster!);
@@ -172,8 +182,13 @@ export const seriesService = {
       const formData = new FormData();
 
       formData.append("title", data.title);
-      formData.append("description", data.description);
+      formData.append("description", JSON.stringify(data.description));
       formData.append("releaseYear", data.releaseYear.toString());
+      formData.append("quality", data.quality.toString());
+      formData.append("rateKinopoisk", data.rateKinopoisk.toString());
+      formData.append("rateImdb", data.rateImdb.toString());
+      formData.append("countries", JSON.stringify(data.countries));
+      formData.append("genres", JSON.stringify(data.genres));
       formData.append("poster", data.poster!);
 
       await $api.post(
@@ -193,6 +208,11 @@ export const seriesService = {
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("releaseYear", data.releaseYear);
+      formData.append("rateKinopoisk", data.rateKinopoisk.toString());
+      formData.append("rateImdb", data.rateImdb.toString());
+      formData.append("quality", data.quality.toString());
+      formData.append("countries", JSON.stringify(data.countries));
+      formData.append("genres", JSON.stringify(data.genres));
       formData.append("poster", data.poster);
 
       const response = await $api.post(

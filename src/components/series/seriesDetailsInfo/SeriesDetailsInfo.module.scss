@@ -40,7 +40,7 @@
         }
       }
 
-      .releaseYear {
+      .infoItem{
         margin-bottom: 5px;
 
         small {
@@ -58,6 +58,8 @@
         }
 
         p{
+          text-indent: 2rem;
+
           @media screen and (max-width: 576px){
             font-size: 14px;
           }
@@ -75,6 +77,8 @@
     }
 
     p{
+      text-indent: 2rem;
+
       @media screen and (max-width: 576px){
         font-size: 14px;
       }

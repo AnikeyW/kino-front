@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import styles from "./SeasonDetailsInfo.module.scss";
 import { ISeason, ISeries } from "@/components/series/Series.types";
+import { isJSON } from "@/utils";
 
 interface Props {
   seasonData: ISeason;
@@ -14,9 +15,21 @@ const SeasonDetailsInfo: FC<Props> = ({ seasonData, seriesData }) => {
         <h1 className={styles.title}>
           {seriesData.title} {seasonData.title}
         </h1>
-        <div className={styles.description}>
-          <p>{seasonData.description}</p>
-        </div>
+        {isJSON(seasonData.description) ? (
+          <div className={styles.description}>
+            {JSON.parse(seasonData.description).map(
+              (paragraph: string, index: number) => (
+                <p style={{ marginBottom: "1rem" }} key={index}>
+                  {paragraph}
+                </p>
+              ),
+            )}
+          </div>
+        ) : (
+          <div className={styles.description}>
+            <p>{seasonData.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );

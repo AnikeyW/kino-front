@@ -8,6 +8,8 @@ import MyInput from "@/components/UI/myInput/MyInput";
 import Image from "next/image";
 import { useAddSeason } from "@/hooks/useAddSeason";
 import ErrorMessage from "@/components/UI/errorMessage/ErrorMessage";
+import MyTextArea from "@/components/UI/myTextArea/MyTextArea";
+import { MdOutlineRemoveCircle } from "react-icons/md";
 
 interface Props {
   seriesId: number;
@@ -60,13 +62,28 @@ const AddSeason: FC<Props> = ({ seriesId, seasons, closeModal }) => {
           />
         </div>
 
-        <div className={styles.input}>
-          <MyInput
-            type={"text"}
-            placeholder={"Описание"}
-            value={data.seasonData.description}
-            onChange={(e) => actions.changeSeasonDataHandler(e, "description")}
-          />
+        {data.seasonData.description.map((textarea, index) => (
+          <div className={styles.input} key={index}>
+            <MyTextArea
+              value={data.seasonData.description[index]}
+              onChange={(e) => {
+                actions.changeDescriptionHandler(e, index);
+              }}
+            />
+            <div
+              className={styles.deleteParagraphBtn}
+              title={"Удалить параграф"}
+              onClick={() => actions.deleteParagraphHandler(index)}
+            >
+              <MdOutlineRemoveCircle />
+            </div>
+          </div>
+        ))}
+
+        <div className={styles.addParagraphBtn}>
+          <MyButton onClick={actions.addParagraphHandler}>
+            Добавить параграф
+          </MyButton>
         </div>
 
         <div className={styles.addSeasonBtn}>

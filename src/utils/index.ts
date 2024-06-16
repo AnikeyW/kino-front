@@ -1,3 +1,5 @@
+import { QualityResolutionType } from "@/components/series/Series.types";
+
 export const formatTime = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -42,4 +44,21 @@ export const isJSON = (str: string): boolean => {
   } catch (e) {
     return false;
   }
+};
+
+export const getQualityName = (
+  qualityResolution: QualityResolutionType,
+): string => {
+  const qualities = {
+    240: "240p",
+    320: "320p",
+    480: "480p",
+    720: "HD",
+    1080: "FullHD",
+    1440: "2K",
+    2160: "4K",
+    4320: "8K",
+  };
+
+  return qualities[qualityResolution];
 };
