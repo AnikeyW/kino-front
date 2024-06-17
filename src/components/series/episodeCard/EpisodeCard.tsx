@@ -13,25 +13,27 @@ interface Props {
 
 const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
   return (
-    <MyLink href={href}>
-      <div className={styles.root}>
-        <div className={styles.poster}>
-          <Image
-            src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
-            alt={"episode_poster"}
-            fill={true}
-            quality={60}
-          />
+    <li>
+      <MyLink href={href}>
+        <div className={styles.root}>
+          <div className={styles.poster}>
+            <Image
+              src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
+              alt={"episode_poster"}
+              fill={true}
+              quality={60}
+            />
+          </div>
+          <div className={styles.episodeInfo}>
+            <span>{`Сезон ${seasonOrder} Серия ${episode.order}`}</span>
+            <span className={styles.duration}>
+              {formatTimeHhMm(episode.duration)}
+            </span>
+          </div>
+          <h3 className={styles.title}>{episode.title}</h3>
         </div>
-        <div className={styles.episodeInfo}>
-          <span>{`Сезон ${seasonOrder} Серия ${episode.order}`}</span>
-          <span className={styles.duration}>
-            {formatTimeHhMm(episode.duration)}
-          </span>
-        </div>
-        <div className={styles.title}>{episode.title}</div>
-      </div>
-    </MyLink>
+      </MyLink>
+    </li>
   );
 };
 

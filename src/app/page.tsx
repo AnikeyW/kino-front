@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./page.module.scss";
 import { seriesService } from "@/services/series.service";
 import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
@@ -19,13 +18,13 @@ const Page = async () => {
   ];
 
   return (
-    <div className={styles.root}>
+    <>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       <DetailsPage>
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
         <SeriesDetailsInfo seriesDetails={seriesDetails} />
         <SeasonList seasons={seriesDetails.seasons} />
       </DetailsPage>
-    </div>
+    </>
   );
 };
 

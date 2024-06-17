@@ -10,8 +10,8 @@ interface Props {
 const SeasonList: FC<Props> = ({ seasons }) => {
   return (
     <div className={styles.root}>
-      <h2 className={styles.title}>Сезоны</h2>
-      <div className={styles.seasonsList}>
+      <h2 className={styles.title}>Все сезоны сериала</h2>
+      <ul className={styles.seasonsList}>
         {seasons.map((season) => (
           <CardItem
             key={season.id}
@@ -20,7 +20,7 @@ const SeasonList: FC<Props> = ({ seasons }) => {
             href={`/series/${season.seriesId}/season/${season.order}`}
           />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

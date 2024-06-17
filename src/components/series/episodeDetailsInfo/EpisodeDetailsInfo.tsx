@@ -52,7 +52,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
           </div>
         </div>
 
-        <div className={styles.title}>{episode.title}</div>
+        <h2 className={styles.title}>{episode.title}</h2>
 
         {isJSON(episode.description) ? (
           <div className={styles.description}>
@@ -76,7 +76,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
         <div className={styles.seasonEpisodesTitle}>
           {`Все серии ${seasonOrder} сезона`}
         </div>
-        <div className={styles.seasonEpisodesList}>
+        <ul className={styles.seasonEpisodesList}>
           {seasonEpisodes.map((episode) => (
             <EpisodeCard
               key={episode.id}
@@ -85,7 +85,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
               seasonOrder={seasonOrder}
             />
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

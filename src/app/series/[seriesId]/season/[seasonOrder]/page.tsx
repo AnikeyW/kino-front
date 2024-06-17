@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./page.module.scss";
 import { seriesService } from "@/services/series.service";
 import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
 import SeasonDetailsInfo from "@/components/series/seasonDetailsInfo/seasonDetailsInfo";
@@ -31,9 +30,9 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
   ];
 
   return (
-    <div className={styles.root}>
+    <>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       <DetailsPage>
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
         <SeasonDetailsInfo seasonData={season} seriesData={series} />
         <EpisodeList
           episodes={season.episodes}
@@ -41,7 +40,7 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
           seasonOrder={params.seasonOrder}
         />
       </DetailsPage>
-    </div>
+    </>
   );
 };
 

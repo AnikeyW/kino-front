@@ -47,10 +47,12 @@ const Page = async () => {
     },
   ];
   return (
-    <div className={styles.root}>
+    <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <SeriesList series={series} />
-    </div>
+      <article className={styles.root}>
+        <SeriesList series={series} />
+      </article>
+    </>
   );
 };
 

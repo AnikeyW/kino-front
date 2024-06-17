@@ -3,9 +3,12 @@
   align-items: center;
   gap: 0.25rem;
   color: #b9b9b9;
+  background-color: var(--bgc-page);
+  padding: 0.5rem;
 
   @media screen and (max-width: 576px){
     font-size: 14px;
+    padding: 5px;
   }
 
   svg {

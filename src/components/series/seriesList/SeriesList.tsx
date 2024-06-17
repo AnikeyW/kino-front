@@ -9,18 +9,17 @@ interface Props {
 
 const SeriesList: FC<Props> = ({ series }) => {
   return (
-    <div className={styles.root}>
+    <ul className={styles.root}>
       {series.map((seriesItem) => (
-        <div key={seriesItem.id} className={styles.itemWrapper}>
-          <CardItem
-            href={`/series/${seriesItem.id}`}
-            imageSrc={seriesItem.poster}
-            title={seriesItem.title}
-            releaseDate={seriesItem.releaseYear}
-          />
-        </div>
+        <CardItem
+          key={seriesItem.id}
+          href={`/series/${seriesItem.id}`}
+          imageSrc={seriesItem.poster}
+          title={seriesItem.title}
+          releaseDate={seriesItem.releaseYear}
+        />
       ))}
-    </div>
+    </ul>
   );
 };
 

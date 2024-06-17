@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import styles from "./EpisodeList.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
-import CardItem from "@/components/UI/cardItem/CardItem";
 import EpisodeCard from "@/components/series/episodeCard/EpisodeCard";
 
 interface Props {
@@ -12,8 +11,8 @@ interface Props {
 const EpisodeList: FC<Props> = ({ episodes, seriesId, seasonOrder }) => {
   return (
     <div className={styles.root}>
-      <h2 className={styles.title}>Эпизоды</h2>
-      <div className={styles.episodesList}>
+      <h2 className={styles.title}>Все серии {seasonOrder} сезона</h2>
+      <ul className={styles.episodesList}>
         {episodes.map((episode) => (
           <EpisodeCard
             key={episode.id}
@@ -22,7 +21,7 @@ const EpisodeList: FC<Props> = ({ episodes, seriesId, seasonOrder }) => {
             href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
           />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

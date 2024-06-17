@@ -16,12 +16,12 @@ const Breadcrumbs: FC<Props> = ({ breadcrumbs }) => {
   const lastBreadcrumb = breadcrumbs.pop();
 
   return (
-    <div className={styles.root}>
+    <nav className={styles.root}>
       {breadcrumbs.map((breadcrumb) => (
         <BreadcrumbItem breadcrumb={breadcrumb} key={breadcrumb.path} />
       ))}
       <span>{lastBreadcrumb?.title}</span>
-    </div>
+    </nav>
   );
 };
 
