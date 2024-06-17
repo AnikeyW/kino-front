@@ -5,6 +5,7 @@ import cl from "classnames";
 export enum VariantsBtn {
   DEFAULT = "default",
   ACTION = "action",
+  ERROR = "error",
 }
 
 interface Props {
@@ -26,6 +27,7 @@ const MyButton: FC<Props> = ({
     <button
       className={cl(styles.root, {
         [styles.action]: variant === VariantsBtn.ACTION,
+        [styles.error]: variant === VariantsBtn.ERROR,
       })}
       onClick={onClick}
       type={type ? type : "button"}

@@ -5,8 +5,9 @@ import styles from "./EditEpisodesList.module.scss";
 import { useRouter } from "next/navigation";
 import AddEpisode from "@/components/adminPage/editSeason/addEpisode/AddEpisode";
 import Modal from "@/components/UI/modal/Modal";
-import MyButton from "@/components/UI/myButton/MyButton";
+import MyButton, { VariantsBtn } from "@/components/UI/myButton/MyButton";
 import Image from "next/image";
+import DeleteEpisode from "@/components/adminPage/editSeason/deleteEpisode/DeleteEpisode";
 
 interface Props {
   episodes: IEpisode[];
@@ -16,10 +17,23 @@ interface Props {
 
 const EditEpisodesList: FC<Props> = ({ episodes, seriesId, seasonId }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenDeleteEpisodeModal, setIsOpenDeleteEpisodeModal] =
+    useState(false);
+  const [selectedEpisode, setSelectedEpisode] = useState<IEpisode | null>(null);
   const router = useRouter();
 
   const closeModal = () => {
     setIsOpenModal(false);
+  };
+
+  const closeDeleteEpisodeModal = () => {
+    setIsOpenDeleteEpisodeModal(false);
+    setSelectedEpisode(null);
+  };
+
+  const openDeleteEpisodeModal = (episode: IEpisode) => {
+    setSelectedEpisode(episode);
+    setIsOpenDeleteEpisodeModal(true);
   };
 
   return (
@@ -30,6 +44,18 @@ const EditEpisodesList: FC<Props> = ({ episodes, seriesId, seasonId }) => {
           seasonId={seasonId}
           closeModal={closeModal}
         />
+      </Modal>
+
+      <Modal
+        isOpen={isOpenDeleteEpisodeModal}
+        onClose={closeDeleteEpisodeModal}
+      >
+        {selectedEpisode && (
+          <DeleteEpisode
+            episode={selectedEpisode}
+            closeModal={closeDeleteEpisodeModal}
+          />
+        )}
       </Modal>
 
       <div className={styles.listTitle}>Эпизоды:</div>
@@ -56,15 +82,23 @@ const EditEpisodesList: FC<Props> = ({ episodes, seriesId, seasonId }) => {
                 </div>
               </div>
 
-              <MyButton
-                onClick={() =>
-                  router.push(
-                    `/admin/series/edit/${seriesId}/season/${seasonId}/episode/${episode.id}`,
-                  )
-                }
-              >
-                Редактировать
-              </MyButton>
+              <div className={styles.btns}>
+                <MyButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/series/edit/${seriesId}/season/${seasonId}/episode/${episode.id}`,
+                    )
+                  }
+                >
+                  Редактировать
+                </MyButton>
+                <MyButton
+                  variant={VariantsBtn.ERROR}
+                  onClick={() => openDeleteEpisodeModal(episode)}
+                >
+                  Удалить
+                </MyButton>
+              </div>
             </div>
           ))}
         </div>

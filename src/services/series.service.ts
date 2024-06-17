@@ -73,6 +73,19 @@ export interface EditEpisodeDto {
 }
 
 export const seriesService = {
+  async deleteEpisode(episodeId: number) {
+    try {
+      const response = await $api.delete<IEpisode>(
+        process.env.NEXT_PUBLIC_SERVER_URL_API + `episode/${episodeId}`,
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Ошибка удаления Эпизода");
+    }
+  },
+
   async addEpisode(
     episodeData: CreateEpisodeDto,
     setPercentCallback: (percent: number) => void,
