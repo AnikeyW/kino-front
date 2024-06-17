@@ -8,4 +8,30 @@
   iframe {
     background-color: inherit;
   }
+  
+  .processing{
+    background: #000;
+    height: 100%;
+    position: relative;
+
+    .poster{
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .text{
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+  }
 }

@@ -63,7 +63,7 @@ export const generateMetadata = async ({
       ],
       shortcut: ["/favicon.ico"],
       apple: [
-        { url: "/apple-touch-icon", sizes: "180x180", type: "image/png" },
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
       ],
     },
   };

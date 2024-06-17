@@ -22,6 +22,7 @@ const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
               alt={"episode_poster"}
               fill={true}
               quality={60}
+              sizes={"300px"}
             />
           </div>
           <div className={styles.episodeInfo}>
