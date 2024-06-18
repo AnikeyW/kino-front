@@ -14,7 +14,8 @@ const DeleteEpisode: FC<Props> = ({ episode, closeModal }) => {
 
   return (
     <div className={styles.root}>
-      Вы точно хотите удалить эпизод "Серия {episode.order} {episode.title}"?
+      {`Вы точно хотите удалить эпизод "Серия ${episode.order} ${episode.title}
+      "?`}
       <div className={styles.btns}>
         <MyButton onClick={closeModal}>Нет, отмена</MyButton>
         <MyButton
