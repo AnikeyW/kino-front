@@ -1,29 +1,24 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
-import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
-import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
-import SeriesDetailsInfo from "@/components/series/seriesDetailsInfo/SeriesDetailsInfo";
-import SeasonList from "@/components/series/seasonList/SeasonList";
+import SeriesList from "@/components/series/seriesList/SeriesList";
+import styles from "./page.module.scss";
 
 export const revalidate = 1800;
 
 const Page = async () => {
-  const seriesDetails = await seriesService.getSeriesById(1);
-
-  const breadcrumbs = [
-    {
-      path: "/",
-      title: "Главная",
-    },
-  ];
+  const series = await seriesService.getSeries();
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <DetailsPage>
-        <SeriesDetailsInfo seriesDetails={seriesDetails} />
-        <SeasonList seasons={seriesDetails.seasons} />
-      </DetailsPage>
+      <article className={styles.root}>
+        <h1>Сериалы онлайн</h1>
+        <p>
+          На ХолоТВ доступны для просмотра сериалы Игра престолов и Дом
+          Драконов. Здесь вы можете абсолютно бесплатно и без рекламы
+          насладиться любимыми сериалами в отличном качестве FullHD.
+        </p>
+        <SeriesList series={series} />
+      </article>
     </>
   );
 };

@@ -9,12 +9,14 @@ export const generateMetadata = async ({
 }: {
   params: SeasonDetailsParams;
 }) => {
+  const series = await seriesService.getSeriesById(params.seriesId);
+
   return {
     alternates: {
       canonical: false,
     },
-    title: `Игра престолов ${params.seasonOrder} сезон смотреть онлайн бесплатно все серии`,
-    description: `Сериал Игра престолов (Game of Thrones) ${params.seasonOrder} сезон смотреть онлайн все серии бесплатно, без регистрации в хорошем качестве HD 1080 официальный дубляж.`,
+    title: `${series.title} ${params.seasonOrder} сезон - смотреть онлайн бесплатно все серии`,
+    description: `Сериал ${series.title} ${params.seasonOrder} сезон - смотреть онлайн все серии бесплатно в хорошем качестве HD 1080 официальный дубляж`,
     robots: {
       index: true,
       follow: true,
@@ -30,13 +32,12 @@ export const generateMetadata = async ({
       email: false,
     },
     openGraph: {
-      title: "Игра престолов смотреть онлайн бесплатно все сезоны",
-      description:
-        "Сериал Игра престолов (Game of Thrones) смотреть онлайн все сезоны и серии бесплатно, без регистрации в хорошем качестве HD, FullHD 720-1080.",
+      title: `${series.title} ${params.seasonOrder} сезон - смотреть онлайн бесплатно все серии`,
+      description: `Сериал ${series.title} ${params.seasonOrder} сезон - смотреть онлайн все серии бесплатно в хорошем качестве HD 1080 официальный дубляж`,
       type: "website",
       locale: "ru_RU",
       url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.seriesId}/season/${params.seasonOrder}`,
-      siteName: "Игра престолов смотреть онлайн",
+      siteName: "ХолоТВ Сериалы онлайн",
       images: {
         url: `${process.env.NEXT_PUBLIC_CLIENT_URL}og-image.jpg`,
         type: "image/jpeg",

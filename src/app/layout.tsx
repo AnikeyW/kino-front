@@ -10,9 +10,10 @@ import YandexMetrika from "@/components/yandexMetrika/YandexMetrika";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Игра престолов смотреть онлайн бесплатно все сезоны",
+  title:
+    "Сериалы Игра престолов и Дом Драконов - смотреть онлайн бесплатно все сезоны и серии",
   description:
-    "Сериал Игра престолов (Game of Thrones) смотреть онлайн все сезоны и серии бесплатно, без регистрации в хорошем качестве HD, FullHD 720-1080.",
+    "На ХолоТВ можно посмотреть сериалы Игра престолов и Дом Драконов онлайн все серии абсолютно бесплатно и без рекламы в отличном качестве FullHD и официальным дубляжом",
   robots: {
     index: true,
     follow: true,
@@ -28,13 +29,14 @@ export const metadata: Metadata = {
     email: false,
   },
   openGraph: {
-    title: "Игра престолов смотреть онлайн бесплатно все сезоны",
+    title:
+      "Сериалы Игра престолов и Дом Драконов - смотреть онлайн бесплатно все сезоны и серии",
     description:
-      "Сериал Игра престолов (Game of Thrones) смотреть онлайн все сезоны и серии бесплатно, без регистрации в хорошем качестве HD, FullHD 720-1080.",
+      "На ХолоТВ можно посмотреть сериалы Игра престолов и Дом Драконов онлайн все серии абсолютно бесплатно и без рекламы в отличном качестве FullHD и официальным дубляжом",
     type: "website",
     locale: "ru_RU",
     url: process.env.NEXT_PUBLIC_CLIENT_URL,
-    siteName: "Игра престолов смотреть онлайн",
+    siteName: "ХолоТВ Сериалы онлайн",
     images: {
       url: `${process.env.NEXT_PUBLIC_CLIENT_URL}og-image.jpg`,
       type: "image/jpeg",

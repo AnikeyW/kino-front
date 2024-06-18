@@ -21,7 +21,11 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
   const breadcrumbs = [
     {
       path: "/",
-      title: "Главная",
+      title: "Сериалы",
+    },
+    {
+      path: `/series/${series.id}`,
+      title: `${series.title}`,
     },
     {
       path: "",

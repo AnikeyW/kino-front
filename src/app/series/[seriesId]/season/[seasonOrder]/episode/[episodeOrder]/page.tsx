@@ -13,15 +13,18 @@ interface Params {
 export const revalidate = 1800;
 
 export const generateMetadata = async ({ params }: { params: Params }) => {
-  const episode = await seriesService.getEpisodeByOrder(
-    params.episodeOrder,
-    params.seasonOrder,
-    params.seriesId,
-  );
+  const [episode, series] = await Promise.all([
+    seriesService.getEpisodeByOrder(
+      params.episodeOrder,
+      params.seasonOrder,
+      params.seriesId,
+    ),
+    seriesService.getSeriesById(params.seriesId),
+  ]);
 
   return {
-    title: `Игра престолов ${params.seasonOrder} сезон ${params.episodeOrder} серия смотреть онлайн бесплатно`,
-    description: `Сериал Игра престолов (Game of Thrones) смотреть онлайн ${params.seasonOrder} сезон ${params.episodeOrder} серию в хорошем качестве FullHD 1080 в русском дубляже на ПК, ТВ и мобильных устройствах.`,
+    title: `${series.title} ${params.seasonOrder} сезон ${params.episodeOrder} серия - смотреть онлайн бесплатно`,
+    description: `Сериал ${series.title} ${params.seasonOrder} сезон ${params.episodeOrder} серия - смотреть онлайн в хорошем качестве FullHD 1080 на любых платформах на ХолоТВ`,
     robots: {
       index: true,
       follow: true,
@@ -37,12 +40,12 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
       email: false,
     },
     openGraph: {
-      title: `Игра престолов ${params.seasonOrder} сезон ${params.episodeOrder} серия смотреть онлайн бесплатно`,
-      description: `Сериал Игра престолов (Game of Thrones) смотреть онлайн ${params.seasonOrder} сезон ${params.episodeOrder} серию в хорошем качестве FullHD 1080 в русском дубляже на ПК, ТВ и мобильных устройствах.`,
+      title: `${series.title} ${params.seasonOrder} сезон ${params.episodeOrder} серия - смотреть онлайн бесплатно`,
+      description: `Сериал ${series.title} ${params.seasonOrder} сезон ${params.episodeOrder} серия - смотреть онлайн в хорошем качестве FullHD 1080 на любых платформах на ХолоТВ`,
       type: "website",
       locale: "ru_RU",
       url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.seriesId}/season/${params.seasonOrder}/episode/${params.episodeOrder}`,
-      siteName: "Игра престолов смотреть онлайн",
+      siteName: "ХолоТВ Сериалы онлайн",
       images: {
         url: `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`,
         type: "image/webp",
@@ -100,7 +103,11 @@ const Page = async ({ params }: { params: Params }) => {
   const breadcrumbs = [
     {
       path: "/",
-      title: "Главная",
+      title: "Сериалы",
+    },
+    {
+      path: `/series/${series.id}`,
+      title: `${series.title}`,
     },
     {
       path: `/series/${series.id}/season/${params.seasonOrder}`,
