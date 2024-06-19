@@ -1,0 +1,133 @@
+.root{
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  color: #b9b9b9;
+  border-radius: 0.25rem;
+  background-color: var(--item-card-bg);
+  margin-bottom: 10px;
+  box-shadow: 1px -3px 15px 1px #000000;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+
+    .poster {
+      transform: scale(1.15);
+    }
+
+    &::before{
+      opacity: 0.6;
+    }
+
+    &::after{
+      opacity: 1;
+    }
+
+    .overlayText{
+      opacity: 1;
+    }
+
+    .title{
+      transform: scale(1.1);
+    }
+
+  }
+
+  .quality{
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: #ecc300;
+    padding: 3px;
+    border-radius: 2px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 2;
+
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+    }
+  }
+
+  &::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &::after{
+    content: url("/play-button.svg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-20px);
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .overlayText{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    z-index: 1;
+    transform: translateY(20px);
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (max-width: 576px) {
+      font-size: 12px;
+    }
+  }
+
+  .posterBox{
+    overflow: hidden;
+
+    .poster{
+      min-width: 100%;
+      aspect-ratio: 1.77777778;
+      position: relative;
+      transition: transform 0.2s ease-in-out;
+
+      .img{
+        width: 100%;
+      }
+    }
+  }
+
+
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1px 0 5px 0;
+    min-height: 32px;
+    position: relative;
+    z-index: 2;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+  }
+}

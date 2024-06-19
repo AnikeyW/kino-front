@@ -1,9 +1,7 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
-import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
-import SeriesDetailsInfo from "@/components/series/seriesDetailsInfo/SeriesDetailsInfo";
-import SeasonList from "@/components/series/seasonList/SeasonList";
+import SeriesPage from "@/components/series/seriesPage/SeriesPage";
 
 export const revalidate = 1800;
 
@@ -24,10 +22,7 @@ const Page = async ({ params }: { params: { seriesId: number } }) => {
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <DetailsPage>
-        <SeriesDetailsInfo seriesDetails={seriesDetails} />
-        <SeasonList seasons={seriesDetails.seasons} />
-      </DetailsPage>
+      <SeriesPage seriesDetails={seriesDetails} />
     </>
   );
 };

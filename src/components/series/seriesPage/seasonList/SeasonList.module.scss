@@ -1,0 +1,28 @@
+.root{
+
+  h2{
+    font-size: 20px;
+    margin-bottom: 1rem;
+    color: var(--text-color-light);
+
+    @media screen and (max-width: 576px){
+      font-size: 18px;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .seasonsList{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 0.5rem;
+    justify-content: center;
+
+    @media screen and (max-width: 576px) {
+      gap: 6px;
+    }
+
+    @media screen and (max-width: 360px) {
+      grid-template-columns: repeat(1, minmax(150px, 1fr));
+    }
+  }
+}

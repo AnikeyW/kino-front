@@ -1,0 +1,60 @@
+.root{
+  display: flex;
+  gap: 1rem;
+
+  @media screen and (max-width: 576px){
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    display: block;
+    margin-left: 1rem;
+  }
+
+  .poster{
+    position: relative;
+    min-width: 200px;
+    aspect-ratio: 0.68;
+    margin-bottom: 0.5rem;
+
+    @media (min-width: 768px) {
+      width: 100%;
+    }
+
+    @media screen and (max-width: 576px){
+      min-width: 150px;
+    }
+
+    @media screen and (max-width: 450px){
+      min-width: 120px;
+    }
+  }
+
+  .info {
+    width: 100%;
+
+    .infoItem{
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+
+      @media screen and (max-width: 450px){
+        font-size: 14px;
+      }
+
+      .value{
+        text-align: center;
+      }
+
+      small {
+        color: var(--text-color-soft);
+        font-size: 14px;
+
+        @media screen and (max-width: 450px){
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+}

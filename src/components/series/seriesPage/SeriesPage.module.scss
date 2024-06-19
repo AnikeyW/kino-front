@@ -1,0 +1,59 @@
+.root{
+  height: 100%;
+  background-color: var(--bgc-page);
+  padding: 0.5rem;
+
+  @media screen and (max-width: 576px){
+    padding: 5px;
+  }
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: auto 1fr;
+  }
+
+  @media (min-width: 868px) {
+    grid-template-columns: 1fr 300px;
+  }
+
+  .pageTitle{
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+    color: var(--text-color-light);
+    grid-column: 1 / -1;
+
+    @media (min-width: 768px) {
+      grid-column: 1 / 2;
+    }
+
+    @media screen and (max-width: 576px) {
+      font-size: 18px;
+    }
+  }
+
+  .seriesInfo{
+
+    @media (min-width: 768px) {
+      grid-column: 2 / 3;
+      grid-row: 1 / -1;
+    }
+  }
+
+  .mainContent{
+
+    @media (min-width: 768px) {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+
+    .description{
+
+      p{
+        text-indent: 2rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
