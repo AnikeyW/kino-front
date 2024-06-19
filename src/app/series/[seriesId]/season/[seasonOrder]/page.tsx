@@ -1,9 +1,10 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
-import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
-import SeasonDetailsInfo from "@/components/series/seasonDetailsInfo/seasonDetailsInfo";
+// import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
+// import SeasonDetailsInfo from "@/components/series/seasonDetailsInfo/seasonDetailsInfo";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
-import EpisodeList from "@/components/series/episodeList/EpisodeList";
+// import EpisodeList from "@/components/series/episodeList/EpisodeList";
+import SeasonPage from "@/components/series/seasonPage/SeasonPage";
 
 export interface SeasonDetailsParams {
   seasonOrder: number;
@@ -36,14 +37,15 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <DetailsPage>
-        <SeasonDetailsInfo seasonData={season} seriesData={series} />
-        <EpisodeList
-          episodes={season.episodes}
-          seriesId={params.seriesId}
-          seasonOrder={params.seasonOrder}
-        />
-      </DetailsPage>
+      <SeasonPage seasonData={season} seriesData={series} />
+      {/*<DetailsPage>*/}
+      {/*  <SeasonDetailsInfo seasonData={season} seriesData={series} />*/}
+      {/*  <EpisodeList*/}
+      {/*    episodes={season.episodes}*/}
+      {/*    seriesId={params.seriesId}*/}
+      {/*    seasonOrder={params.seasonOrder}*/}
+      {/*  />*/}
+      {/*</DetailsPage>*/}
     </>
   );
 };

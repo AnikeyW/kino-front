@@ -1,0 +1,29 @@
+.root{
+  height: 100%;
+  background-color: var(--bgc-page);
+  padding: 0.5rem;
+
+  @media screen and (max-width: 576px){
+    padding: 5px;
+  }
+
+  .pageTitle{
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+    color: var(--text-color-light);
+    grid-column: 1 / -1;
+
+    @media screen and (max-width: 576px) {
+      font-size: 18px;
+    }
+  }
+
+  .description{
+
+    p{
+      text-indent: 2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+}

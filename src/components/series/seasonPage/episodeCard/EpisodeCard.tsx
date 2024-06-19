@@ -16,14 +16,16 @@ const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
     <li>
       <MyLink href={href}>
         <div className={styles.root}>
-          <div className={styles.poster}>
-            <Image
-              src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
-              alt={"episode_poster"}
-              fill={true}
-              quality={60}
-              sizes={"300px"}
-            />
+          <div className={styles.posterBox}>
+            <div className={styles.poster}>
+              <Image
+                src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
+                alt={"episode_poster"}
+                fill={true}
+                quality={60}
+                sizes={"300px"}
+              />
+            </div>
           </div>
           <div className={styles.episodeInfo}>
             <span>{`Сезон ${seasonOrder} Серия ${episode.order}`}</span>

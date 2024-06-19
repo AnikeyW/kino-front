@@ -5,7 +5,7 @@ import { formatDate, isJSON } from "@/utils";
 import PreviousEpisodeButton from "@/components/series/previousEpisodeButton/PreviousEpisodeButton";
 import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisodeButton";
 import IframePlayer from "@/components/iframePlayer/IramePlayer";
-import EpisodeCard from "@/components/series/episodeCard/EpisodeCard";
+import EpisodeCard from "@/components/series/seasonPage/episodeCard/EpisodeCard";
 
 interface Props {
   episode: IEpisode;

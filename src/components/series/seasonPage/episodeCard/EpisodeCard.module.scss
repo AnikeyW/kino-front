@@ -1,0 +1,102 @@
+.root{
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  color: #b9b9b9;
+  border-radius: 0.25rem;
+  background-color: var(--item-card-bg);
+  margin-bottom: 10px;
+  box-shadow: 1px -3px 15px 1px #000000;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+
+    .poster {
+      transform: scale(1.15);
+    }
+
+    &::before{
+      opacity: 0.6;
+    }
+
+    &::after{
+      opacity: 1;
+    }
+  }
+
+  &::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &::after{
+    content: url("/play-button.svg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-20px);
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .posterBox{
+    overflow: hidden;
+
+    .poster{
+      min-width: 100%;
+      aspect-ratio: 1.77777778;
+      position: relative;
+      transition: transform 0.2s ease-in-out;
+
+      .img{
+        width: 100%;
+      }
+    }
+  }
+
+  .episodeInfo{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 0 3px;
+    font-size: 14px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+
+    .duration{
+      color: var(--text-color-soft);
+      font-size: 12px;
+    }
+  }
+
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px 0 0 0;
+    min-height: 32px;
+    color: #01a0c4;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+}
