@@ -2,6 +2,7 @@
     --header-height: 50px;
     --nav-height: 50px;
 
+    --bgc-header: #212121;
     --bgc-page: #1c1c1c;
     --bgc-section: #121212;
 
@@ -75,4 +76,8 @@ q:before, q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+html {
+    background-color: var(--bgc-header);
 }

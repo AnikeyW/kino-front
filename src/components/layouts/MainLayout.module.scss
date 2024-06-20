@@ -6,7 +6,7 @@
   
   .header {
     height: var(--header-height);
-    background-color: #212121;
+    background-color: var(--bgc-header);
     display: flex;
 
     .headerBox{

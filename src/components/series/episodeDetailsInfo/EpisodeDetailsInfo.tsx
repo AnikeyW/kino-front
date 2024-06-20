@@ -54,21 +54,14 @@ const EpisodeDetailsInfo: FC<Props> = ({
 
         <h2 className={styles.title}>{episode.title}</h2>
 
-        {isJSON(episode.description) ? (
+        {isJSON(episode.description) && (
           <div className={styles.description}>
             {JSON.parse(episode.description).map(
               (paragraph: string, index: number) => (
-                <p style={{ marginBottom: "1rem" }} key={index}>
-                  {paragraph}
-                </p>
+                <p key={index}>{paragraph}</p>
               ),
             )}
           </div>
-        ) : (
-          <div
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: episode.description }}
-          ></div>
         )}
       </div>
 
