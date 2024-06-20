@@ -3,6 +3,7 @@ import styles from "./SeriesDetailsInfo.module.scss";
 import Image from "next/image";
 import { ISeries } from "@/components/series/Series.types";
 import { getQualityName } from "@/utils";
+import RateValue from "@/components/UI/rateValue/RateValue";
 
 interface Props {
   seriesDetails: ISeries;
@@ -61,12 +62,14 @@ const SeriesDetailsInfo: FC<Props> = ({ seriesDetails }) => {
 
         <div className={styles.infoItem}>
           <small>Рейтинг Кинопоиска: </small>
-          <span>{seriesDetails.rateKinopoisk}</span>
+          {/*<span>{seriesDetails.rateKinopoisk}</span>*/}
+          <RateValue value={seriesDetails.rateKinopoisk} />
         </div>
 
         <div className={styles.infoItem}>
           <small>Рейтинг IMDB: </small>
-          <span>{seriesDetails.rateImdb}</span>
+          {/*<span>{seriesDetails.rateImdb}</span>*/}
+          <RateValue value={seriesDetails.rateImdb} />
         </div>
       </div>
     </div>

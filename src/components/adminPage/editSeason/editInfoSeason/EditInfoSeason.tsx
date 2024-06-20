@@ -31,7 +31,7 @@ const EditInfoSeason: FC<Props> = ({ seasonDetails }) => {
             }
             alt={seasonDetails.title}
             fill={true}
-            sizes={"200px"}
+            sizes={"240px"}
           />
         </div>
 

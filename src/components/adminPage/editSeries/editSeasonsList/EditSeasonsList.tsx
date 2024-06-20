@@ -46,7 +46,7 @@ const EditSeasonsList: FC<Props> = ({ seasons, seriesId }) => {
                     }
                     alt={""}
                     fill={true}
-                    sizes={"30px"}
+                    sizes={"100px"}
                   />
                 </div>
                 <div className={styles.title}>Сезон {season.order}</div>

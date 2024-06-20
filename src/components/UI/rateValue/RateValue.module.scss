@@ -1,0 +1,19 @@
+.value{
+  color: var(--text-color-light);
+  border-radius: 2px;
+  padding: 2px;
+  width: 40px;
+  text-align: center;
+}
+
+.valueBest{
+  background-color: #248d00;
+}
+
+.valueGood{
+  background-color: #c0b400;
+}
+
+.valueBad{
+  background-color: #8d8d8d;
+}

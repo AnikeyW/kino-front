@@ -5,6 +5,7 @@ import MyLink from "@/components/UI/myLink/MyLink";
 import Image from "next/image";
 import { getQualityName } from "@/utils";
 import classNames from "classnames";
+import RateValue from "@/components/UI/rateValue/RateValue";
 const cx = classNames.bind(styles);
 
 interface Props {
@@ -21,31 +22,11 @@ const SeriesItem: FC<Props> = ({ seriesDetails }) => {
           </div>
           <div className={cx(styles.rate, styles.kinopoiskRate)}>
             <span className={styles.rateName}>Кинопоиск</span>
-            <span
-              className={cx(styles.value, {
-                [styles.valueBest]: seriesDetails.rateKinopoisk > 7.5,
-                [styles.valueGood]:
-                  seriesDetails.rateKinopoisk >= 6.5 &&
-                  seriesDetails.rateKinopoisk <= 7.5,
-                [styles.valueBad]: seriesDetails.rateKinopoisk < 6.5,
-              })}
-            >
-              {seriesDetails.rateKinopoisk.toFixed(1)}
-            </span>
+            <RateValue value={seriesDetails.rateKinopoisk} />
           </div>
           <div className={cx(styles.rate, styles.imdbRate)}>
             <span className={styles.rateName}>IMDB</span>
-            <span
-              className={cx(styles.value, {
-                [styles.valueBest]: seriesDetails.rateImdb > 7.5,
-                [styles.valueGood]:
-                  seriesDetails.rateImdb >= 6.5 &&
-                  seriesDetails.rateImdb <= 7.5,
-                [styles.valueBad]: seriesDetails.rateImdb < 6.5,
-              })}
-            >
-              {seriesDetails.rateImdb.toFixed(1)}
-            </span>
+            <RateValue value={seriesDetails.rateImdb} />
           </div>
           <div className={styles.overlayText}>СМОТРЕТЬ ОНЛАЙН</div>
           <div className={styles.posterBox}>

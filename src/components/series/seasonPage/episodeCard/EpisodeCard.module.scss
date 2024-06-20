@@ -10,18 +10,27 @@
   position: relative;
   overflow: hidden;
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      .poster {
+        transform: scale(1.15);
+      }
 
-    .poster {
-      transform: scale(1.15);
+      &::before {
+        opacity: 0.6;
+      }
+
+      &::after {
+        opacity: 1;
+      }
     }
+  }
 
-    &::before{
-      opacity: 0.6;
-    }
-
-    &::after{
-      opacity: 1;
+  @media (hover: none) {
+    &:active {
+      .poster {
+        transform: scale(1.15);
+      }
     }
   }
 

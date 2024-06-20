@@ -10,22 +10,32 @@
   position: relative;
   overflow: hidden;
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
 
-    .poster {
-      transform: scale(1.15);
+      .poster {
+        transform: scale(1.15);
+      }
+
+      &::before{
+        opacity: 0.6;
+      }
+
+      &::after{
+        opacity: 1;
+      }
+
+      .overlayText{
+        opacity: 1;
+      }
     }
+  }
 
-    &::before{
-      opacity: 0.6;
-    }
-
-    &::after{
-      opacity: 1;
-    }
-
-    .overlayText{
-      opacity: 1;
+  @media (hover: none) {
+    &:active {
+      .poster {
+        transform: scale(1.15);
+      }
     }
   }
 
@@ -67,26 +77,6 @@
       border-radius: 2px;
       padding: 2px;
       flex: auto;
-    }
-
-    .value{
-      color: var(--text-color-light);
-      border-radius: 2px;
-      padding: 2px;
-      width: 40px;
-      text-align: center;
-    }
-
-    .valueBest{
-      background-color: #248d00;
-    }
-    
-    .valueGood{
-      background-color: #c0b400;
-    }
-
-    .valueBad{
-      background-color: #8d8d8d;
     }
   }
 
