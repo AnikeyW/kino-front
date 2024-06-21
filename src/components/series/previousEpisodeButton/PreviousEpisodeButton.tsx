@@ -18,7 +18,6 @@ const PreviousEpisodeButton: FC<Props> = ({
 }) => {
   const prevEpisodeLink = `/series/${seriesId}/season/${seasonOrder}/episode/${episodeOrder - 1}`;
   const prevSeasonLink = `/series/${seriesId}/season/${seasonOrder - 1}/episode/${prevSeason?.episodes.length}`;
-  console.log(prevSeason?.episodes.length);
 
   return (
     <div className={styles.root}>
