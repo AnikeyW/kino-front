@@ -1,13 +1,12 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
-import EpisodeDetailsInfo from "@/components/series/episodeDetailsInfo/EpisodeDetailsInfo";
-import DetailsPage from "@/components/UI/detailsPage/DetailsPage";
+import EpisodePage from "@/components/series/episodePage/EpisodePage";
 
 interface Params {
-  seasonOrder: number;
-  seriesId: number;
-  episodeOrder: number;
+  seasonOrder: string;
+  seriesId: string;
+  episodeOrder: string;
 }
 
 export const revalidate = 1800;
@@ -15,11 +14,11 @@ export const revalidate = 1800;
 export const generateMetadata = async ({ params }: { params: Params }) => {
   const [episode, series] = await Promise.all([
     seriesService.getEpisodeByOrder(
-      params.episodeOrder,
-      params.seasonOrder,
-      params.seriesId,
+      Number(params.episodeOrder),
+      Number(params.seasonOrder),
+      Number(params.seriesId),
     ),
-    seriesService.getSeriesById(params.seriesId),
+    seriesService.getSeriesById(Number(params.seriesId)),
   ]);
 
   return {
@@ -80,8 +79,8 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
 
 export async function generateStaticParams({ params }: { params: Params }) {
   const season = await seriesService.getSeasonByOrder(
-    params.seasonOrder,
-    params.seriesId,
+    Number(params.seasonOrder),
+    Number(params.seriesId),
   );
 
   return season.episodes.map((episode) => ({
@@ -92,13 +91,25 @@ export async function generateStaticParams({ params }: { params: Params }) {
 const Page = async ({ params }: { params: Params }) => {
   const [episode, series, season] = await Promise.all([
     seriesService.getEpisodeByOrder(
-      params.episodeOrder,
-      params.seasonOrder,
-      params.seriesId,
+      Number(params.episodeOrder),
+      Number(params.seasonOrder),
+      Number(params.seriesId),
     ),
-    seriesService.getSeriesById(params.seriesId),
-    seriesService.getSeasonByOrder(params.seasonOrder, params.seriesId),
+    seriesService.getSeriesById(Number(params.seriesId)),
+    seriesService.getSeasonByOrder(
+      Number(params.seasonOrder),
+      Number(params.seriesId),
+    ),
   ]);
+
+  let prevSeason = null;
+
+  if (season.order !== 1) {
+    prevSeason = await seriesService.getSeasonByOrder(
+      Number(params.seasonOrder) - 1,
+      Number(params.seriesId),
+    );
+  }
 
   const breadcrumbs = [
     {
@@ -122,15 +133,13 @@ const Page = async ({ params }: { params: Params }) => {
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <DetailsPage>
-        <EpisodeDetailsInfo
-          episode={episode}
-          seriesTitle={series.title}
-          seasonOrder={params.seasonOrder}
-          seriesId={params.seriesId}
-          seasonEpisodes={season.episodes}
-        />
-      </DetailsPage>
+      <EpisodePage
+        episode={episode}
+        seasonOrder={Number(params.seasonOrder)}
+        seasonEpisodes={season.episodes}
+        seriesInfo={series}
+        prevSeason={prevSeason}
+      />
     </>
   );
 };

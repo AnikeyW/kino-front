@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import styles from "./EpisodeDetailsInfo.module.scss";
-import { IEpisode } from "@/components/series/Series.types";
+import styles from "./EpisodePage.module.scss";
+import { IEpisode, ISeason, ISeries } from "@/components/series/Series.types";
 import { formatDate } from "@/utils";
 import PreviousEpisodeButton from "@/components/series/previousEpisodeButton/PreviousEpisodeButton";
 import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisodeButton";
@@ -10,39 +10,39 @@ import DescriptionBlock from "@/components/UI/descriptionBlock/DescriptionBlock"
 
 interface Props {
   episode: IEpisode;
-  seriesTitle: string;
   seasonOrder: number;
-  seriesId: number;
+  seriesInfo: ISeries;
   seasonEpisodes: IEpisode[];
+  prevSeason: ISeason | null;
 }
 
-const EpisodeDetailsInfo: FC<Props> = ({
+const EpisodePage: FC<Props> = ({
   episode,
-  seriesTitle,
   seasonOrder,
-  seriesId,
   seasonEpisodes,
+  seriesInfo,
+  prevSeason,
 }) => {
   return (
-    <div className={styles.root}>
+    <article className={styles.root}>
       <div className={styles.episodeInfo}>
-        <h1
-          className={styles.episodeNumber}
-        >{`${seriesTitle} Сезон ${seasonOrder} Серия ${episode.order}`}</h1>
+        <h1>{`${seriesInfo.title} Сезон ${seasonOrder} Серия ${episode.order}`}</h1>
 
         <IframePlayer episode={episode} />
 
         <div className={styles.prevNextBtns}>
           <PreviousEpisodeButton
             episodeOrder={episode.order}
-            seriesId={seriesId}
+            seriesId={seriesInfo.id}
             seasonOrder={seasonOrder}
+            prevSeason={prevSeason}
           />
           <NextEpisodeButton
             episodeOrder={episode.order}
-            seriesId={seriesId}
+            seriesId={seriesInfo.id}
             seasonOrder={seasonOrder}
             episodesQuantity={seasonEpisodes.length}
+            seasonsQuantity={seriesInfo.seasons.length}
           />
         </div>
 
@@ -53,28 +53,27 @@ const EpisodeDetailsInfo: FC<Props> = ({
           </div>
         </div>
 
-        <h2 className={styles.title}>{episode.title}</h2>
+        <h2>{episode.title}</h2>
 
         <DescriptionBlock description={episode.description} />
       </div>
 
       <div className={styles.seasonEpisodesBlock}>
-        <div className={styles.seasonEpisodesTitle}>
-          {`Все серии ${seasonOrder} сезона`}
-        </div>
+        <h2>{`Все серии ${seasonOrder} сезона`}</h2>
+
         <ul className={styles.seasonEpisodesList}>
           {seasonEpisodes.map((episode) => (
             <EpisodeCard
               key={episode.id}
               episode={episode}
-              href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
+              href={`/series/${seriesInfo.id}/season/${seasonOrder}/episode/${episode.order}`}
               seasonOrder={seasonOrder}
             />
           ))}
         </ul>
       </div>
-    </div>
+    </article>
   );
 };
 
-export default EpisodeDetailsInfo;
+export default EpisodePage;
