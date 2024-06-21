@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import styles from "./EpisodeDetailsInfo.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
-import { formatDate, isJSON } from "@/utils";
+import { formatDate } from "@/utils";
 import PreviousEpisodeButton from "@/components/series/previousEpisodeButton/PreviousEpisodeButton";
 import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisodeButton";
 import IframePlayer from "@/components/iframePlayer/IramePlayer";
 import EpisodeCard from "@/components/series/seasonPage/episodeCard/EpisodeCard";
+import DescriptionBlock from "@/components/UI/descriptionBlock/DescriptionBlock";
 
 interface Props {
   episode: IEpisode;
@@ -54,15 +55,7 @@ const EpisodeDetailsInfo: FC<Props> = ({
 
         <h2 className={styles.title}>{episode.title}</h2>
 
-        {isJSON(episode.description) && (
-          <div className={styles.description}>
-            {JSON.parse(episode.description).map(
-              (paragraph: string, index: number) => (
-                <p key={index}>{paragraph}</p>
-              ),
-            )}
-          </div>
-        )}
+        <DescriptionBlock description={episode.description} />
       </div>
 
       <div className={styles.seasonEpisodesBlock}>

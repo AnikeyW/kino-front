@@ -38,7 +38,7 @@ module.exports = {
       return {
         loc: path,
         changefreq: "weekly",
-        priority: 0.9,
+        priority: 1.0,
         lastmod: new Date().toISOString(),
       };
     }
@@ -46,7 +46,7 @@ module.exports = {
     return {
       loc: path,
       changefreq: "weekly",
-      priority: 0.7,
+      priority: 1.0,
       lastmod: new Date().toISOString(),
     };
   },

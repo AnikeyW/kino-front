@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import styles from "./SeasonPage.module.scss";
 import { ISeason, ISeries } from "@/components/series/Series.types";
-import { isJSON } from "@/utils";
 import EpisodeList from "@/components/series/seasonPage/episodeList/EpisodeList";
+import DescriptionBlock from "@/components/UI/descriptionBlock/DescriptionBlock";
 
 interface Props {
   seasonData: ISeason;
@@ -15,15 +15,8 @@ const SeasonPage: FC<Props> = ({ seasonData, seriesData }) => {
       <h1 className={styles.pageTitle}>
         {seriesData.title} {seasonData.order} сезон смотреть онлайн
       </h1>
-      {isJSON(seasonData.description) && (
-        <div className={styles.description}>
-          {JSON.parse(seasonData.description).map(
-            (paragraph: string, index: number) => (
-              <p key={index}>{paragraph}</p>
-            ),
-          )}
-        </div>
-      )}
+
+      <DescriptionBlock description={seasonData.description} />
 
       <EpisodeList
         episodes={seasonData.episodes}
