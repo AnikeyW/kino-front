@@ -20,7 +20,7 @@ export const useAddEpisode = (
     skipIntro: null,
     skipCredits: null,
     skipRepeat: null,
-    // subtitles: [],
+    subtitles: [],
   });
   const [error, setError] = useState("");
   const [uploadProgress, setUploadProgress] = useState({
@@ -60,15 +60,15 @@ export const useAddEpisode = (
     });
   };
 
-  // const changeSubtitlesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setError("");
-  //   if (e.target.files) {
-  //     setEpisodeData({
-  //       ...episodeData,
-  //       subtitles: [...Array.from(e.target.files)],
-  //     });
-  //   }
-  // };
+  const changeSubtitlesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError("");
+    if (e.target.files) {
+      setEpisodeData({
+        ...episodeData,
+        subtitles: [...Array.from(e.target.files)],
+      });
+    }
+  };
 
   const onChangeVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -110,7 +110,7 @@ export const useAddEpisode = (
           skipRepeat: null,
           skipCredits: null,
           skipIntro: null,
-          // subtitles: [],
+          subtitles: [],
         });
         closeModal();
         router.refresh();
@@ -130,7 +130,7 @@ export const useAddEpisode = (
       addEpisodeHandler,
       changeEpisodeDataHandler,
       onChangeVideo,
-      // changeSubtitlesHandler,
+      changeSubtitlesHandler,
       changeDescriptionHandler,
       addParagraphHandler,
       deleteParagraphHandler,

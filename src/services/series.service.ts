@@ -56,7 +56,7 @@ export interface CreateEpisodeDto {
   seasonId: number;
   releaseDate: string;
   video: File | null;
-  // subtitles: File[];
+  subtitles: File[];
 }
 
 export interface EditEpisodeDto {
@@ -99,9 +99,9 @@ export const seriesService = {
       formData.append("seasonId", episodeData.seasonId.toString());
       formData.append("releaseDate", episodeData.releaseDate.toString());
       formData.append("video", episodeData.video!);
-      // episodeData.subtitles.forEach((sub) => {
-      //   formData.append("subtitles", sub);
-      // });
+      episodeData.subtitles.forEach((sub) => {
+        formData.append("subtitles", sub);
+      });
       if (episodeData.skipCredits) {
         formData.append("skipCredits", episodeData.skipCredits.toString());
       }
