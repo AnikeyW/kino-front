@@ -22,7 +22,8 @@ const IframePlayer: FC<Props> = ({ episode }) => {
           .replace(/\\/g, "/")
           .split("/")
           .pop()
-          ?.split(".")[0];
+          ?.split(".")[0]
+          .replace("_", " ");
         if (index === episode.subtitles.length - 1) {
           subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src}`;
         } else {
