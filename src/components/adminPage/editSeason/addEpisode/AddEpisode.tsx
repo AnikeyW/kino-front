@@ -26,7 +26,7 @@ const AddEpisode: FC<Props> = ({ episodes, seasonId, closeModal }) => {
           <MyButton>
             <FileUpload
               setFile={actions.onChangeVideo}
-              accept={"video/mp4"}
+              accept={"video/*"}
               name={"video"}
             >
               Выбрать видео
@@ -35,22 +35,22 @@ const AddEpisode: FC<Props> = ({ episodes, seasonId, closeModal }) => {
           {data.episodeData.video && <div>{data.episodeData.video.name}</div>}
         </div>
 
-        <div className={styles.selectSubsBtn}>
-          <MyButton>
-            <FileUpload
-              setFile={actions.changeSubtitlesHandler}
-              accept={".vtt,text/vtt"}
-              name={"subtitles"}
-              multiple={true}
-            >
-              Выбрать Субтитры
-            </FileUpload>
-          </MyButton>
-          {data.episodeData.subtitles.length > 0 &&
-            data.episodeData.subtitles.map((sub, index) => (
-              <div key={index}>{sub.name}</div>
-            ))}
-        </div>
+        {/*<div className={styles.selectSubsBtn}>*/}
+        {/*  <MyButton>*/}
+        {/*    <FileUpload*/}
+        {/*      setFile={actions.changeSubtitlesHandler}*/}
+        {/*      accept={".vtt,text/vtt"}*/}
+        {/*      name={"subtitles"}*/}
+        {/*      multiple={true}*/}
+        {/*    >*/}
+        {/*      Выбрать Субтитры*/}
+        {/*    </FileUpload>*/}
+        {/*  </MyButton>*/}
+        {/*  {data.episodeData.subtitles.length > 0 &&*/}
+        {/*    data.episodeData.subtitles.map((sub, index) => (*/}
+        {/*      <div key={index}>{sub.name}</div>*/}
+        {/*    ))}*/}
+        {/*</div>*/}
       </div>
 
       <div className={styles.info}>
