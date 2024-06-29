@@ -66,7 +66,7 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
 
           <div className={styles.order}>
             <EditableInput
-              label={"Пропустить интро(сек.): "}
+              label={"Начало заставки(сек.): "}
               value={data.episodeData.skipIntro?.toString() || ""}
               onChange={(e) => actions.changeEpisodeDataHandler(e, "skipIntro")}
             />
@@ -74,7 +74,17 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
 
           <div className={styles.order}>
             <EditableInput
-              label={"Пропустить повтор(сек.): "}
+              label={"Конец заставки(сек.): "}
+              value={data.episodeData.skipIntroEnd?.toString() || ""}
+              onChange={(e) =>
+                actions.changeEpisodeDataHandler(e, "skipIntroEnd")
+              }
+            />
+          </div>
+
+          <div className={styles.order}>
+            <EditableInput
+              label={"Начало повтора(сек.): "}
               value={data.episodeData.skipRepeat?.toString() || ""}
               onChange={(e) =>
                 actions.changeEpisodeDataHandler(e, "skipRepeat")
@@ -84,11 +94,39 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
 
           <div className={styles.order}>
             <EditableInput
-              label={"Пропустить титры(сек.): "}
+              label={"Конец повтора(сек.): "}
+              value={data.episodeData.skipRepeatEnd?.toString() || ""}
+              onChange={(e) =>
+                actions.changeEpisodeDataHandler(e, "skipRepeatEnd")
+              }
+            />
+          </div>
+
+          <div className={styles.order}>
+            <EditableInput
+              label={"Начало титров(сек.): "}
               value={data.episodeData.skipCredits?.toString() || ""}
               onChange={(e) =>
                 actions.changeEpisodeDataHandler(e, "skipCredits")
               }
+            />
+          </div>
+
+          <div className={styles.order}>
+            <span>Ширина видео: </span>
+            <input
+              type="number"
+              value={data.episodeData.width}
+              onChange={(e) => actions.changeEpisodeDataHandler(e, "width")}
+            />
+          </div>
+
+          <div className={styles.order}>
+            <span>Высота видео: </span>
+            <input
+              type="number"
+              value={data.episodeData.height}
+              onChange={(e) => actions.changeEpisodeDataHandler(e, "height")}
             />
           </div>
 

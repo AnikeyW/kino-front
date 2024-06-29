@@ -15,7 +15,11 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
     releaseDate: episodeDetails.releaseDate.split("T")[0],
     skipCredits: episodeDetails.skipCredits,
     skipIntro: episodeDetails.skipIntro,
+    skipIntroEnd: episodeDetails.skipIntroEnd,
     skipRepeat: episodeDetails.skipRepeat,
+    skipRepeatEnd: episodeDetails.skipRepeatEnd,
+    width: episodeDetails.width,
+    height: episodeDetails.height,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -108,11 +112,19 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
           skipIntro: !episodeData.skipIntro
             ? null
             : Number(episodeData.skipIntro),
+          skipIntroEnd: !episodeData.skipIntroEnd
+            ? null
+            : Number(episodeData.skipIntroEnd),
           skipRepeat: !episodeData.skipRepeat
             ? null
             : Number(episodeData.skipRepeat),
+          skipRepeatEnd: !episodeData.skipRepeatEnd
+            ? null
+            : Number(episodeData.skipRepeatEnd),
           existSubtitles: episodeData.existSubtitles,
           newSubtitles: episodeData.newSubtitles,
+          width: episodeData.width,
+          height: episodeData.height,
         },
         episodeDetails.id,
       );
@@ -124,8 +136,12 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
         poster: updatedEpisode.poster,
         skipCredits: updatedEpisode.skipCredits,
         skipIntro: updatedEpisode.skipIntro,
+        skipIntroEnd: updatedEpisode.skipIntroEnd,
         skipRepeat: updatedEpisode.skipRepeat,
+        skipRepeatEnd: updatedEpisode.skipRepeatEnd,
         existSubtitles: updatedEpisode.subtitles,
+        width: updatedEpisode.width,
+        height: updatedEpisode.height,
         newSubtitles: [],
       });
       toast.success("Изменения сохранены");

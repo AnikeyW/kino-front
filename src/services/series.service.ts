@@ -64,10 +64,14 @@ export interface EditEpisodeDto {
   description: string;
   order: string;
   skipRepeat?: number | null;
+  skipRepeatEnd?: number | null;
   skipIntro?: number | null;
+  skipIntroEnd?: number | null;
   skipCredits?: number | null;
   releaseDate: string;
   poster: string;
+  width: number;
+  height: number;
   existSubtitles: ISubtitle[];
   newSubtitles: File[];
 }
@@ -138,6 +142,8 @@ export const seriesService = {
       formData.append("title", episodeData.title);
       formData.append("description", episodeData.description);
       formData.append("order", episodeData.order);
+      formData.append("width", episodeData.width.toString());
+      formData.append("height", episodeData.height.toString());
       formData.append("releaseDate", episodeData.releaseDate);
       formData.append("poster", episodeData.poster);
       episodeData.newSubtitles.forEach((sub) => {
@@ -153,8 +159,14 @@ export const seriesService = {
       if (episodeData.skipRepeat) {
         formData.append("skipRepeat", episodeData.skipRepeat.toString());
       }
+      if (episodeData.skipRepeatEnd) {
+        formData.append("skipRepeatEnd", episodeData.skipRepeatEnd.toString());
+      }
       if (episodeData.skipIntro) {
         formData.append("skipIntro", episodeData.skipIntro.toString());
+      }
+      if (episodeData.skipIntroEnd) {
+        formData.append("skipIntroEnd", episodeData.skipIntroEnd.toString());
       }
 
       const response = await $api.post(

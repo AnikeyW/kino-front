@@ -17,7 +17,10 @@ const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
       <MyLink href={href}>
         <div className={styles.root}>
           <div className={styles.posterBox}>
-            <div className={styles.poster}>
+            <div
+              className={styles.poster}
+              style={{ aspectRatio: episode.width / episode.height }}
+            >
               <Image
                 src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
                 alt={"episode_poster"}

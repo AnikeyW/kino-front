@@ -28,7 +28,13 @@ const EpisodePage: FC<Props> = ({
       <div className={styles.episodeInfo}>
         <h1>{`${seriesInfo.title} Сезон ${seasonOrder} Серия ${episode.order}`}</h1>
 
-        <IframePlayer episode={episode} />
+        <IframePlayer
+          episode={episode}
+          episodesQuantity={seasonEpisodes.length}
+          seasonsQuantity={seriesInfo.seasons.length}
+          seasonOrder={seasonOrder}
+          seriesId={seriesInfo.id}
+        />
 
         <div className={styles.prevNextBtns}>
           <PreviousEpisodeButton

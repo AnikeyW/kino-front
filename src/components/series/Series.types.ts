@@ -48,7 +48,9 @@ export interface IEpisode {
   description: string;
   order: number;
   skipRepeat: number | null;
+  skipRepeatEnd: number | null;
   skipIntro: number | null;
+  skipIntroEnd: number | null;
   skipCredits: number | null;
   seasonId: number;
   views: number;
@@ -59,5 +61,7 @@ export interface IEpisode {
   srcHls: string;
   srcDash: string;
   releaseDate: string;
+  width: number;
+  height: number;
   subtitles: ISubtitle[];
 }
