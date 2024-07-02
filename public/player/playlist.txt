@@ -1,1 +1,0 @@
-[{"title":"серия 1","file":"http://localhost:5000/video/8d2990ca-f815-4862-a5f9-4c3648f68397/master.m3u8","subtitle":"[En]/output.vtt"},{"title":"Серия 2","file":"http://localhost:5000/video/7dceac25-2db5-45aa-a030-a34983eb6e91/master.m3u8"}]

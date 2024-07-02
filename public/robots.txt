@@ -1,6 +1,7 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /login/
+Disallow: /player/
 Allow: /
 
 Sitemap: https://holotv.space/sitemap.xml

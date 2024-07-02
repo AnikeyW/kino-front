@@ -26,7 +26,13 @@ const IframePlayer: FC<Props> = ({
 
   useEffect(() => {
     // const videoSrc = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls} or ${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcDash}`;
-    const videoSrc = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls}`;
+
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SERVER_URL_STATIC!.split("/api/static/")[0] + "/";
+    const videoName = episode.srcHls.replace(/\\/g, "/").split("/")[1];
+
+    // const videoSrc = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls}`;
+    const videoSrc = `${baseUrl}{v1}/${videoName}/{v2}`;
 
     let subtitlesSrc = "";
 
@@ -63,6 +69,7 @@ const IframePlayer: FC<Props> = ({
               skipCredits: episode.skipCredits,
               skipRepeat: episode.skipRepeat,
               skipRepeatEnd: episode.skipRepeatEnd,
+              mode: process.env.NODE_ENV,
             },
           },
           process.env.NEXT_PUBLIC_CLIENT_URL!,
