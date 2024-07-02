@@ -58,7 +58,7 @@
         window.addEventListener("message", (event) => {
           if (event.data.type === "MY_VARIABLES") {
             if(event.data.value.mode !== 'development'){
-              if (event.origin !== "http://holotv.space") {
+              if (event.origin !== "https://holotv.space") {
                 document.querySelectorAll('body')[0].remove();
                 document.querySelectorAll('html')[0].innerHTML = '<style>body,html{background:#000;color:#fff;position:relative;margin:0;height:100%;font:12px Verdana,sans-serif;} .error_player{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;height:100%;width:100%;text-align:center;font-size:18px;}</style><div class="error_player">Контент не найден или недоступен в вашем регионе! <br>Приносим свои извинения за неудобства.</div>';
                 return;
