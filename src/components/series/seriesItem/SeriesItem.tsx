@@ -15,7 +15,7 @@ interface Props {
 const SeriesItem: FC<Props> = ({ seriesDetails }) => {
   return (
     <li>
-      <MyLink href={`/series/${seriesDetails.id}`}>
+      <MyLink href={`/series/${seriesDetails.slug}`}>
         <div className={styles.root}>
           <div className={styles.quality}>
             {getQualityName(seriesDetails.quality)}

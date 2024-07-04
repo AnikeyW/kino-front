@@ -33,22 +33,22 @@ const EpisodePage: FC<Props> = ({
           episodesQuantity={seasonEpisodes.length}
           seasonsQuantity={seriesInfo.seasons.length}
           seasonOrder={seasonOrder}
-          seriesId={seriesInfo.id}
+          seriesSlug={seriesInfo.slug}
         />
 
         <div className={styles.prevNextBtns}>
           <PreviousEpisodeButton
             episodeOrder={episode.order}
-            seriesId={seriesInfo.id}
             seasonOrder={seasonOrder}
             prevSeason={prevSeason}
+            seriesSlug={seriesInfo.slug}
           />
           <NextEpisodeButton
             episodeOrder={episode.order}
-            seriesId={seriesInfo.id}
             seasonOrder={seasonOrder}
             episodesQuantity={seasonEpisodes.length}
             seasonsQuantity={seriesInfo.seasons.length}
+            seriesSlug={seriesInfo.slug}
           />
         </div>
 
@@ -72,7 +72,7 @@ const EpisodePage: FC<Props> = ({
             <EpisodeCard
               key={episode.id}
               episode={episode}
-              href={`/series/${seriesInfo.id}/season/${seasonOrder}/episode/${episode.order}`}
+              href={`/series/${seriesInfo.slug}/season/${seasonOrder}/episode/${episode.order}`}
               seasonOrder={seasonOrder}
             />
           ))}

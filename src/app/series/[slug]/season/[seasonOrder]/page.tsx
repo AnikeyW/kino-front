@@ -4,16 +4,16 @@ import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import SeasonPage from "@/components/series/seasonPage/SeasonPage";
 
 export interface SeasonDetailsParams {
+  slug: string;
   seasonOrder: number;
-  seriesId: number;
 }
 
 export const revalidate = 1800;
 
 const Page = async ({ params }: { params: SeasonDetailsParams }) => {
   const [season, series] = await Promise.all([
-    seriesService.getSeasonByOrder(params.seasonOrder, params.seriesId),
-    seriesService.getSeriesById(params.seriesId),
+    seriesService.getSeasonByOrder(params.seasonOrder, params.slug),
+    seriesService.getSeriesBySlug(params.slug),
   ]);
 
   const breadcrumbs = [
@@ -22,7 +22,7 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
       title: "Сериалы",
     },
     {
-      path: `/series/${series.id}`,
+      path: `/series/${series.slug}`,
       title: `${series.title}`,
     },
     {

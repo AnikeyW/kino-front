@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   episode: IEpisode;
-  seriesId: number;
+  seriesSlug: string;
   seasonOrder: number;
   episodesQuantity: number;
   seasonsQuantity: number;
@@ -18,7 +18,7 @@ const IframePlayer: FC<Props> = ({
   episodesQuantity,
   seasonsQuantity,
   seasonOrder,
-  seriesId,
+  seriesSlug,
 }) => {
   const [url, setUrl] = useState<string | null>(null);
   const iFrameRef = useRef<HTMLIFrameElement | null>(null);
@@ -85,8 +85,8 @@ const IframePlayer: FC<Props> = ({
         )
           return;
 
-        const nextEpisodeLink = `/series/${seriesId}/season/${seasonOrder}/episode/${episode.order + 1}`;
-        const nextSeasonLink = `/series/${seriesId}/season/${seasonOrder + 1}/episode/1`;
+        const nextEpisodeLink = `/series/${seriesSlug}/season/${seasonOrder}/episode/${episode.order + 1}`;
+        const nextSeasonLink = `/series/${seriesSlug}/season/${seasonOrder + 1}/episode/1`;
 
         if (episode.order === episodesQuantity) {
           router.push(nextSeasonLink);

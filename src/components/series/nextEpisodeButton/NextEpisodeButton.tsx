@@ -4,7 +4,7 @@ import LinkBtn from "@/components/UI/myLink/linkBtn/LinkBtn";
 
 interface Props {
   episodeOrder: number;
-  seriesId: number;
+  seriesSlug: string;
   seasonOrder: number;
   episodesQuantity: number;
   seasonsQuantity: number;
@@ -12,13 +12,13 @@ interface Props {
 
 const NextEpisodeButton: FC<Props> = ({
   episodeOrder,
-  seriesId,
   seasonOrder,
   episodesQuantity,
   seasonsQuantity,
+  seriesSlug,
 }) => {
-  const nextEpisodeLink = `/series/${seriesId}/season/${seasonOrder}/episode/${episodeOrder + 1}`;
-  const nextSeasonLink = `/series/${seriesId}/season/${seasonOrder + 1}/episode/1`;
+  const nextEpisodeLink = `/series/${seriesSlug}/season/${seasonOrder}/episode/${episodeOrder + 1}`;
+  const nextSeasonLink = `/series/${seriesSlug}/season/${seasonOrder + 1}/episode/1`;
 
   return (
     <div className={styles.root}>

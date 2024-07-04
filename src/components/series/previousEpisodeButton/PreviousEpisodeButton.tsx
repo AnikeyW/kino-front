@@ -5,19 +5,19 @@ import { ISeason } from "@/components/series/Series.types";
 
 interface Props {
   episodeOrder: number;
-  seriesId: number;
+  seriesSlug: string;
   seasonOrder: number;
   prevSeason: ISeason | null;
 }
 
 const PreviousEpisodeButton: FC<Props> = ({
   episodeOrder,
-  seriesId,
   seasonOrder,
   prevSeason,
+  seriesSlug,
 }) => {
-  const prevEpisodeLink = `/series/${seriesId}/season/${seasonOrder}/episode/${episodeOrder - 1}`;
-  const prevSeasonLink = `/series/${seriesId}/season/${seasonOrder - 1}/episode/${prevSeason?.episodes.length}`;
+  const prevEpisodeLink = `/series/${seriesSlug}/season/${seasonOrder}/episode/${episodeOrder - 1}`;
+  const prevSeasonLink = `/series/${seriesSlug}/season/${seasonOrder - 1}/episode/${prevSeason?.episodes.length}`;
 
   return (
     <div className={styles.root}>

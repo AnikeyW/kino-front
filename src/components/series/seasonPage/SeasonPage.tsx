@@ -20,8 +20,8 @@ const SeasonPage: FC<Props> = ({ seasonData, seriesData }) => {
 
       <EpisodeList
         episodes={seasonData.episodes}
-        seriesId={seriesData.id}
         seasonOrder={seasonData.order}
+        seriesSlug={seriesData.slug}
       />
     </article>
   );

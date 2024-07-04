@@ -1,6 +1,6 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
-import { SeasonDetailsParams } from "@/app/series/[seriesId]/season/[seasonOrder]/page";
+import { SeasonDetailsParams } from "@/app/series/[slug]/season/[seasonOrder]/page";
 
 export const revalidate = 1800;
 
@@ -9,7 +9,7 @@ export const generateMetadata = async ({
 }: {
   params: SeasonDetailsParams;
 }) => {
-  const series = await seriesService.getSeriesById(params.seriesId);
+  const series = await seriesService.getSeriesBySlug(params.slug);
 
   return {
     alternates: {
@@ -36,7 +36,7 @@ export const generateMetadata = async ({
       description: `Сериал ${series.title} ${params.seasonOrder} сезон - смотреть онлайн все серии бесплатно в хорошем качестве HD 1080 официальный дубляж`,
       type: "website",
       locale: "ru_RU",
-      url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.seriesId}/season/${params.seasonOrder}`,
+      url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.slug}/season/${params.seasonOrder}`,
       siteName: "ХолоТВ Сериалы онлайн",
       images: {
         url: `${process.env.NEXT_PUBLIC_CLIENT_URL}og-image.jpg`,
@@ -75,7 +75,7 @@ export async function generateStaticParams({
 }: {
   params: SeasonDetailsParams;
 }) {
-  const series = await seriesService.getSeriesById(params.seriesId);
+  const series = await seriesService.getSeriesBySlug(params.slug);
 
   return series.seasons.map((season) => ({
     seasonOrder: season.order.toString(),

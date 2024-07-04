@@ -6,9 +6,9 @@ export const revalidate = 1800;
 export const generateMetadata = async ({
   params,
 }: {
-  params: { seriesId: number };
+  params: { slug: string };
 }) => {
-  const seriesDetails = await seriesService.getSeriesById(params.seriesId);
+  const seriesDetails = await seriesService.getSeriesBySlug(params.slug);
 
   return {
     alternates: {
@@ -35,7 +35,7 @@ export const generateMetadata = async ({
       description: `Сериал ${seriesDetails.title} смотреть онлайн все сезоны и серии бесплатно, без регистрации в хорошем качестве FullHD 1080`,
       type: "website",
       locale: "ru_RU",
-      url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.seriesId}`,
+      url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.slug}`,
       siteName: "ХолоТВ Сериалы онлайн",
       images: {
         url: `${process.env.NEXT_PUBLIC_CLIENT_URL}og-image.jpg`,
@@ -73,7 +73,7 @@ export async function generateStaticParams() {
   const series = await seriesService.getSeries();
 
   return series.map((ser) => ({
-    seriesId: ser.id.toString(),
+    slug: ser.slug,
   }));
 }
 

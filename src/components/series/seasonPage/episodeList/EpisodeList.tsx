@@ -5,10 +5,10 @@ import EpisodeCard from "@/components/series/seasonPage/episodeCard/EpisodeCard"
 
 interface Props {
   episodes: IEpisode[];
-  seriesId: number;
+  seriesSlug: string;
   seasonOrder: number;
 }
-const EpisodeList: FC<Props> = ({ episodes, seriesId, seasonOrder }) => {
+const EpisodeList: FC<Props> = ({ episodes, seasonOrder, seriesSlug }) => {
   return (
     <div className={styles.root}>
       <h2>Все серии {seasonOrder} сезона</h2>
@@ -18,7 +18,7 @@ const EpisodeList: FC<Props> = ({ episodes, seriesId, seasonOrder }) => {
             key={episode.id}
             episode={episode}
             seasonOrder={seasonOrder}
-            href={`/series/${seriesId}/season/${seasonOrder}/episode/${episode.order}`}
+            href={`/series/${seriesSlug}/season/${seasonOrder}/episode/${episode.order}`}
           />
         ))}
       </ul>

@@ -11,12 +11,13 @@ import { getQualityName } from "@/utils";
 interface Props {
   season: ISeasonWithoutEpisodes;
   quality: QualityResolutionType;
+  seriesSlug: string;
 }
 
-const SeasonItem: FC<Props> = ({ season, quality }) => {
+const SeasonItem: FC<Props> = ({ season, quality, seriesSlug }) => {
   return (
     <li>
-      <MyLink href={`/series/${season.seriesId}/season/${season.order}`}>
+      <MyLink href={`/series/${seriesSlug}/season/${season.order}`}>
         <div className={styles.root}>
           <div className={styles.quality}>{getQualityName(quality)}</div>
           <div className={styles.overlayText}>СМОТРЕТЬ ОНЛАЙН</div>

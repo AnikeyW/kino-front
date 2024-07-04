@@ -17,6 +17,7 @@ const SeasonList: FC<Props> = ({ seriesDetails }) => {
             key={season.id}
             season={season}
             quality={seriesDetails.quality}
+            seriesSlug={seriesDetails.slug}
           />
         ))}
       </ul>

@@ -4,8 +4,8 @@ import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import EpisodePage from "@/components/series/episodePage/EpisodePage";
 
 interface Params {
+  slug: string;
   seasonOrder: string;
-  seriesId: string;
   episodeOrder: string;
 }
 
@@ -16,9 +16,9 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
     seriesService.getEpisodeByOrder(
       Number(params.episodeOrder),
       Number(params.seasonOrder),
-      Number(params.seriesId),
+      params.slug,
     ),
-    seriesService.getSeriesById(Number(params.seriesId)),
+    seriesService.getSeriesBySlug(params.slug),
   ]);
 
   return {
@@ -43,7 +43,7 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
       description: `Сериал ${series.title} ${params.seasonOrder} сезон ${params.episodeOrder} серия - смотреть онлайн в хорошем качестве FullHD 1080 на любых платформах на ХолоТВ`,
       type: "website",
       locale: "ru_RU",
-      url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.seriesId}/season/${params.seasonOrder}/episode/${params.episodeOrder}`,
+      url: `${process.env.NEXT_PUBLIC_CLIENT_URL}series/${params.slug}/season/${params.seasonOrder}/episode/${params.episodeOrder}`,
       siteName: "ХолоТВ Сериалы онлайн",
       images: {
         url: `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`,
@@ -80,7 +80,7 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
 export async function generateStaticParams({ params }: { params: Params }) {
   const season = await seriesService.getSeasonByOrder(
     Number(params.seasonOrder),
-    Number(params.seriesId),
+    params.slug,
   );
 
   return season.episodes.map((episode) => ({
@@ -93,13 +93,10 @@ const Page = async ({ params }: { params: Params }) => {
     seriesService.getEpisodeByOrder(
       Number(params.episodeOrder),
       Number(params.seasonOrder),
-      Number(params.seriesId),
+      params.slug,
     ),
-    seriesService.getSeriesById(Number(params.seriesId)),
-    seriesService.getSeasonByOrder(
-      Number(params.seasonOrder),
-      Number(params.seriesId),
-    ),
+    seriesService.getSeriesBySlug(params.slug),
+    seriesService.getSeasonByOrder(Number(params.seasonOrder), params.slug),
   ]);
 
   let prevSeason = null;
@@ -107,7 +104,7 @@ const Page = async ({ params }: { params: Params }) => {
   if (season.order !== 1) {
     prevSeason = await seriesService.getSeasonByOrder(
       Number(params.seasonOrder) - 1,
-      Number(params.seriesId),
+      params.slug,
     );
   }
 
@@ -117,11 +114,11 @@ const Page = async ({ params }: { params: Params }) => {
       title: "Сериалы",
     },
     {
-      path: `/series/${series.id}`,
+      path: `/series/${series.slug}`,
       title: `${series.title}`,
     },
     {
-      path: `/series/${series.id}/season/${params.seasonOrder}`,
+      path: `/series/${series.slug}/season/${params.seasonOrder}`,
       title: `Сезон ${season.order}`,
     },
     {

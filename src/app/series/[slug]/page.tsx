@@ -5,8 +5,8 @@ import SeriesPage from "@/components/series/seriesPage/SeriesPage";
 
 export const revalidate = 1800;
 
-const Page = async ({ params }: { params: { seriesId: number } }) => {
-  const seriesDetails = await seriesService.getSeriesById(params.seriesId);
+const Page = async ({ params }: { params: { slug: string } }) => {
+  const seriesDetails = await seriesService.getSeriesBySlug(params.slug);
 
   const breadcrumbs = [
     {
