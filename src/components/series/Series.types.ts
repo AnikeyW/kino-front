@@ -11,6 +11,7 @@ export type QualityResolutionType =
 export interface ISeries {
   id: number;
   title: string;
+  slug: string;
   poster: string;
   releaseYear: number;
   description: string;

@@ -55,6 +55,16 @@ const AddSeries: FC<Props> = ({ closeModal }) => {
         </div>
 
         <div className={styles.input}>
+          <span>Slug:</span>
+          <MyInput
+            type={"text"}
+            placeholder={"Slug"}
+            value={data.seriesData.slug}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "slug")}
+          />
+        </div>
+
+        <div className={styles.input}>
           <span>Год выхода:</span>
           <MyInput
             type={"number"}

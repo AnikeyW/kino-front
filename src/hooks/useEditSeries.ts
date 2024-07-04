@@ -7,6 +7,7 @@ import { isJSON } from "@/utils";
 export const useEditSeries = (seriesDetails: ISeries) => {
   const [seriesData, setSeriesData] = useState<EditSeriesDto>({
     title: seriesDetails.title,
+    slug: seriesDetails.slug,
     description: seriesDetails.description,
     releaseYear: seriesDetails.releaseYear.toString(),
     rateKinopoisk: seriesDetails.rateKinopoisk,

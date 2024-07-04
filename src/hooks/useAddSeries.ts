@@ -6,7 +6,8 @@ import { toast } from "react-hot-toast";
 export const useAddSeries = (closeModal: () => void) => {
   const router = useRouter();
   const [seriesData, setSeriesData] = useState<CreateSeriesDto>({
-    title: ``,
+    title: "",
+    slug: "",
     description: [""],
     releaseYear: 2011,
     poster: null,
@@ -96,6 +97,7 @@ export const useAddSeries = (closeModal: () => void) => {
       const response = await seriesService.addSeries(seriesData);
       setSeriesData({
         title: "",
+        slug: "",
         description: [""],
         poster: null,
         releaseYear: 2011,

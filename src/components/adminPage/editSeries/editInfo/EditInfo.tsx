@@ -65,6 +65,14 @@ const EditInfo: FC<Props> = ({ seriesDetails }) => {
 
         <div className={styles.input}>
           <EditableInput
+            label={"Slug: "}
+            value={data.seriesData.slug}
+            onChange={(e) => actions.changeSeriesDataHandler(e, "slug")}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <EditableInput
             label={"Год выхода: "}
             value={data.seriesData.releaseYear}
             onChange={(e) => actions.changeSeriesDataHandler(e, "releaseYear")}

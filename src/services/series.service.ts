@@ -9,6 +9,7 @@ import { AxiosProgressEvent } from "axios";
 
 export interface CreateSeriesDto {
   title: string;
+  slug: string;
   description: string[];
   releaseYear: number;
   rateKinopoisk: number;
@@ -21,6 +22,7 @@ export interface CreateSeriesDto {
 
 export interface EditSeriesDto {
   title: string;
+  slug: string;
   description: string;
   releaseYear: string;
   rateKinopoisk: number;
@@ -207,6 +209,7 @@ export const seriesService = {
       const formData = new FormData();
 
       formData.append("title", data.title);
+      formData.append("slug", data.slug);
       formData.append("description", JSON.stringify(data.description));
       formData.append("releaseYear", data.releaseYear.toString());
       formData.append("quality", data.quality.toString());
@@ -231,6 +234,7 @@ export const seriesService = {
       const formData = new FormData();
 
       formData.append("title", data.title);
+      formData.append("slug", data.slug);
       formData.append("description", data.description);
       formData.append("releaseYear", data.releaseYear);
       formData.append("rateKinopoisk", data.rateKinopoisk.toString());
