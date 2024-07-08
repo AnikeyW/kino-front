@@ -43,7 +43,9 @@ const IframePlayer: FC<Props> = ({
           .split("/")
           .pop()
           ?.split(".")[0]
-          .replace("_", " ");
+          .replace(/_/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
         if (index === episode.subtitles.length - 1) {
           subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src}`;
         } else {
