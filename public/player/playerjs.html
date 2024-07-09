@@ -38,6 +38,7 @@
         let skipIntroEnd = null
         let skipRepeat = null
         let skipRepeatEnd = null
+        let defaultSubtitle = null
 
         function get_skip_credits(){
           window.parent.postMessage({ event: "CLICK_BUTTON_NEXT_EPISODE" }, "*");
@@ -75,8 +76,13 @@
             skipIntroEnd = receivedVariable.skipIntroEnd
             skipRepeat = receivedVariable.skipRepeat
             skipRepeatEnd = receivedVariable.skipRepeatEnd
+            defaultSubtitle = receivedVariable.defaultSubtitle
 
             var vs = {id:"playerjs"}
+
+            if(defaultSubtitle){
+              vs.default_subtitle = defaultSubtitle
+            }
 
             if(skipRepeatEnd){
               vs.skipRepeat = skipRepeat ? skipRepeat : 1

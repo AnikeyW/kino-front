@@ -4,6 +4,7 @@ import styles from "./IframePlayer.module.scss";
 import { IEpisode } from "@/components/series/Series.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { subLabelFromSubSrc } from "@/utils";
 
 interface Props {
   episode: IEpisode;
@@ -38,14 +39,7 @@ const IframePlayer: FC<Props> = ({
 
     if (episode.subtitles.length > 0) {
       episode.subtitles.forEach((sub, index) => {
-        const subLabel = episode.subtitles[index].src
-          .replace(/\\/g, "/")
-          .split("/")
-          .pop()
-          ?.split(".")[0]
-          .replace(/_/g, " ")
-          .replace(/\s+/g, " ")
-          .trim();
+        const subLabel = subLabelFromSubSrc(sub.src);
         if (index === episode.subtitles.length - 1) {
           subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src}`;
         } else {
@@ -72,6 +66,9 @@ const IframePlayer: FC<Props> = ({
               skipRepeat: episode.skipRepeat,
               skipRepeatEnd: episode.skipRepeatEnd,
               mode: process.env.NODE_ENV,
+              defaultSubtitle: episode.defaultSubtitle
+                ? subLabelFromSubSrc(episode.defaultSubtitle)
+                : null,
             },
           },
           process.env.NEXT_PUBLIC_CLIENT_URL!,

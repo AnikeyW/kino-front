@@ -3,6 +3,7 @@ import { EditEpisodeDto, seriesService } from "@/services/series.service";
 import { IEpisode } from "@/components/series/Series.types";
 import { toast } from "react-hot-toast";
 import { isJSON } from "@/utils";
+import { SUB_OFF } from "@/constants";
 
 export const useEditEpisode = (episodeDetails: IEpisode) => {
   const [episodeData, setEpisodeData] = useState<EditEpisodeDto>({
@@ -20,8 +21,16 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
     skipRepeatEnd: episodeDetails.skipRepeatEnd,
     width: episodeDetails.width,
     height: episodeDetails.height,
+    defaultSubtitle: episodeDetails.defaultSubtitle,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const changeDefaultSubtitle = (value: string) => {
+    if (value === SUB_OFF) {
+      setEpisodeData({ ...episodeData, defaultSubtitle: null });
+    } else {
+      setEpisodeData({ ...episodeData, defaultSubtitle: value });
+    }
+  };
 
   const deleteParagraphHandler = (paragraphIndex: number) => {
     const episodeDescription = JSON.parse(episodeData.description);
@@ -125,6 +134,7 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
           newSubtitles: episodeData.newSubtitles,
           width: episodeData.width,
           height: episodeData.height,
+          defaultSubtitle: episodeData.defaultSubtitle,
         },
         episodeDetails.id,
       );
@@ -143,6 +153,7 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
         width: updatedEpisode.width,
         height: updatedEpisode.height,
         newSubtitles: [],
+        defaultSubtitle: updatedEpisode.defaultSubtitle,
       });
       toast.success("Изменения сохранены");
     } catch (e) {
@@ -166,6 +177,7 @@ export const useEditEpisode = (episodeDetails: IEpisode) => {
       addParagraphHandler,
       changeDescriptionHandler,
       deleteParagraphHandler,
+      changeDefaultSubtitle,
     },
   };
 };

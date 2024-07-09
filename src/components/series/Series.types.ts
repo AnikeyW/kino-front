@@ -65,4 +65,5 @@ export interface IEpisode {
   width: number;
   height: number;
   subtitles: ISubtitle[];
+  defaultSubtitle: string | null;
 }

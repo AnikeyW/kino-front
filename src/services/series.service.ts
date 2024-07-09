@@ -58,7 +58,6 @@ export interface CreateEpisodeDto {
   seasonId: number;
   releaseDate: string;
   video: File | null;
-  subtitles: File[];
 }
 
 export interface EditEpisodeDto {
@@ -76,6 +75,7 @@ export interface EditEpisodeDto {
   height: number;
   existSubtitles: ISubtitle[];
   newSubtitles: File[];
+  defaultSubtitle: string | null;
 }
 
 export const seriesService = {
@@ -105,9 +105,9 @@ export const seriesService = {
       formData.append("seasonId", episodeData.seasonId.toString());
       formData.append("releaseDate", episodeData.releaseDate.toString());
       formData.append("video", episodeData.video!);
-      episodeData.subtitles.forEach((sub) => {
-        formData.append("subtitles", sub);
-      });
+      // episodeData.subtitles.forEach((sub) => {
+      //   formData.append("subtitles", sub);
+      // });
       if (episodeData.skipCredits) {
         formData.append("skipCredits", episodeData.skipCredits.toString());
       }
@@ -155,6 +155,9 @@ export const seriesService = {
         "existSubtitles",
         JSON.stringify(episodeData.existSubtitles),
       );
+      if (episodeData.defaultSubtitle) {
+        formData.append("defaultSubtitle", episodeData.defaultSubtitle);
+      }
       if (episodeData.skipCredits) {
         formData.append("skipCredits", episodeData.skipCredits.toString());
       }
@@ -300,7 +303,6 @@ export const seriesService = {
   },
 
   async getSeriesBySlug(slug: string): Promise<ISeries> {
-    console.log(slug);
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API + `series/bySlug/${slug}`,
     );

@@ -10,7 +10,9 @@ import Image from "next/image";
 import FileUpload from "@/components/UI/fileUploud/FileUpload";
 import { MdOutlineRemoveCircle } from "react-icons/md";
 import { useEditEpisode } from "@/hooks/useEditEpisode";
-import { isJSON } from "@/utils";
+import { isJSON, subLabelFromSubSrc } from "@/utils";
+import { Select } from "antd";
+import { SUB_OFF } from "@/constants";
 
 interface Props {
   episodeDetails: IEpisode;
@@ -140,15 +142,7 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
                 <ul>
                   {data.episodeData.existSubtitles.map((sub) => (
                     <li key={sub.id}>
-                      <span>
-                        {
-                          sub.src
-                            .replace(/\\/g, "/")
-                            .split("/")
-                            .pop()
-                            ?.split(".")[0]
-                        }
-                      </span>
+                      <span>{subLabelFromSubSrc(sub.src)}</span>
 
                       <div
                         onClick={() =>
@@ -178,6 +172,27 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
                   <div key={index}>{sub.name}</div>
                 ))}
             </div>
+          </div>
+
+          <div className={styles.order}>
+            <span>Субтитры по умочанию: </span>
+            <Select
+              value={
+                data.episodeData.defaultSubtitle
+                  ? data.episodeData.defaultSubtitle
+                  : SUB_OFF
+              }
+              style={{ width: "200px" }}
+              onChange={actions.changeDefaultSubtitle}
+              variant={"outlined"}
+              options={[
+                { value: SUB_OFF, label: "Выкл" },
+                ...data.episodeData.existSubtitles.map((sub) => ({
+                  value: sub.src,
+                  label: subLabelFromSubSrc(sub.src),
+                })),
+              ]}
+            />
           </div>
         </div>
       </div>
