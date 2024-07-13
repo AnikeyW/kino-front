@@ -13,7 +13,8 @@ const SeasonPage: FC<Props> = ({ seasonData, seriesData }) => {
   return (
     <article className={styles.root}>
       <h1 className={styles.pageTitle}>
-        {seriesData.title} {seasonData.order} сезон смотреть онлайн
+        Сериал {seriesData.title} {seasonData.order} сезон смотреть онлайн
+        бесплатно
       </h1>
 
       <DescriptionBlock description={seasonData.description} />

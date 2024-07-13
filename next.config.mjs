@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  swcMinify: false,
+  // swcMinify: false,
   images: { remotePatterns: [
       process.env.NODE_ENV === 'development'
         ? {
@@ -14,7 +14,7 @@ const nextConfig = {
           hostname: 'holotv.space',
         },
     ]
-  }
+  },
 };
 
 export default nextConfig;

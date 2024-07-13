@@ -14,8 +14,8 @@ export const generateMetadata = async ({
     alternates: {
       canonical: false,
     },
-    title: `${seriesDetails.title} смотреть все сезоны и серии онлайн`,
-    description: `Сериал ${seriesDetails.title} смотреть онлайн все сезоны и серии бесплатно, без регистрации в хорошем качестве FullHD 1080`,
+    title: `${seriesDetails.title} смотреть онлайн все сезоны и серии`,
+    description: `Сериал ${seriesDetails.title} смотреть онлайн в хорошем качестве FullHD 1080 все сезоны и серии бесплатно, без регистрации в озвучке Lostfilm, HDRezka и официальном дубляже`,
     robots: {
       index: true,
       follow: true,

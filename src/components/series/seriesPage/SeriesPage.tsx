@@ -13,7 +13,7 @@ const SeriesPage: FC<Props> = ({ seriesDetails }) => {
   return (
     <article className={styles.root}>
       <h1 className={styles.pageTitle}>
-        {seriesDetails.title} смотреть онлайн
+        Сериал {seriesDetails.title} смотреть онлайн бесплатно
       </h1>
       <div className={styles.seriesInfo}>
         <SeriesDetailsInfo seriesDetails={seriesDetails} />

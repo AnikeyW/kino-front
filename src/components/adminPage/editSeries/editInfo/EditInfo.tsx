@@ -13,6 +13,7 @@ import { useGetCountriesList } from "@/hooks/useGetCountriesList";
 import { useGetGenresList } from "@/hooks/useGetGenresList";
 import { isJSON } from "@/utils";
 import { MdOutlineRemoveCircle } from "react-icons/md";
+import AntConfigProvider from "@/components/UI/antConfigProvider/AntConfigProvider";
 
 interface Props {
   seriesDetails: ISeries;
@@ -99,56 +100,62 @@ const EditInfo: FC<Props> = ({ seriesDetails }) => {
 
         <div className={styles.input}>
           <span>Качество:</span>
-          <Select
-            value={data.seriesData.quality}
-            style={{ width: 120 }}
-            onChange={actions.onSelectQualityHandler}
-            variant={"outlined"}
-            options={[
-              { value: 240, label: 240 },
-              { value: 320, label: 320 },
-              { value: 480, label: 480 },
-              { value: 720, label: 720 },
-              { value: 1080, label: 1080 },
-              { value: 1440, label: 1440 },
-              { value: 2160, label: 2160 },
-              { value: 4320, label: 4320 },
-            ]}
-          />
+          <AntConfigProvider>
+            <Select
+              value={data.seriesData.quality}
+              style={{ width: 120 }}
+              onChange={actions.onSelectQualityHandler}
+              variant={"outlined"}
+              options={[
+                { value: 240, label: 240 },
+                { value: 320, label: 320 },
+                { value: 480, label: 480 },
+                { value: 720, label: 720 },
+                { value: 1080, label: 1080 },
+                { value: 1440, label: 1440 },
+                { value: 2160, label: 2160 },
+                { value: 4320, label: 4320 },
+              ]}
+            />
+          </AntConfigProvider>
         </div>
 
         <div className={styles.input}>
           <span>Страна:</span>
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ minWidth: "200px" }}
-            placeholder="Выбери страны"
-            defaultValue={data.seriesData.countries}
-            onChange={actions.onSelectCountryHandler}
-            loading={isLoadingCountries}
-            options={countries.map((country) => ({
-              value: country,
-              label: country,
-            }))}
-          />
+          <AntConfigProvider>
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ minWidth: "200px" }}
+              placeholder="Выбери страны"
+              defaultValue={data.seriesData.countries}
+              onChange={actions.onSelectCountryHandler}
+              loading={isLoadingCountries}
+              options={countries.map((country) => ({
+                value: country,
+                label: country,
+              }))}
+            />
+          </AntConfigProvider>
         </div>
 
         <div className={styles.input}>
           <span>Жанры:</span>
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: "200px" }}
-            placeholder="Выбери жанры"
-            defaultValue={data.seriesData.genres}
-            onChange={actions.onSelectGenresHandler}
-            loading={isLoadingGenres}
-            options={genres.map((genre) => ({
-              value: genre,
-              label: genre,
-            }))}
-          />
+          <AntConfigProvider>
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: "200px" }}
+              placeholder="Выбери жанры"
+              defaultValue={data.seriesData.genres}
+              onChange={actions.onSelectGenresHandler}
+              loading={isLoadingGenres}
+              options={genres.map((genre) => ({
+                value: genre,
+                label: genre,
+              }))}
+            />
+          </AntConfigProvider>
         </div>
 
         <div className={styles.description}>

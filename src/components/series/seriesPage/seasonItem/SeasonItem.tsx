@@ -25,7 +25,7 @@ const SeasonItem: FC<Props> = ({ season, quality, seriesSlug }) => {
             <div className={styles.poster}>
               <Image
                 src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + season.poster}
-                alt={"series_poster"}
+                alt={`${seriesSlug} ${season.order} сезон`}
                 fill={true}
                 sizes={"400px"}
               />

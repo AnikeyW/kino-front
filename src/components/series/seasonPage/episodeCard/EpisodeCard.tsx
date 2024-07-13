@@ -20,7 +20,7 @@ const EpisodeCard: FC<Props> = ({ episode, href, seasonOrder }) => {
             <div className={styles.poster}>
               <Image
                 src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
-                alt={"episode_poster"}
+                alt={`Серия ${episode.order} ${episode.title}`}
                 fill={true}
                 sizes={"300px"}
                 style={{

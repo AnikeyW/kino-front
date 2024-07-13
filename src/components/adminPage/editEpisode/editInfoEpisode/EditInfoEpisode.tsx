@@ -13,6 +13,7 @@ import { useEditEpisode } from "@/hooks/useEditEpisode";
 import { isJSON, subLabelFromSubSrc } from "@/utils";
 import { Select } from "antd";
 import { SUB_OFF } from "@/constants";
+import AntConfigProvider from "@/components/UI/antConfigProvider/AntConfigProvider";
 
 interface Props {
   episodeDetails: IEpisode;
@@ -176,23 +177,25 @@ const EditInfoEpisode: FC<Props> = ({ episodeDetails }) => {
 
           <div className={styles.order}>
             <span>Субтитры по умочанию: </span>
-            <Select
-              value={
-                data.episodeData.defaultSubtitle
-                  ? data.episodeData.defaultSubtitle
-                  : SUB_OFF
-              }
-              style={{ width: "200px" }}
-              onChange={actions.changeDefaultSubtitle}
-              variant={"outlined"}
-              options={[
-                { value: SUB_OFF, label: "Выкл" },
-                ...data.episodeData.existSubtitles.map((sub) => ({
-                  value: sub.src,
-                  label: subLabelFromSubSrc(sub.src),
-                })),
-              ]}
-            />
+            <AntConfigProvider>
+              <Select
+                value={
+                  data.episodeData.defaultSubtitle
+                    ? data.episodeData.defaultSubtitle
+                    : SUB_OFF
+                }
+                style={{ width: "200px" }}
+                onChange={actions.changeDefaultSubtitle}
+                variant={"outlined"}
+                options={[
+                  { value: SUB_OFF, label: "Выкл" },
+                  ...data.episodeData.existSubtitles.map((sub) => ({
+                    value: sub.src,
+                    label: subLabelFromSubSrc(sub.src),
+                  })),
+                ]}
+              />
+            </AntConfigProvider>
           </div>
         </div>
       </div>

@@ -49,6 +49,7 @@ const IframePlayer: FC<Props> = ({
     }
 
     const url = `/player/playerjs.html?file=${videoSrc}${episode.subtitles.length > 0 ? `&subtitle=${subtitlesSrc}` : ""}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
+    // const url = `https://player-holotv.ru/?file=${videoSrc}${episode.subtitles.length > 0 ? `&subtitle=${subtitlesSrc}` : ""}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
     const formatUrl = url.replace(/\\/g, "/");
     setUrl(formatUrl);
   }, [episode]);
