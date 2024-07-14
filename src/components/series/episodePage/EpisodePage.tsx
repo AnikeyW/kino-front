@@ -7,6 +7,7 @@ import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisode
 import IframePlayer from "@/components/iframePlayer/IramePlayer";
 import EpisodeCard from "@/components/series/seasonPage/episodeCard/EpisodeCard";
 import DescriptionBlock from "@/components/UI/descriptionBlock/DescriptionBlock";
+import TitleH1 from "@/components/UI/titleH1/TitleH1";
 
 interface Props {
   episode: IEpisode;
@@ -26,7 +27,11 @@ const EpisodePage: FC<Props> = ({
   return (
     <article className={styles.root}>
       <div className={styles.episodeInfo}>
-        <h1>{`${seriesInfo.title} Сезон ${seasonOrder} Серия ${episode.order}`}</h1>
+        <div className={styles.title}>
+          <TitleH1
+            text={`${seriesInfo.title} Сезон ${seasonOrder} Серия ${episode.order} смотреть онлайн`}
+          />
+        </div>
 
         <IframePlayer
           episode={episode}
@@ -59,7 +64,7 @@ const EpisodePage: FC<Props> = ({
           </div>
         </div>
 
-        <h2>{episode.title}</h2>
+        <h2>«{episode.title}»</h2>
 
         <DescriptionBlock description={episode.description} />
       </div>

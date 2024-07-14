@@ -17,19 +17,12 @@
     grid-template-columns: 1fr 300px;
   }
 
-  .pageTitle{
-    font-weight: 600;
-    font-size: 22px;
+  .title{
     margin-bottom: 0.5rem;
-    color: var(--text-color-light);
     grid-column: 1 / -1;
 
     @media (min-width: 768px) {
       grid-column: 1 / 2;
-    }
-
-    @media screen and (max-width: 576px) {
-      font-size: 18px;
     }
   }
 

@@ -1,24 +1,31 @@
 import React, { FC } from "react";
 import styles from "./EpisodeList.module.scss";
-import { IEpisode } from "@/components/series/Series.types";
+import { IEpisode, ISeries } from "@/components/series/Series.types";
 import EpisodeCard from "@/components/series/seasonPage/episodeCard/EpisodeCard";
+import TitleH2 from "@/components/UI/titleH2/TitleH2";
 
 interface Props {
   episodes: IEpisode[];
-  seriesSlug: string;
+  seriesData: ISeries;
   seasonOrder: number;
 }
-const EpisodeList: FC<Props> = ({ episodes, seasonOrder, seriesSlug }) => {
+const EpisodeList: FC<Props> = ({ episodes, seasonOrder, seriesData }) => {
   return (
     <div className={styles.root}>
-      <h2>Все серии {seasonOrder} сезона</h2>
+      <div className={styles.title}>
+        <TitleH2>
+          Все серии {seasonOrder} сезона сериала {seriesData.title}{" "}
+          <span className={styles.titleSpan}>({episodes.length} серий)</span>
+        </TitleH2>
+      </div>
+
       <ul className={styles.episodesList}>
         {episodes.map((episode) => (
           <EpisodeCard
             key={episode.id}
             episode={episode}
             seasonOrder={seasonOrder}
-            href={`/series/${seriesSlug}/season/${seasonOrder}/episode/${episode.order}`}
+            href={`/series/${seriesData.slug}/season/${seasonOrder}/episode/${episode.order}`}
           />
         ))}
       </ul>

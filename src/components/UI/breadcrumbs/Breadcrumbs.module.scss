@@ -5,13 +5,39 @@
   color: #b9b9b9;
   background-color: var(--bgc-page);
   padding: 0.5rem;
+  flex-shrink: 0;
+  height: 32px;
 
   @media screen and (max-width: 576px){
     font-size: 14px;
     padding: 5px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    height: 26px;
+
+    &> * {
+      scroll-snap-align: end;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   svg {
     padding-top: 3px;
+    flex-shrink: 0;
+  }
+
+  a {
+    flex-shrink: 0;
+  }
+
+  span {
+    flex-shrink: 0;
   }
 }

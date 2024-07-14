@@ -3,36 +3,26 @@
   background-color: var(--bgc-page);
   padding: 0.5rem;
 
-  h1{
-    font-size: 22px;
-    color: var(--text-color-light);
-
-    @media screen and (max-width: 576px){
-      font-size: 18px;
-      text-align: center;
-    }
+  @media screen and (max-width: 576px){
+    padding: 5px;
   }
 
-  h2 {
-    margin: 1rem 0;
-    text-indent: 2rem;
-    line-height: 20px;
-    font-size: 20px;
-    color: var(--text-color-light);
+  .titleH1{
+    margin-bottom: 1rem;
+  }
 
-    @media screen and (max-width: 576px){
-      font-size: 18px;
-      text-align: center;
-    }
+  .titleH2 {
+    margin: 1rem 0;
   }
 
   p{
-    margin: 1rem 0;
+    margin: 0.25rem 0;
     text-indent: 2rem;
     line-height: 20px;
 
     @media screen and (max-width: 576px){
       font-size: 16px;
     }
+
   }
 }

@@ -17,14 +17,8 @@
   .episodeInfo{
     flex: auto;
 
-    h1{
-      font-size: 20px;
-      color: var(--text-color-light);
+    .title{
       margin-bottom: 0.5rem;
-
-      @media screen and (max-width: 576px){
-        font-size: 16px;
-      }
     }
 
     .releaseDate{

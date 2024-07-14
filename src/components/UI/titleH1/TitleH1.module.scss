@@ -1,0 +1,11 @@
+.root{
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--text-color-light);
+
+  @media screen and (max-width: 576px) {
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.5rem;
+  }
+}
