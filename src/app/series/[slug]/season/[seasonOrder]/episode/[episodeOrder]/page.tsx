@@ -90,23 +90,33 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
   };
 };
 export async function generateStaticParams({ params }: { params: Params }) {
-  // Получаем данные о сезоне
   const season = await seriesService.getSeasonByOrder(
     Number(params.seasonOrder),
     params.slug,
   );
 
-  if (!season) {
-    return [];
-  }
-
-  // Возвращаем параметры для каждого эпизода в сезоне
-  return season.episodes.map((episode) => ({
-    slug: params.slug,
-    seasonOrder: params.seasonOrder,
+  return season!.episodes.map((episode) => ({
     episodeOrder: episode.order.toString(),
   }));
 }
+// export async function generateStaticParams({ params }: { params: Params }) {
+//   // Получаем данные о сезоне
+//   const season = await seriesService.getSeasonByOrder(
+//     Number(params.seasonOrder),
+//     params.slug,
+//   );
+//
+//   if (!season) {
+//     return [];
+//   }
+//
+//   // Возвращаем параметры для каждого эпизода в сезоне
+//   return season.episodes.map((episode) => ({
+//     slug: params.slug,
+//     seasonOrder: params.seasonOrder,
+//     episodeOrder: episode.order.toString(),
+//   }));
+// }
 
 // export async function generateStaticParams({ params }: { params: Params }) {
 //   console.log(params);
