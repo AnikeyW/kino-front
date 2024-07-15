@@ -305,7 +305,8 @@ export const seriesService = {
     );
 
     if (!res.ok) {
-      return undefined;
+      // return undefined;
+      throw new Error(`failed to fetch ${res.status}`);
     }
     return await res.json();
   },
@@ -320,7 +321,8 @@ export const seriesService = {
     );
 
     if (!res.ok) {
-      return undefined;
+      // return undefined;
+      throw new Error(`failed to fetch ${res.status}`);
     }
     return await res.json();
   },
@@ -348,7 +350,8 @@ export const seriesService = {
     );
 
     if (!res.ok) {
-      return undefined;
+      // return undefined;
+      throw new Error(`failed to fetch ${res.status}`);
     }
     return await res.json();
   },
