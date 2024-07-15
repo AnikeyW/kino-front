@@ -90,16 +90,17 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
 };
 
 export async function generateStaticParams({ params }: { params: Params }) {
+  // console.log('');
   const season = await seriesService.getSeasonByOrder(
     Number(params.seasonOrder),
     params.slug,
   );
 
-  if (!season) {
-    return [];
-  }
+  // if (!season) {
+  //   return [];
+  // }
 
-  return season.episodes.map((episode) => ({
+  return season!.episodes.map((episode) => ({
     episodeOrder: episode.order.toString(),
   }));
 }
