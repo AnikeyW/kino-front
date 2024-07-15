@@ -346,7 +346,7 @@ export const seriesService = {
   ): Promise<IEpisode | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API +
-        `episode/byOrder/${episodeOrder}?season_order=${seasonOrder}&series_slug=${seriesSlug}`,
+        `episode/${episodeOrder}?season_order=${seasonOrder}&series_slug=${seriesSlug}`,
     );
 
     if (!res.ok) {
