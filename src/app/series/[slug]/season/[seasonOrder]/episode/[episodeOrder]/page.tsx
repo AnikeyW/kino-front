@@ -166,14 +166,14 @@ const Page = async ({ params }: { params: Params }) => {
     // seriesService.getAllEpisodesBySeriesSlug(params.slug),
   ]);
 
-  if (!episode || !series || !season) {
-    notFound();
-    return null;
-  }
+  // if (!episode || !series || !season) {
+  //   notFound();
+  //   return null;
+  // }
 
   let prevSeason = null;
 
-  if (season.order !== 1) {
+  if (season!.order !== 1) {
     const season = await seriesService.getSeasonByOrder(
       Number(params.seasonOrder) - 1,
       params.slug,
@@ -190,16 +190,16 @@ const Page = async ({ params }: { params: Params }) => {
       title: "Сериалы",
     },
     {
-      path: `/series/${series.slug}`,
+      path: `/series/${series!.slug}`,
       title: `${series!.title}`,
     },
     {
-      path: `/series/${series.slug}/season/${params.seasonOrder}`,
-      title: `Сезон ${season.order}`,
+      path: `/series/${series!.slug}/season/${params.seasonOrder}`,
+      title: `Сезон ${season!.order}`,
     },
     {
       path: "",
-      title: `Серия ${episode.order}`,
+      title: `Серия ${episode!.order}`,
     },
   ];
 
@@ -207,10 +207,10 @@ const Page = async ({ params }: { params: Params }) => {
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <EpisodePage
-        episode={episode}
+        episode={episode!}
         seasonOrder={Number(params.seasonOrder)}
-        seasonEpisodes={season.episodes}
-        seriesInfo={series}
+        seasonEpisodes={season!.episodes}
+        seriesInfo={series!}
         prevSeason={prevSeason}
         // allEpisodes={allEpisodes}
       />
