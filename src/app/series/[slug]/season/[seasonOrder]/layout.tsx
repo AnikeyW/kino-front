@@ -89,7 +89,7 @@ export async function generateStaticParams({
   const series = await seriesService.getSeriesBySlug(params.slug);
 
   if (!series) {
-    return null;
+    return [];
   }
 
   return series.seasons.map((season) => ({
