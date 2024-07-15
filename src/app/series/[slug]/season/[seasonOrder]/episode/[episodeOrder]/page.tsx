@@ -3,6 +3,7 @@ import { seriesService } from "@/services/series.service";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import EpisodePage from "@/components/series/episodePage/EpisodePage";
 import { notFound } from "next/navigation";
+import { ISeason, ISeries } from "@/components/series/Series.types";
 
 interface Params {
   slug: string;
@@ -88,22 +89,70 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
     },
   };
 };
-
 export async function generateStaticParams({ params }: { params: Params }) {
-  // console.log('');
+  // Получаем данные о сезоне
   const season = await seriesService.getSeasonByOrder(
     Number(params.seasonOrder),
     params.slug,
   );
 
-  // if (!season) {
-  //   return [];
-  // }
+  if (!season) {
+    return [];
+  }
 
-  return season!.episodes.map((episode) => ({
+  // Возвращаем параметры для каждого эпизода в сезоне
+  return season.episodes.map((episode) => ({
+    slug: params.slug,
+    seasonOrder: params.seasonOrder,
     episodeOrder: episode.order.toString(),
   }));
 }
+
+// export async function generateStaticParams({ params }: { params: Params }) {
+//   console.log(params);
+//   const season = await seriesService.getSeasonByOrder(
+//     Number(params.seasonOrder),
+//     params.slug,
+//   );
+//
+//   // if (!season) {
+//   //   return [];
+//   // }
+//
+//   return season!.episodes.map((episode) => ({
+//     episodeOrder: episode.order.toString(),
+//   }));
+// }
+// export async function generateStaticParams({ params }: { params: Params }) {
+//   console.log(params);
+//   // Получаем все сериалы
+//   const seriesList: ISeries[] = await seriesService.getSeries();
+//
+//   // Создаем массив для хранения всех возможных параметров
+//   const paramsList: {
+//     slug: string;
+//     seasonOrder: string;
+//     episodeOrder: string;
+//   }[] = [];
+//
+//   for (const series of seriesList) {
+//     for (const season of series.seasons) {
+//       const seasonData = await seriesService.getSeasonByOrder(
+//         season.order,
+//         series.slug,
+//       );
+//       for (const episode of seasonData!.episodes) {
+//         paramsList.push({
+//           slug: series.slug,
+//           seasonOrder: season.order.toString(),
+//           episodeOrder: episode.order.toString(),
+//         });
+//       }
+//     }
+//   }
+//
+//   return paramsList;
+// }
 
 const Page = async ({ params }: { params: Params }) => {
   const [episode, series, season] = await Promise.all([
