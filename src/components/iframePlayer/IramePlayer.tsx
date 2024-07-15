@@ -1,9 +1,9 @@
 "use client";
 import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./IframePlayer.module.scss";
-import { IEpisode } from "@/components/series/Series.types";
+import { IEpisode, ISeries } from "@/components/series/Series.types";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { subLabelFromSubSrc } from "@/utils";
 
 interface Props {
@@ -12,6 +12,8 @@ interface Props {
   seasonOrder: number;
   episodesQuantity: number;
   seasonsQuantity: number;
+  // allEpisodes: IEpisode[];
+  seriesInfo: ISeries;
 }
 
 const IframePlayer: FC<Props> = ({
@@ -20,10 +22,21 @@ const IframePlayer: FC<Props> = ({
   seasonsQuantity,
   seasonOrder,
   seriesSlug,
+  // allEpisodes,
+  seriesInfo,
 }) => {
   const [url, setUrl] = useState<string | null>(null);
   const iFrameRef = useRef<HTMLIFrameElement | null>(null);
   const router = useRouter();
+  // const pathname = usePathname();
+  // console.log(allEpisodes);
+
+  // useEffect(() => {
+  //   const url = pathname;
+  //   console.log(url);
+  //   // You can now use the current URL
+  //   // ...
+  // }, [pathname]);
 
   useEffect(() => {
     // const videoSrc = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls} or ${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcDash}`;
@@ -48,6 +61,7 @@ const IframePlayer: FC<Props> = ({
       });
     }
 
+    // const url = `/player/playerjs.html?file=[{"title":"Сезон 1","folder":[{"title":"Серия 1","file":"http://localhost:5000/{v1}/1dbe20b8-c678-4144-b6aa-15ae399d2f98/{v2}","id":"1","poster":"http://localhost:5000/api/static/thumbnails/1dbe20b8-c678-4144-b6aa-15ae399d2f98/thumbnail_11.webp"},{"title":"Серия 2","file":"http://localhost:5000/{v1}/a50180a9-d791-45f9-89ad-e16d59a70238/{v2}","id":"129"}]},{"title":"Сезон 2","folder":[{"title":"Серия 1","file":"http://localhost:5000/{v1}/5c87ab31-c2d6-4c48-8207-13bcfff1e0f8/{v2}","id":"124","poster":"http://localhost:5000/api/static/thumbnails/5c87ab31-c2d6-4c48-8207-13bcfff1e0f8/thumbnail_11.webp"}]}]`;
     const url = `/player/playerjs.html?file=${videoSrc}${episode.subtitles.length > 0 ? `&subtitle=${subtitlesSrc}` : ""}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
     // const url = `https://player-holotv.ru/?file=${videoSrc}${episode.subtitles.length > 0 ? `&subtitle=${subtitlesSrc}` : ""}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
     const formatUrl = url.replace(/\\/g, "/");
@@ -78,6 +92,27 @@ const IframePlayer: FC<Props> = ({
     };
 
     const handleWindowEvents = (event: any) => {
+      // if (event.data.event === "new") {
+      //   const episodeInfo = allEpisodes.find(
+      //     (episode) => episode.id == event.data.id,
+      //   );
+      //   console.log("episodeInfo", episodeInfo);
+      //
+      //   const seasonOrder = seriesInfo.seasons.find(
+      //     (season) => season.id === episodeInfo?.seasonId,
+      //   )?.order;
+      //   console.log("seasonOrder", seasonOrder);
+      //
+      //   window.history.replaceState(
+      //     {
+      //       ...window.history.state,
+      //       // as: "/series/game-of-thrones/season/1/episode/112",
+      //       // url: "/series/game-of-thrones/season/1/episode/112",
+      //     },
+      //     "",
+      //     `/series/game-of-thrones/season/${seasonOrder}/episode/${episodeInfo?.order}`,
+      //   );
+      // }
       if (event.data.event === "CLICK_BUTTON_NEXT_EPISODE") {
         if (
           episode.order === episodesQuantity &&

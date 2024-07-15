@@ -10,6 +10,17 @@ export const generateMetadata = async ({
 }) => {
   const seriesDetails = await seriesService.getSeriesBySlug(params.slug);
 
+  if (!seriesDetails) {
+    return {
+      title: "Страница не найдена",
+      description: "Запрашиваемая страница не найдена",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   return {
     alternates: {
       canonical: false,

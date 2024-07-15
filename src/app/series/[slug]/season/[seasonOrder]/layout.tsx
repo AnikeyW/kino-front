@@ -11,6 +11,17 @@ export const generateMetadata = async ({
 }) => {
   const series = await seriesService.getSeriesBySlug(params.slug);
 
+  if (!series) {
+    return {
+      title: "Страница не найдена",
+      description: "Запрашиваемая страница не найдена",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   return {
     alternates: {
       canonical: false,
@@ -76,6 +87,10 @@ export async function generateStaticParams({
   params: SeasonDetailsParams;
 }) {
   const series = await seriesService.getSeriesBySlug(params.slug);
+
+  if (!series) {
+    return null;
+  }
 
   return series.seasons.map((season) => ({
     seasonOrder: season.order.toString(),

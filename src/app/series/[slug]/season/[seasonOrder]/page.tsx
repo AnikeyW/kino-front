@@ -2,6 +2,7 @@ import React from "react";
 import { seriesService } from "@/services/series.service";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import SeasonPage from "@/components/series/seasonPage/SeasonPage";
+import { notFound } from "next/navigation";
 
 export interface SeasonDetailsParams {
   slug: string;
@@ -15,6 +16,11 @@ const Page = async ({ params }: { params: SeasonDetailsParams }) => {
     seriesService.getSeasonByOrder(params.seasonOrder, params.slug),
     seriesService.getSeriesBySlug(params.slug),
   ]);
+
+  if (!season || !series) {
+    notFound();
+    return null;
+  }
 
   const breadcrumbs = [
     {

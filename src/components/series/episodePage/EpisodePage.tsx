@@ -15,6 +15,7 @@ interface Props {
   seriesInfo: ISeries;
   seasonEpisodes: IEpisode[];
   prevSeason: ISeason | null;
+  // allEpisodes: IEpisode[];
 }
 
 const EpisodePage: FC<Props> = ({
@@ -23,6 +24,7 @@ const EpisodePage: FC<Props> = ({
   seasonEpisodes,
   seriesInfo,
   prevSeason,
+  // allEpisodes,
 }) => {
   return (
     <article className={styles.root}>
@@ -39,6 +41,8 @@ const EpisodePage: FC<Props> = ({
           seasonsQuantity={seriesInfo.seasons.length}
           seasonOrder={seasonOrder}
           seriesSlug={seriesInfo.slug}
+          // allEpisodes={allEpisodes}
+          seriesInfo={seriesInfo}
         />
 
         <div className={styles.prevNextBtns}>

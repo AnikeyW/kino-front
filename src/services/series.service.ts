@@ -105,9 +105,6 @@ export const seriesService = {
       formData.append("seasonId", episodeData.seasonId.toString());
       formData.append("releaseDate", episodeData.releaseDate.toString());
       formData.append("video", episodeData.video!);
-      // episodeData.subtitles.forEach((sub) => {
-      //   formData.append("subtitles", sub);
-      // });
       if (episodeData.skipCredits) {
         formData.append("skipCredits", episodeData.skipCredits.toString());
       }
@@ -302,13 +299,13 @@ export const seriesService = {
     return await res.json();
   },
 
-  async getSeriesBySlug(slug: string): Promise<ISeries> {
+  async getSeriesBySlug(slug: string): Promise<ISeries | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API + `series/bySlug/${slug}`,
     );
 
     if (!res.ok) {
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },
@@ -316,14 +313,14 @@ export const seriesService = {
   async getSeasonByOrder(
     seasonOrder: number,
     seriesSlug: string,
-  ): Promise<ISeason> {
+  ): Promise<ISeason | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API +
         `season/${seasonOrder}?series_slug=${seriesSlug}`,
     );
 
     if (!res.ok) {
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },
@@ -344,10 +341,21 @@ export const seriesService = {
     episodeOrder: number,
     seasonOrder: number,
     seriesSlug: string,
-  ): Promise<IEpisode> {
+  ): Promise<IEpisode | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API +
-        `episode/${episodeOrder}?season_order=${seasonOrder}&series_slug=${seriesSlug}`,
+        `episode/byOrder/${episodeOrder}?season_order=${seasonOrder}&series_slug=${seriesSlug}`,
+    );
+
+    if (!res.ok) {
+      return undefined;
+    }
+    return await res.json();
+  },
+
+  async getEpisodeById(episodeId: number): Promise<IEpisode> {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_SERVER_URL_API + `episode/byId/${episodeId}`,
     );
 
     if (!res.ok) {
@@ -356,9 +364,10 @@ export const seriesService = {
     return await res.json();
   },
 
-  async getEpisodeById(episodeId: number): Promise<IEpisode> {
+  async getAllEpisodesBySeriesSlug(seriesSlug: string): Promise<IEpisode[]> {
     const res = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL_API + `episode/byId/${episodeId}`,
+      process.env.NEXT_PUBLIC_SERVER_URL_API +
+        `episode/getAll/?series_slug=${seriesSlug}`,
     );
 
     if (!res.ok) {

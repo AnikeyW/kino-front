@@ -2,6 +2,7 @@ import React from "react";
 import { seriesService } from "@/services/series.service";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import EpisodePage from "@/components/series/episodePage/EpisodePage";
+import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;
@@ -20,6 +21,17 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
     ),
     seriesService.getSeriesBySlug(params.slug),
   ]);
+
+  if (!episode || !series) {
+    return {
+      title: "Страница не найдена",
+      description: "Запрашиваемая страница не найдена",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
   return {
     title: `${series.title} ${params.seasonOrder} сезон ${params.episodeOrder} серия - смотреть онлайн бесплатно`,
@@ -83,6 +95,10 @@ export async function generateStaticParams({ params }: { params: Params }) {
     params.slug,
   );
 
+  if (!season) {
+    return null;
+  }
+
   return season.episodes.map((episode) => ({
     episodeOrder: episode.order.toString(),
   }));
@@ -97,15 +113,25 @@ const Page = async ({ params }: { params: Params }) => {
     ),
     seriesService.getSeriesBySlug(params.slug),
     seriesService.getSeasonByOrder(Number(params.seasonOrder), params.slug),
+    // seriesService.getAllEpisodesBySeriesSlug(params.slug),
   ]);
+
+  if (!episode || !series || !season) {
+    notFound();
+    return null;
+  }
 
   let prevSeason = null;
 
   if (season.order !== 1) {
-    prevSeason = await seriesService.getSeasonByOrder(
+    const season = await seriesService.getSeasonByOrder(
       Number(params.seasonOrder) - 1,
       params.slug,
     );
+
+    if (season) {
+      prevSeason = season;
+    }
   }
 
   const breadcrumbs = [
@@ -115,7 +141,7 @@ const Page = async ({ params }: { params: Params }) => {
     },
     {
       path: `/series/${series.slug}`,
-      title: `${series.title}`,
+      title: `${series!.title}`,
     },
     {
       path: `/series/${series.slug}/season/${params.seasonOrder}`,
@@ -136,6 +162,7 @@ const Page = async ({ params }: { params: Params }) => {
         seasonEpisodes={season.episodes}
         seriesInfo={series}
         prevSeason={prevSeason}
+        // allEpisodes={allEpisodes}
       />
     </>
   );
