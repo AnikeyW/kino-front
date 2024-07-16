@@ -95,7 +95,7 @@ export async function generateStaticParams({ params }: { params: Params }) {
   );
 
   if (!season) {
-    return null;
+    return [];
   }
 
   return season.episodes.map((episode) => ({
