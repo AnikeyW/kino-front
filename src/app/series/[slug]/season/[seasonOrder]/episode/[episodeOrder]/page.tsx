@@ -3,7 +3,6 @@ import { seriesService } from "@/services/series.service";
 import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import EpisodePage from "@/components/series/episodePage/EpisodePage";
 import { notFound } from "next/navigation";
-import { ISeason, ISeries } from "@/components/series/Series.types";
 
 interface Params {
   slug: string;
@@ -95,74 +94,14 @@ export async function generateStaticParams({ params }: { params: Params }) {
     params.slug,
   );
 
-  return season!.episodes.map((episode) => ({
+  if (!season) {
+    return null;
+  }
+
+  return season.episodes.map((episode) => ({
     episodeOrder: episode.order.toString(),
   }));
 }
-// export async function generateStaticParams({ params }: { params: Params }) {
-//   // Получаем данные о сезоне
-//   const season = await seriesService.getSeasonByOrder(
-//     Number(params.seasonOrder),
-//     params.slug,
-//   );
-//
-//   if (!season) {
-//     return [];
-//   }
-//
-//   // Возвращаем параметры для каждого эпизода в сезоне
-//   return season.episodes.map((episode) => ({
-//     slug: params.slug,
-//     seasonOrder: params.seasonOrder,
-//     episodeOrder: episode.order.toString(),
-//   }));
-// }
-
-// export async function generateStaticParams({ params }: { params: Params }) {
-//   console.log(params);
-//   const season = await seriesService.getSeasonByOrder(
-//     Number(params.seasonOrder),
-//     params.slug,
-//   );
-//
-//   // if (!season) {
-//   //   return [];
-//   // }
-//
-//   return season!.episodes.map((episode) => ({
-//     episodeOrder: episode.order.toString(),
-//   }));
-// }
-// export async function generateStaticParams({ params }: { params: Params }) {
-//   console.log(params);
-//   // Получаем все сериалы
-//   const seriesList: ISeries[] = await seriesService.getSeries();
-//
-//   // Создаем массив для хранения всех возможных параметров
-//   const paramsList: {
-//     slug: string;
-//     seasonOrder: string;
-//     episodeOrder: string;
-//   }[] = [];
-//
-//   for (const series of seriesList) {
-//     for (const season of series.seasons) {
-//       const seasonData = await seriesService.getSeasonByOrder(
-//         season.order,
-//         series.slug,
-//       );
-//       for (const episode of seasonData!.episodes) {
-//         paramsList.push({
-//           slug: series.slug,
-//           seasonOrder: season.order.toString(),
-//           episodeOrder: episode.order.toString(),
-//         });
-//       }
-//     }
-//   }
-//
-//   return paramsList;
-// }
 
 const Page = async ({ params }: { params: Params }) => {
   const [episode, series, season] = await Promise.all([
@@ -176,14 +115,14 @@ const Page = async ({ params }: { params: Params }) => {
     // seriesService.getAllEpisodesBySeriesSlug(params.slug),
   ]);
 
-  // if (!episode || !series || !season) {
-  //   notFound();
-  //   return null;
-  // }
+  if (!episode || !series || !season) {
+    notFound();
+    return null;
+  }
 
   let prevSeason = null;
 
-  if (season!.order !== 1) {
+  if (season.order !== 1) {
     const season = await seriesService.getSeasonByOrder(
       Number(params.seasonOrder) - 1,
       params.slug,
@@ -200,16 +139,16 @@ const Page = async ({ params }: { params: Params }) => {
       title: "Сериалы",
     },
     {
-      path: `/series/${series!.slug}`,
-      title: `${series!.title}`,
+      path: `/series/${series.slug}`,
+      title: `${series.title}`,
     },
     {
-      path: `/series/${series!.slug}/season/${params.seasonOrder}`,
-      title: `Сезон ${season!.order}`,
+      path: `/series/${series.slug}/season/${params.seasonOrder}`,
+      title: `Сезон ${season.order}`,
     },
     {
       path: "",
-      title: `Серия ${episode!.order}`,
+      title: `Серия ${episode.order}`,
     },
   ];
 
@@ -217,10 +156,10 @@ const Page = async ({ params }: { params: Params }) => {
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <EpisodePage
-        episode={episode!}
+        episode={episode}
         seasonOrder={Number(params.seasonOrder)}
-        seasonEpisodes={season!.episodes}
-        seriesInfo={series!}
+        seasonEpisodes={season.episodes}
+        seriesInfo={series}
         prevSeason={prevSeason}
         // allEpisodes={allEpisodes}
       />

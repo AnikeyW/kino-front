@@ -305,8 +305,7 @@ export const seriesService = {
     );
 
     if (!res.ok) {
-      // return undefined;
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },
@@ -321,8 +320,7 @@ export const seriesService = {
     );
 
     if (!res.ok) {
-      // return undefined;
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },
@@ -346,12 +344,11 @@ export const seriesService = {
   ): Promise<IEpisode | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API +
-        `episode/${episodeOrder}?season_order=${seasonOrder}&series_slug=${seriesSlug}`,
+        `episode/byOrder/${episodeOrder}?season_order=${seasonOrder}&series_slug=${seriesSlug}`,
     );
 
     if (!res.ok) {
-      // return undefined;
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },

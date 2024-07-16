@@ -88,26 +88,14 @@ export async function generateStaticParams({
 }) {
   const series = await seriesService.getSeriesBySlug(params.slug);
 
-  return series!.seasons.map((season) => ({
+  if (!series) {
+    return null;
+  }
+
+  return series.seasons.map((season) => ({
     seasonOrder: season.order.toString(),
   }));
 }
-
-// export async function generateStaticParams({
-//   params,
-// }: {
-//   params: SeasonDetailsParams;
-// }) {
-//   const series = await seriesService.getSeriesBySlug(params.slug);
-//
-//   if (!series) {
-//     return [];
-//   }
-//
-//   return series.seasons.map((season) => ({
-//     seasonOrder: season.order.toString(),
-//   }));
-// }
 
 const SeasonDetailsLayout = ({
   children,
