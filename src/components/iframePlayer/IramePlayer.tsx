@@ -30,10 +30,20 @@ const IframePlayer: FC<Props> = ({
 
   useEffect(() => {
     const playlist = createPlaylist(seriesInfo, allEpisodes);
+    console.log(JSON.stringify(playlist));
+    if (seriesInfo.slug === "game-of-thrones") {
+      const url = `/player/playerjs.html?file=/player/pl0.txt`;
 
-    const url = `/player/playerjs.html?file=${JSON.stringify(playlist)}`;
+      setUrl(url);
+    } else {
+      const url = `/player/playerjs.html?file=/player/pl1.txt`;
 
-    setUrl(url);
+      setUrl(url);
+    }
+
+    // const url = `/player/playerjs.html?file=${JSON.stringify(playlist)}`;
+    //
+    // setUrl(url);
   }, [episode]);
 
   useEffect(() => {
