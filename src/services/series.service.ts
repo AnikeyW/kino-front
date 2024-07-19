@@ -353,25 +353,27 @@ export const seriesService = {
     return await res.json();
   },
 
-  async getEpisodeById(episodeId: number): Promise<IEpisode> {
+  async getEpisodeById(episodeId: number): Promise<IEpisode | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API + `episode/byId/${episodeId}`,
     );
 
     if (!res.ok) {
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },
 
-  async getAllEpisodesBySeriesSlug(seriesSlug: string): Promise<IEpisode[]> {
+  async getAllEpisodesBySeriesSlug(
+    seriesSlug: string,
+  ): Promise<IEpisode[] | undefined> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API +
         `episode/getAll/?series_slug=${seriesSlug}`,
     );
 
     if (!res.ok) {
-      throw new Error(`failed to fetch ${res.status}`);
+      return undefined;
     }
     return await res.json();
   },

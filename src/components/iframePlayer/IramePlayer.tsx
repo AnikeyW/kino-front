@@ -3,69 +3,37 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./IframePlayer.module.scss";
 import { IEpisode, ISeries } from "@/components/series/Series.types";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { subLabelFromSubSrc } from "@/utils";
+import { createPlaylist, subLabelFromSubSrc } from "@/utils";
+import { EVENT_CHANGE_URL } from "@/constants";
 
 interface Props {
   episode: IEpisode;
   seriesSlug: string;
-  seasonOrder: number;
-  episodesQuantity: number;
-  seasonsQuantity: number;
-  // allEpisodes: IEpisode[];
+  allEpisodes: IEpisode[];
   seriesInfo: ISeries;
 }
 
 const IframePlayer: FC<Props> = ({
   episode,
-  episodesQuantity,
-  seasonsQuantity,
-  seasonOrder,
   seriesSlug,
-  // allEpisodes,
+  allEpisodes,
   seriesInfo,
 }) => {
   const [url, setUrl] = useState<string | null>(null);
   const iFrameRef = useRef<HTMLIFrameElement | null>(null);
-  const router = useRouter();
-  // const pathname = usePathname();
-  // console.log(allEpisodes);
-
-  // useEffect(() => {
-  //   const url = pathname;
-  //   console.log(url);
-  //   // You can now use the current URL
-  //   // ...
-  // }, [pathname]);
 
   useEffect(() => {
-    // const videoSrc = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls} or ${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcDash}`;
+    return () => {
+      localStorage.clear();
+    };
+  }, []);
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SERVER_URL_STATIC!.split("/api/static/")[0] + "/";
-    const videoName = episode.srcHls.replace(/\\/g, "/").split("/")[1];
+  useEffect(() => {
+    const playlist = createPlaylist(seriesInfo, allEpisodes);
 
-    // const videoSrc = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.srcHls}`;
-    const videoSrc = `${baseUrl}{v1}/${videoName}/{v2}`;
+    const url = `/player/playerjs.html?file=${JSON.stringify(playlist)}`;
 
-    let subtitlesSrc = "";
-
-    if (episode.subtitles.length > 0) {
-      episode.subtitles.forEach((sub, index) => {
-        const subLabel = subLabelFromSubSrc(sub.src);
-        if (index === episode.subtitles.length - 1) {
-          subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src}`;
-        } else {
-          subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src},`;
-        }
-      });
-    }
-
-    // const url = `/player/playerjs.html?file=[{"title":"Сезон 1","folder":[{"title":"Серия 1","file":"http://localhost:5000/{v1}/1dbe20b8-c678-4144-b6aa-15ae399d2f98/{v2}","id":"1","poster":"http://localhost:5000/api/static/thumbnails/1dbe20b8-c678-4144-b6aa-15ae399d2f98/thumbnail_11.webp"},{"title":"Серия 2","file":"http://localhost:5000/{v1}/a50180a9-d791-45f9-89ad-e16d59a70238/{v2}","id":"129"}]},{"title":"Сезон 2","folder":[{"title":"Серия 1","file":"http://localhost:5000/{v1}/5c87ab31-c2d6-4c48-8207-13bcfff1e0f8/{v2}","id":"124","poster":"http://localhost:5000/api/static/thumbnails/5c87ab31-c2d6-4c48-8207-13bcfff1e0f8/thumbnail_11.webp"}]}]`;
-    const url = `/player/playerjs.html?file=${videoSrc}${episode.subtitles.length > 0 ? `&subtitle=${subtitlesSrc}` : ""}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
-    // const url = `https://player-holotv.ru/?file=${videoSrc}${episode.subtitles.length > 0 ? `&subtitle=${subtitlesSrc}` : ""}&poster=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}`;
-    const formatUrl = url.replace(/\\/g, "/");
-    setUrl(formatUrl);
+    setUrl(url);
   }, [episode]);
 
   useEffect(() => {
@@ -75,6 +43,7 @@ const IframePlayer: FC<Props> = ({
           {
             type: "MY_VARIABLES",
             value: {
+              videoId: episode.id,
               skipIntro: episode.skipIntro,
               skipIntroEnd: episode.skipIntroEnd,
               skipCredits: episode.skipCredits,
@@ -92,41 +61,41 @@ const IframePlayer: FC<Props> = ({
     };
 
     const handleWindowEvents = (event: any) => {
-      // if (event.data.event === "new") {
-      //   const episodeInfo = allEpisodes.find(
-      //     (episode) => episode.id == event.data.id,
-      //   );
-      //   console.log("episodeInfo", episodeInfo);
-      //
-      //   const seasonOrder = seriesInfo.seasons.find(
-      //     (season) => season.id === episodeInfo?.seasonId,
-      //   )?.order;
-      //   console.log("seasonOrder", seasonOrder);
-      //
-      //   window.history.replaceState(
-      //     {
-      //       ...window.history.state,
-      //       // as: "/series/game-of-thrones/season/1/episode/112",
-      //       // url: "/series/game-of-thrones/season/1/episode/112",
-      //     },
-      //     "",
-      //     `/series/game-of-thrones/season/${seasonOrder}/episode/${episodeInfo?.order}`,
-      //   );
-      // }
-      if (event.data.event === "CLICK_BUTTON_NEXT_EPISODE") {
-        if (
-          episode.order === episodesQuantity &&
-          seasonOrder === seasonsQuantity
-        )
-          return;
+      if (event.data.event === "new") {
+        const episodeInfo = allEpisodes.find(
+          (episode) => episode.id == event.data.id,
+        );
 
-        const nextEpisodeLink = `/series/${seriesSlug}/season/${seasonOrder}/episode/${episode.order + 1}`;
-        const nextSeasonLink = `/series/${seriesSlug}/season/${seasonOrder + 1}/episode/1`;
+        const seasonOrder = seriesInfo.seasons.find(
+          (season) => season.id === episodeInfo?.seasonId,
+        )?.order;
 
-        if (episode.order === episodesQuantity) {
-          router.push(nextSeasonLink);
-        } else {
-          router.push(nextEpisodeLink);
+        window.history.replaceState(
+          {
+            ...window.history.state,
+            // as: "/series/game-of-thrones/season/1/episode/112",
+            // url: "/series/game-of-thrones/season/1/episode/112",
+          },
+          "",
+          `/series/${seriesSlug}/season/${seasonOrder}/episode/${episodeInfo?.order}`,
+        );
+
+        const customEvent = new Event(EVENT_CHANGE_URL);
+        window.dispatchEvent(customEvent);
+
+        if (iFrameRef.current) {
+          const index = episodeInfo?.subtitles.findIndex(
+            (sub) => sub.src === episodeInfo?.defaultSubtitle,
+          );
+          iFrameRef.current.contentWindow?.postMessage(
+            {
+              type: "CHANGE_SUBS",
+              value: {
+                defaultSubtitle: index,
+              },
+            },
+            process.env.NEXT_PUBLIC_CLIENT_URL!,
+          );
         }
       }
     };

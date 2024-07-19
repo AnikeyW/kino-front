@@ -1,8 +1,8 @@
 import React from "react";
 import { seriesService } from "@/services/series.service";
-import Breadcrumbs from "@/components/UI/breadcrumbs/Breadcrumbs";
 import EpisodePage from "@/components/series/episodePage/EpisodePage";
 import { notFound } from "next/navigation";
+import EpisodeBreadcrubs from "@/components/series/episodePage/episodeBreadcrubs/EpisodeBreadcrubs";
 
 interface Params {
   slug: string;
@@ -104,7 +104,7 @@ export async function generateStaticParams({ params }: { params: Params }) {
 }
 
 const Page = async ({ params }: { params: Params }) => {
-  const [episode, series, season] = await Promise.all([
+  const [episode, series, season, allEpisodes] = await Promise.all([
     seriesService.getEpisodeByOrder(
       Number(params.episodeOrder),
       Number(params.seasonOrder),
@@ -112,56 +112,40 @@ const Page = async ({ params }: { params: Params }) => {
     ),
     seriesService.getSeriesBySlug(params.slug),
     seriesService.getSeasonByOrder(Number(params.seasonOrder), params.slug),
-    // seriesService.getAllEpisodesBySeriesSlug(params.slug),
+    seriesService.getAllEpisodesBySeriesSlug(params.slug),
   ]);
 
-  if (!episode || !series || !season) {
+  if (!episode || !series || !season || !allEpisodes) {
     notFound();
     return null;
   }
 
-  let prevSeason = null;
-
-  if (season.order !== 1) {
-    const season = await seriesService.getSeasonByOrder(
-      Number(params.seasonOrder) - 1,
-      params.slug,
-    );
-
-    if (season) {
-      prevSeason = season;
-    }
-  }
-
-  const breadcrumbs = [
-    {
-      path: "/",
-      title: "Сериалы",
-    },
-    {
-      path: `/series/${series.slug}`,
-      title: `${series.title}`,
-    },
-    {
-      path: `/series/${series.slug}/season/${params.seasonOrder}`,
-      title: `Сезон ${season.order}`,
-    },
-    {
-      path: "",
-      title: `Серия ${episode.order}`,
-    },
-  ];
+  // let prevSeason = null;
+  //
+  // if (season.order !== 1) {
+  //   const season = await seriesService.getSeasonByOrder(
+  //     Number(params.seasonOrder) - 1,
+  //     params.slug,
+  //   );
+  //
+  //   if (season) {
+  //     prevSeason = season;
+  //   }
+  // }
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <EpisodeBreadcrubs
+        episode={episode}
+        allEpisodes={allEpisodes}
+        seriesInfo={series}
+        season={season}
+      />
       <EpisodePage
         episode={episode}
-        seasonOrder={Number(params.seasonOrder)}
-        seasonEpisodes={season.episodes}
         seriesInfo={series}
-        prevSeason={prevSeason}
-        // allEpisodes={allEpisodes}
+        allEpisodes={allEpisodes}
+        seasonInfo={season}
       />
     </>
   );

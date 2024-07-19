@@ -1,92 +1,74 @@
 import React, { FC } from "react";
 import styles from "./EpisodePage.module.scss";
 import { IEpisode, ISeason, ISeries } from "@/components/series/Series.types";
-import { formatDate } from "@/utils";
-import PreviousEpisodeButton from "@/components/series/previousEpisodeButton/PreviousEpisodeButton";
-import NextEpisodeButton from "@/components/series/nextEpisodeButton/NextEpisodeButton";
 import IframePlayer from "@/components/iframePlayer/IramePlayer";
-import EpisodeCard from "@/components/series/seasonPage/episodeCard/EpisodeCard";
-import DescriptionBlock from "@/components/UI/descriptionBlock/DescriptionBlock";
-import TitleH1 from "@/components/UI/titleH1/TitleH1";
+import EpisodePageTitle from "@/components/series/episodePage/episodePageTitle/EpisodePageTitle";
+import EpisodeTitle from "@/components/series/episodePage/episodeTitle/EpisodeTitle";
+import ReleaseDate from "@/components/series/episodePage/releaseDate/ReleaseDate";
+import EpisodeDescription from "@/components/series/episodePage/episodeDescription/EpisodeDescription";
+import SeasonEpisodes from "@/components/series/episodePage/seasonEpisodes/SeasonEpisodes";
 
 interface Props {
   episode: IEpisode;
-  seasonOrder: number;
   seriesInfo: ISeries;
-  seasonEpisodes: IEpisode[];
-  prevSeason: ISeason | null;
-  // allEpisodes: IEpisode[];
+  allEpisodes: IEpisode[];
+  seasonInfo: ISeason;
 }
 
 const EpisodePage: FC<Props> = ({
   episode,
-  seasonOrder,
-  seasonEpisodes,
   seriesInfo,
-  prevSeason,
-  // allEpisodes,
+  allEpisodes,
+  seasonInfo,
 }) => {
   return (
     <article className={styles.root}>
       <div className={styles.episodeInfo}>
-        <div className={styles.title}>
-          <TitleH1
-            text={`${seriesInfo.title} Сезон ${seasonOrder} Серия ${episode.order} смотреть онлайн`}
+        <div className={styles.pageTitle}>
+          <EpisodePageTitle
+            episode={episode}
+            seasonOrder={seasonInfo.order}
+            seriesInfo={seriesInfo}
+            allEpisodes={allEpisodes}
           />
         </div>
 
         <IframePlayer
           episode={episode}
-          episodesQuantity={seasonEpisodes.length}
-          seasonsQuantity={seriesInfo.seasons.length}
-          seasonOrder={seasonOrder}
           seriesSlug={seriesInfo.slug}
-          // allEpisodes={allEpisodes}
+          allEpisodes={allEpisodes}
           seriesInfo={seriesInfo}
         />
 
-        <div className={styles.prevNextBtns}>
-          <PreviousEpisodeButton
-            episodeOrder={episode.order}
-            seasonOrder={seasonOrder}
-            prevSeason={prevSeason}
-            seriesSlug={seriesInfo.slug}
-          />
-          <NextEpisodeButton
-            episodeOrder={episode.order}
-            seasonOrder={seasonOrder}
-            episodesQuantity={seasonEpisodes.length}
-            seasonsQuantity={seriesInfo.seasons.length}
-            seriesSlug={seriesInfo.slug}
-          />
-        </div>
-
         <div className={styles.releaseDate}>
-          <div className={styles.releaseDateName}>Дата выхода:</div>
-          <div className={styles.releaseDateValue}>
-            {formatDate(episode.releaseDate)}
-          </div>
+          <ReleaseDate
+            episode={episode}
+            allEpisodes={allEpisodes}
+            seriesInfo={seriesInfo}
+          />
         </div>
 
-        <h2>«{episode.title}»</h2>
+        <div className={styles.episodeTitle}>
+          <EpisodeTitle
+            episode={episode}
+            allEpisodes={allEpisodes}
+            seriesInfo={seriesInfo}
+          />
+        </div>
 
-        <DescriptionBlock description={episode.description} />
+        <EpisodeDescription
+          episode={episode}
+          allEpisodes={allEpisodes}
+          seriesInfo={seriesInfo}
+        />
       </div>
 
-      <div className={styles.seasonEpisodesBlock}>
-        <h2>{`Все серии ${seasonOrder} сезона`}</h2>
-
-        <ul className={styles.seasonEpisodesList}>
-          {seasonEpisodes.map((episode) => (
-            <EpisodeCard
-              key={episode.id}
-              episode={episode}
-              href={`/series/${seriesInfo.slug}/season/${seasonOrder}/episode/${episode.order}`}
-              seasonOrder={seasonOrder}
-            />
-          ))}
-        </ul>
-      </div>
+      <SeasonEpisodes
+        episode={episode}
+        season={seasonInfo}
+        seriesInfo={seriesInfo}
+        allEpisodes={allEpisodes}
+      />
     </article>
   );
 };

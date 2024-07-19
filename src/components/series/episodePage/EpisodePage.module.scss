@@ -17,82 +17,16 @@
   .episodeInfo{
     flex: auto;
 
-    .title{
+    .pageTitle{
       margin-bottom: 0.5rem;
     }
 
     .releaseDate{
-      display: flex;
-      width: 200px;
-      justify-content: space-between;
-      align-items: center;
       margin: 0.5rem 0;
-
-      @media screen and (max-width: 576px){
-        width: 100%;
-      }
-
-      .releaseDateName{
-        font-size: 14px;
-        color: var(--text-color-soft);
-      }
-      .releaseDateValue{}
     }
 
-    .prevNextBtns {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    h2{
-      display: flex;
-      justify-content: center;
-      font-size: 18px;
+    .episodeTitle{
       margin-bottom: 0.5rem;
-      font-weight: bold;
-      color: var(--text-color-light);
-    }
-  }
-
-  .seasonEpisodesBlock{
-    width: 270px;
-    min-width: 270px;
-
-    @media screen and (max-width: 992px){
-      width: 200px;
-      min-width: 200px;
-    }
-
-    @media screen and (max-width: 768px){
-      width: 100%;
-    }
-
-    h2{
-      display: flex;
-      justify-content: center;
-      font-size: 18px;
-      margin: 0.5rem 0;
-
-      @media screen and (max-width: 992px) and (min-width: 769px){
-        font-size: 16px;
-      }
-
-      @media screen and (max-width: 768px){
-        margin-top: 1rem;
-      }
-    }
-
-    .seasonEpisodesList{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-
-      @media screen and (max-width: 768px){
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(181px, 1fr));
-        gap: 6px;
-        justify-content: center;
-      }
     }
   }
 }
