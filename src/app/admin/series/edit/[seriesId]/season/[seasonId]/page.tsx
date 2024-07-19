@@ -9,10 +9,6 @@ const Page = async ({
 }: {
   params: { seriesId: number; seasonId: number };
 }) => {
-  // const data = await seriesService.getSeasonById(
-  //   params.seasonId,
-  //   params.seriesId,
-  // );
   const data = await seriesService.getSeasonById(Number(params.seasonId));
 
   return <EditSeason seasonDetails={data} />;

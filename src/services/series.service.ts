@@ -325,17 +325,6 @@ export const seriesService = {
     return await res.json();
   },
 
-  // async getSeasonById(seasonId: number, seriesId: number): Promise<ISeason> {
-  //   const res = await fetch(
-  //     process.env.NEXT_PUBLIC_SERVER_URL_API +
-  //       `season/byId/${seasonId}?series_id=${seriesId}`,
-  //   );
-  //
-  //   if (!res.ok) {
-  //     throw new Error(`failed to fetch ${res.status}`);
-  //   }
-  //   return await res.json();
-  // },
   async getSeasonById(seasonId: number): Promise<ISeason> {
     const res = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL_API + `season/byId/${seasonId}`,

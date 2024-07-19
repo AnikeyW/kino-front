@@ -120,19 +120,6 @@ const Page = async ({ params }: { params: Params }) => {
     return null;
   }
 
-  // let prevSeason = null;
-  //
-  // if (season.order !== 1) {
-  //   const season = await seriesService.getSeasonByOrder(
-  //     Number(params.seasonOrder) - 1,
-  //     params.slug,
-  //   );
-  //
-  //   if (season) {
-  //     prevSeason = season;
-  //   }
-  // }
-
   return (
     <>
       <EpisodeBreadcrubs

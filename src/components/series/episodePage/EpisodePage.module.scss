@@ -22,7 +22,12 @@
     }
 
     .releaseDate{
-      margin: 0.5rem 0;
+      margin: 0.5rem 0 0.5rem auto;
+      width: 200px;
+
+      @media screen and (max-width: 576px){
+        width: 100%;
+      }
     }
 
     .episodeTitle{

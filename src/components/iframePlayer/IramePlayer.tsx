@@ -21,8 +21,6 @@ const IframePlayer: FC<Props> = ({
 }) => {
   const [url, setUrl] = useState<string | null>(null);
   const iFrameRef = useRef<HTMLIFrameElement | null>(null);
-  console.log("allEpisodes", allEpisodes);
-  console.log("seriesInfo", seriesInfo);
 
   useEffect(() => {
     return () => {

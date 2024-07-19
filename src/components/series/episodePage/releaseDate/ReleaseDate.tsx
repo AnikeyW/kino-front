@@ -1,6 +1,6 @@
 "use client";
 import React, { FC } from "react";
-import styles from "@/components/series/episodePage/EpisodePage.module.scss";
+import styles from "./ReleaseDate.module.scss";
 import { formatDate } from "@/utils";
 import { IEpisode, ISeries } from "@/components/series/Series.types";
 import { useUrlChange } from "@/hooks/useUrlChange";

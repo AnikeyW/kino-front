@@ -1,8 +1,4 @@
-import {
-  IEpisode,
-  ISeries,
-  QualityResolutionType,
-} from "@/components/series/Series.types";
+import { QualityResolutionType } from "@/components/series/Series.types";
 
 export const formatTime = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600);
@@ -78,85 +74,4 @@ export const subLabelFromSubSrc = (subSrc: string): string => {
       .replace(/\s+/g, " ")
       .trim() || "Sub"
   );
-};
-
-export const createPlaylist = (seriesInfo: ISeries, episodes: IEpisode[]) => {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SERVER_URL_STATIC!.split("/api/static/")[0] + "/";
-
-  const playlist: any = [];
-
-  seriesInfo.seasons
-    .sort((a, b) => a.order - b.order)
-    .forEach((season) => {
-      const playlistSeason: any = {
-        title: `Сезон ${season.order}`,
-        folder: [],
-      };
-      const seasonEpisodes = episodes.filter(
-        (episode) => episode.seasonId === season.id,
-      );
-
-      seasonEpisodes
-        .sort((a, b) => a.order - b.order)
-        .forEach((episode) => {
-          const playlistFile: Record<string, string | number> = {};
-
-          playlistFile.id = episode.id;
-
-          playlistFile.title = episode.title;
-
-          const videoName = episode.srcHls.replace(/\\/g, "/").split("/")[1];
-          playlistFile.file = `${baseUrl}{v1}/${videoName}/{v2}`;
-
-          playlistFile.poster = `${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${episode.poster.replace(/\\/g, "/")}`;
-
-          playlistFile.update_skipIntro = episode.skipIntro
-            ? episode.skipIntro
-            : 99999;
-
-          playlistFile.update_skipIntroEnd = episode.skipIntroEnd
-            ? episode.skipIntroEnd
-            : 999999;
-
-          playlistFile.update_skipRepeat = episode.skipRepeat
-            ? episode.skipRepeat
-            : 0;
-
-          playlistFile.update_skipRepeatEnd = episode.skipRepeatEnd
-            ? episode.skipRepeatEnd
-            : 0;
-
-          playlistFile.update_skipCredits = episode.skipCredits
-            ? episode.skipCredits
-            : 99999;
-
-          if (episode.subtitles.length > 0) {
-            let subtitlesSrc = "";
-
-            episode.subtitles.forEach((sub, index) => {
-              const subLabel = subLabelFromSubSrc(sub.src);
-              if (index === episode.subtitles.length - 1) {
-                subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src.replace(/\\/g, "/")}`;
-              } else {
-                subtitlesSrc += `[${subLabel}]${process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.subtitles[index].src.replace(/\\/g, "/")},`;
-              }
-            });
-
-            playlistFile.subtitle = subtitlesSrc;
-          }
-
-          if (episode.defaultSubtitle) {
-            playlistFile.default_subtitle = subLabelFromSubSrc(
-              episode.defaultSubtitle,
-            );
-          }
-
-          playlistSeason.folder.push(playlistFile);
-        });
-
-      playlist.push(playlistSeason);
-    });
-
-  return playlist;
 };
