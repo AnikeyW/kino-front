@@ -59,6 +59,13 @@
           }
         }
 
+        function PlayerReady(){
+          const playlistdiv1 = document.getElementById('playerjs_playlist1')
+          const playlistdiv2 = document.getElementById('playerjs_playlist2')
+          playlistdiv1.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
+          playlistdiv2.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
+        }
+
         window.addEventListener("message", (event) => {
           if (event.data.type === "MY_VARIABLES") {
             if(event.data.value.mode !== 'development'){
@@ -90,7 +97,7 @@
             videoId = receivedVariable.videoId
 
 
-            var vs = {id:"playerjs"}
+            var vs = {id:"playerjs",ready:"PlayerReady",}
 
             if(videoId){
               vs.plstart = videoId.toString()
@@ -134,10 +141,10 @@
 
             playerjs = new Playerjs(vs);
 
-            const playlistdiv1 = document.getElementById('playerjs_playlist1')
-            const playlistdiv2 = document.getElementById('playerjs_playlist2')
-            playlistdiv1.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
-            playlistdiv2.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
+            // const playlistdiv1 = document.getElementById('playerjs_playlist1')
+            // const playlistdiv2 = document.getElementById('playerjs_playlist2')
+            // playlistdiv1.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
+            // playlistdiv2.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
           }
         });
             
