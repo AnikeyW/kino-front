@@ -3,7 +3,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./IframePlayer.module.scss";
 import { IEpisode, ISeries } from "@/components/series/Series.types";
 import Image from "next/image";
-import { createPlaylist, subLabelFromSubSrc } from "@/utils";
+import { subLabelFromSubSrc } from "@/utils";
 import { EVENT_CHANGE_URL } from "@/constants";
 
 interface Props {
@@ -29,20 +29,9 @@ const IframePlayer: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    const playlist = createPlaylist(seriesInfo, allEpisodes);
-    if (seriesInfo.slug === "game-of-thrones") {
-      const url = `/player/playerjs.html?file=/player/pl0.txt`;
+    const url = `/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
 
-      setUrl(url);
-    } else {
-      const url = `/player/playerjs.html?file=/player/pl1.txt`;
-
-      setUrl(url);
-    }
-
-    // const url = `/player/playerjs.html?file=${JSON.stringify(playlist)}`;
-    //
-    // setUrl(url);
+    setUrl(url);
   }, [episode]);
 
   useEffect(() => {

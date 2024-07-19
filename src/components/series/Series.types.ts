@@ -21,6 +21,7 @@ export interface ISeries {
   countries: string[];
   genres: string[];
   seasons: ISeasonWithoutEpisodes[];
+  playlist: string;
 }
 
 export type ISeriesWithoutSeasons = Omit<ISeries, "seasons">;
