@@ -13,7 +13,7 @@ const Page = async ({
   //   params.seasonId,
   //   params.seriesId,
   // );
-  const data = await seriesService.getSeasonById(params.seasonId);
+  const data = await seriesService.getSeasonById(Number(params.seasonId));
 
   return <EditSeason seasonDetails={data} />;
 };
