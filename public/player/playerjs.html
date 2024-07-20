@@ -59,13 +59,24 @@
           }
         }
 
-        function PlayerReady(){
-          setTimeout(() => {
-            const playlistdiv1 = document.getElementById('playerjs_playlist1')
-            const playlistdiv2 = document.getElementById('playerjs_playlist2')
+        function changeBackGroundColorPlaylist(){
+          console.log('changeBackGroundColorPlaylist');
+          const playlistdiv1 = document.getElementById('playerjs_playlist1')
+          const playlistdiv2 = document.getElementById('playerjs_playlist2')
+
+          if(!playlistdiv1.children[0] || !playlistdiv2.children[0]){
+            setTimeout(() => {
+              changeBackGroundColorPlaylist()
+            }, 10)
+          } else {
+            console.log('else color');
             playlistdiv1.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
             playlistdiv2.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
-          }, 1500)
+          }
+        }
+
+        function PlayerReady(){
+          changeBackGroundColorPlaylist()
         }
 
         window.addEventListener("message", (event) => {

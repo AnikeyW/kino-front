@@ -29,7 +29,8 @@ const IframePlayer: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    const url = `/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
+    // const url = `/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
+    const url = `${process.env.NEXT_PUBLIC_PLAYER_URL}?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
 
     setUrl(url);
   }, [episode]);
@@ -53,7 +54,8 @@ const IframePlayer: FC<Props> = ({
                 : null,
             },
           },
-          process.env.NEXT_PUBLIC_CLIENT_URL!,
+          // process.env.NEXT_PUBLIC_CLIENT_URL!,
+          process.env.NEXT_PUBLIC_PLAYER_URL!,
         );
       }
     };
@@ -92,7 +94,8 @@ const IframePlayer: FC<Props> = ({
                 defaultSubtitle: index,
               },
             },
-            process.env.NEXT_PUBLIC_CLIENT_URL!,
+            // process.env.NEXT_PUBLIC_CLIENT_URL!,
+            process.env.NEXT_PUBLIC_PLAYER_URL!,
           );
         }
       }
