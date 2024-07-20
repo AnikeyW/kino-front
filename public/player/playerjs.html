@@ -76,7 +76,13 @@
         }
 
         function PlayerReady(){
-          changeBackGroundColorPlaylist()
+          // changeBackGroundColorPlaylist()
+          setTimeout(() => {
+            const playlistdiv1 = document.getElementById('playerjs_playlist1')
+            const playlistdiv2 = document.getElementById('playerjs_playlist2')
+            playlistdiv1.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
+            playlistdiv2.children[0].style.backgroundColor = 'rgba(38,93,99, 0.9)'
+          }, 1500)
         }
 
         window.addEventListener("message", (event) => {
