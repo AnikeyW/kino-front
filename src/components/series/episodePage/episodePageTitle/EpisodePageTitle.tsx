@@ -25,7 +25,7 @@ const EpisodePageTitle: FC<Props> = ({
 
   return (
     <TitleH1
-      text={`${seriesInfo.title} Сезон ${seasonInfo?.order || seasonOrder} Серия ${episodeInfo.order || " "} смотреть онлайн`}
+      text={`${seriesInfo.title} Сезон ${seasonInfo?.order || seasonOrder} Серия ${episodeInfo?.order || " "} смотреть онлайн`}
     />
   );
 };

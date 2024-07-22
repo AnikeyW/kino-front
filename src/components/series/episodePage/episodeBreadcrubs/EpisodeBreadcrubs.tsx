@@ -38,7 +38,7 @@ const EpisodeBreadcrubs: FC<Props> = ({
     },
     {
       path: "",
-      title: `Серия ${episodeInfo.order || episode.order}`,
+      title: `Серия ${episodeInfo?.order || episode.order}`,
     },
   ];
   return <Breadcrumbs breadcrumbs={breadcrumbs} />;
