@@ -30,11 +30,11 @@ const IframePlayer: FC<Props> = ({
 
   useEffect(() => {
     // const url = `/player/playerjs.html?file=https://localhost:3000/player/pl.txt`;
-    // const url = `/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
-    const url = `${process.env.NEXT_PUBLIC_PLAYER_URL}?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
+    const url = `/player/playerjs.html?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
+    // const url = `${process.env.NEXT_PUBLIC_PLAYER_URL}?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
     // const url = `${process.env.NEXT_PUBLIC_PLAYER_URL}?file=https://holotv.space/api/static/playlists/house-of-the-dragon.txt`;
     // const url = `https://localhost:5173/?file=${process.env.NEXT_PUBLIC_SERVER_URL_STATIC}${seriesInfo.playlist}`;
-    // const url = `https://localhost:5173/?file=https://localhost:3000/player/pl.txt`;
+    // const url = `https://localhost:5173/?file=https://localhost:3000/player/pl.txt${Math.random()}`;
     // const url = `https://localhost:5173/?file=https://localhost:5173/pl.txt`;
     // const url = `https://localhost:5173`;
 
@@ -60,8 +60,8 @@ const IframePlayer: FC<Props> = ({
                 : null,
             },
           },
-          // process.env.NEXT_PUBLIC_CLIENT_URL!,
-          process.env.NEXT_PUBLIC_PLAYER_URL!,
+          process.env.NEXT_PUBLIC_CLIENT_URL!,
+          // process.env.NEXT_PUBLIC_PLAYER_URL!,
           // "https://localhost:5173/",
         );
       }
@@ -101,8 +101,8 @@ const IframePlayer: FC<Props> = ({
                 defaultSubtitle: index,
               },
             },
-            // process.env.NEXT_PUBLIC_CLIENT_URL!,
-            process.env.NEXT_PUBLIC_PLAYER_URL!,
+            process.env.NEXT_PUBLIC_CLIENT_URL!,
+            // process.env.NEXT_PUBLIC_PLAYER_URL!,
             // "https://localhost:5173/",
           );
         }
