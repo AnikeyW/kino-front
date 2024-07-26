@@ -12,14 +12,19 @@ interface Props {
 const SeriesDetailsInfo: FC<Props> = ({ seriesDetails }) => {
   return (
     <div className={styles.root}>
-      <div className={styles.poster}>
-        <Image
-          src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + seriesDetails.poster}
-          alt={`Сериал ${seriesDetails.title}`}
-          fill={true}
-          sizes={"300px"}
-        />
+      <div>
+        <div className={styles.poster}>
+          <Image
+            src={
+              process.env.NEXT_PUBLIC_SERVER_URL_STATIC + seriesDetails.poster
+            }
+            alt={`Сериал ${seriesDetails.title}`}
+            fill={true}
+            sizes={"300px"}
+          />
+        </div>
       </div>
+
       <div className={styles.info}>
         <div className={styles.infoItem}>
           <small>Название: </small>

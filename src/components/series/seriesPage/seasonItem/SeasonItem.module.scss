@@ -115,7 +115,7 @@
 
     .poster{
       min-width: 100%;
-      aspect-ratio: 1.77777778;
+      padding-bottom: 56.25%; //aspect-ratio: 1.777778;
       position: relative;
       transition: transform 0.2s ease-in-out;
 
