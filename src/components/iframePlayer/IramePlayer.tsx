@@ -27,7 +27,6 @@ const IframePlayer: FC<Props> = ({
       localStorage.clear();
     };
   }, []);
-  console.log(seriesInfo);
 
   useEffect(() => {
     // const url = `/player/playerjs.html?file=https://localhost:3000/player/pl.txt`;
