@@ -70,10 +70,11 @@ export async function middleware(request: NextRequest) {
                   cookieOptions.secure = true;
                   break;
                 case "samesite":
-                  cookieOptions.sameSite = attrValue.toLowerCase() as
-                    | "lax"
-                    | "strict"
-                    | "none";
+                  cookieOptions.sameSite = "none";
+                  // cookieOptions.sameSite = attrValue.toLowerCase() as
+                  //   | "lax"
+                  //   | "strict"
+                  //   | "none";
                   break;
               }
             });
