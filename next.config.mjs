@@ -70,7 +70,7 @@ const nextConfig = {
         }
         : {
           protocol: 'https',
-          hostname: 'holotv.space',
+          hostname: 'serverkino.ru',
         },
     ]
   },
