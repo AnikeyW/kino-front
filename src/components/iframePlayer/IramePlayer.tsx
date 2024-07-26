@@ -5,6 +5,7 @@ import { IEpisode, ISeries } from "@/components/series/Series.types";
 import Image from "next/image";
 import { subLabelFromSubSrc } from "@/utils";
 import { EVENT_CHANGE_URL } from "@/constants";
+import { useWindowResize } from "@/hooks/useWindowResize";
 
 interface Props {
   episode: IEpisode;
@@ -19,15 +20,31 @@ const IframePlayer: FC<Props> = ({
   allEpisodes,
   seriesInfo,
 }) => {
+  const windowSize = useWindowResize();
   const [url, setUrl] = useState<string | null>(null);
+  const [isIframeLoading, setIsIframeLoading] = useState(true);
   const iFrameRef = useRef<HTMLIFrameElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const rootElementResizeHandler = () => {
+      const rootElement = rootRef.current;
+      if (rootElement) {
+        const rootElementWidth = rootElement.getBoundingClientRect().width;
+        const rootElementHeight =
+          rootElementWidth * (episode.height / episode.width);
+        rootElement.style.height = `${rootElementHeight}px`;
+      }
+    };
+
+    rootElementResizeHandler();
+  }, [windowSize?.width]);
 
   useEffect(() => {
     return () => {
       localStorage.clear();
     };
   }, []);
-  console.log(seriesInfo);
 
   useEffect(() => {
     // const url = `/player/playerjs.html?file=https://localhost:3000/player/pl.txt`;
@@ -70,6 +87,9 @@ const IframePlayer: FC<Props> = ({
     };
 
     const handleWindowEvents = (event: any) => {
+      if (event.data.event === "playlist") {
+        setIsIframeLoading(false);
+      }
       if (event.data.event === "new") {
         const episodeInfo = allEpisodes.find(
           (episode) => episode.id == event.data.id,
@@ -131,18 +151,36 @@ const IframePlayer: FC<Props> = ({
   }, [iFrameRef, url]);
 
   return (
-    <div
-      className={styles.root}
-      style={{ aspectRatio: episode.width / episode.height }}
-    >
+    <div className={styles.root} ref={rootRef}>
       {url && !episode.isProcessing && (
         <iframe
           ref={iFrameRef}
           src={url}
           width="100%"
-          height="100%"
+          height={isIframeLoading ? "0px" : "100%"}
           allowFullScreen
         ></iframe>
+      )}
+      {isIframeLoading && (
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            paddingBottom: `${(episode.height / episode.width) * 100}%`,
+          }}
+          className={styles.loaderBox}
+        >
+          <div className={styles.poster1}>
+            <Image
+              src={process.env.NEXT_PUBLIC_SERVER_URL_STATIC + episode.poster}
+              alt={"video-poster"}
+              fill={true}
+              sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
+              priority={true}
+            />
+            <div className={styles.loader}></div>
+          </div>
+        </div>
       )}
       {episode.isProcessing && (
         <div className={styles.processing}>
