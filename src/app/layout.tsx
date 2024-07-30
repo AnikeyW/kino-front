@@ -82,7 +82,7 @@ export default function RootLayout({
           k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
        
-          ym(97433961, "init", {
+          ym(${process.env.NEXT_PUBLIC_YM_ID}, "init", {
                 defer: true,
                 clickmap:true,
                 trackLinks:true,
@@ -101,7 +101,7 @@ export default function RootLayout({
         <MainLayout>{children}</MainLayout>
       </body>
       {process.env.NODE_ENV === "production" && (
-        <GoogleAnalytics gaId="G-9NXHFLG71P" />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
       )}
     </html>
   );
