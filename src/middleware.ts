@@ -7,6 +7,8 @@ export async function middleware(request: NextRequest) {
 
   const refreshToken = request.cookies.get("refreshToken")?.value as string;
   const accessToken = request.cookies.get("accessToken")?.value as string;
+  console.log(request.cookies);
+  console.log("accessToken", accessToken);
 
   if (isLoginPage) {
     if (accessToken && refreshToken) {
