@@ -21,13 +21,10 @@
       margin-bottom: 0.5rem;
     }
 
-    .releaseDate{
-      margin: 0.5rem 0 0.5rem auto;
-      width: 200px;
-
-      @media screen and (max-width: 576px){
-        width: 100%;
-      }
+    .socialShareAndReleaseDate{
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
     }
 
     .episodeTitle{

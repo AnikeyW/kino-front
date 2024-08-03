@@ -7,6 +7,7 @@ import EpisodeTitle from "@/components/series/episodePage/episodeTitle/EpisodeTi
 import ReleaseDate from "@/components/series/episodePage/releaseDate/ReleaseDate";
 import EpisodeDescription from "@/components/series/episodePage/episodeDescription/EpisodeDescription";
 import SeasonEpisodes from "@/components/series/episodePage/seasonEpisodes/SeasonEpisodes";
+import ShareBlock from "@/components/series/episodePage/shareBlock/ShareBlock";
 
 interface Props {
   episode: IEpisode;
@@ -40,7 +41,13 @@ const EpisodePage: FC<Props> = ({
           seriesInfo={seriesInfo}
         />
 
-        <div className={styles.releaseDate}>
+        <div className={styles.socialShareAndReleaseDate}>
+          <ShareBlock
+            episode={episode}
+            allEpisodes={allEpisodes}
+            seriesInfo={seriesInfo}
+            seasonOrder={seasonInfo.order}
+          />
           <ReleaseDate
             episode={episode}
             allEpisodes={allEpisodes}
